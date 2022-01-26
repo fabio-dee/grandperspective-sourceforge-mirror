@@ -53,6 +53,9 @@ extern NSString  *ColorMappingChangedEvent;
   NSRect  zoomBoundsStart;
   NSRect  zoomBoundsEnd;
 
+  NSImage  *testImage;
+  NSImage  *testImage2;
+
   // Indicates the direction of the zoom animation.
   BOOL  zoomingIn;
   // Counter used to abort animations

@@ -70,6 +70,7 @@ CGFloat ramp(CGFloat x, CGFloat minX, CGFloat maxX) {
 - (void) releaseZoomImages;
 - (void) abortZoomAnimation;
 - (void) addZoomAnimationCompletionHandler;
+- (void) drawScaledImages;
 
 - (void) postColorPaletteChanged;
 - (void) postColorMappingChanged;
@@ -393,10 +394,13 @@ CGFloat ramp(CGFloat x, CGFloat minX, CGFloat maxX) {
 
 
 - (void) drawRect:(NSRect)rect {
+  [self drawScaledImages];
+  return;
+
   if (pathModelView == nil) {
     return;
   }
-  
+
   if (treeImage != nil && !NSEqualSizes(treeImage.size, self.bounds.size)) {
     // Handle resizing of the view
 
@@ -771,6 +775,7 @@ CGFloat ramp(CGFloat x, CGFloat minX, CGFloat maxX) {
   treeImage = [image retain];
   treeImageIsScaled = NO;
   isTreeDrawInProgress = NO;
+  NSLog(@"treeImage = %@", NSStringFromSize(treeImage.size));
 
   if (zoomImage != nil) {
     // Replace initial zoom image so the layout matches the new aspect ratio.
@@ -867,7 +872,7 @@ CGFloat ramp(CGFloat x, CGFloat minX, CGFloat maxX) {
 
     [NSAnimationContext beginGrouping];
 
-    [NSAnimationContext.currentContext setDuration: 0.5 * durationMultiplier];
+    [NSAnimationContext.currentContext setDuration: 20 * durationMultiplier];
     [self addZoomAnimationCompletionHandler];
     self.animator.zoomBounds = zoomBoundsEnd;
 
@@ -878,15 +883,85 @@ CGFloat ramp(CGFloat x, CGFloat minX, CGFloat maxX) {
   }
 }
 
-- (void) drawZoomAnimation {
+- (NSImage *)createTestImageFromColor {
+  NSSize  size = NSMakeSize(640, 640);
+  NSImage *image = [[[NSImage alloc] initWithSize: size] autorelease];
+  [image lockFocus];
+  [NSColor.blueColor drawSwatchInRect: NSMakeRect(0, 0, size.width, size.height)];
+  [NSColor.whiteColor drawSwatchInRect: NSMakeRect(10, 10, size.width - 20, size.height - 20)];
+  [image unlockFocus];
+  return image;
+}
+
+- (NSImage *)createTestImageFromBitmap {
+  int  w = 640, h = 640;
+  NSBitmapImageRep  *bitmap;
+  bitmap = [[NSBitmapImageRep alloc] initWithBitmapDataPlanes: NULL
+                                                   pixelsWide: w
+                                                   pixelsHigh: h
+                                                bitsPerSample: 8
+                                              samplesPerPixel: 3
+                                                     hasAlpha: NO
+                                                     isPlanar: NO
+                                               colorSpaceName: NSDeviceRGBColorSpace
+                                                  bytesPerRow: 0
+                                                 bitsPerPixel: 32];
+
+  int  bitmapWidth = (int)bitmap.bytesPerRow / sizeof(UInt32);
+  for (int y = 0; y < h; ++y) {
+      UInt32  *pos = (UInt32 *)bitmap.bitmapData + y * bitmapWidth;
+      for (int x = 0; x < w; ++x) {
+          *pos++ = 0xFF;
+      }
+  }
+
+  NSImage  *image = [[NSImage alloc] initWithSize: NSMakeSize(w, h)];
+  [image addRepresentation: bitmap];
+  [bitmap release];
+
+  return [image autorelease];
+}
+
+- (void) drawScaledImages {
+  if (testImage == nil) {
+    testImage = [[self createTestImageFromColor] retain];
+  }
+  if (testImage2 == nil) {
+    testImage2 = [[self createTestImageFromBitmap] retain];
+  }
   [NSColor.whiteColor setFill];
   NSRectFill(self.bounds);
 
+  [testImage drawInRect: NSMakeRect(50, 50, 320, 320)
+               fromRect: NSZeroRect
+              operation: NSCompositeCopy
+               fraction: 1.0];
+
+  [testImage2 drawInRect: NSMakeRect(50, 100, 320, 320)
+                fromRect: NSZeroRect
+               operation: NSCompositeCopy
+                fraction: 1.0];
+
+  [testImage drawInRect: NSMakeRect(450, 50, 480, 480)
+               fromRect: NSZeroRect
+              operation: NSCompositeCopy
+               fraction: 1.0];
+  [testImage2 drawInRect: NSMakeRect(450, 100, 480, 480)
+                fromRect: NSZeroRect
+               operation: NSCompositeCopy
+                fraction: 1.0];
+}
+
+- (void) drawZoomAnimation {
   NSRect *zoomP = zoomingIn ? &zoomBoundsStart : &zoomBoundsEnd;
   NSRect *fullP = zoomingIn ? &zoomBoundsEnd : &zoomBoundsStart;
-  CGFloat scaleX = zoomBounds.size.width / zoomP->size.width;
-  CGFloat scaleY = zoomBounds.size.height / zoomP->size.height;
+
+  NSLog(@"draw zoomBounds = %@ %@ %@", NSStringFromRect(*zoomP), NSStringFromRect(*fullP),
+        NSStringFromSize(zoomImage.size));
+
   if (zoomBackgroundImage != nil) {
+    CGFloat scaleX = zoomBounds.size.width / zoomP->size.width;
+    CGFloat scaleY = zoomBounds.size.height / zoomP->size.height;
     CGFloat x = zoomP->origin.x - zoomBounds.origin.x / scaleX;
     CGFloat y = zoomP->origin.y - zoomBounds.origin.y / scaleY;
     [zoomBackgroundImage drawInRect: *fullP
