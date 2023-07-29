@@ -38,6 +38,29 @@ NSString  *FastBehavior = @"fast";
 
 static const int AUTORELEASE_PERIOD = 1024;
 
+int scanOrder(const FTSENT **ent1, const FTSENT **ent2) {
+  // Ensure that the contents in /System/Volumes are scanned last as it contains firmlinked
+  // folders. These should be scanned after the other locations where copies of these folders
+  // reside, so that files appear in the location where the user expects them.
+  if ((*ent1)->fts_level == 1) {
+    if (strcmp("System", (*ent1)->fts_name) == 0) return 1;
+    if (strcmp("System", (*ent2)->fts_name) == 0) return -1;
+  }
+  if ((*ent1)->fts_level <= 2) {
+    // Also consider level one here, in case /System is scanned. Then /System/Volumes should also
+    // be scanned last, to ensure that firmlinked folders inside /System/Library are scanned first.
+    //
+    // Nots: This implies that /Volumes is also scanned late (still before /System) which is fine.
+    if (strcmp("Volumes", (*ent1)->fts_name) == 0) return 1;
+    if (strcmp("Volumes", (*ent2)->fts_name) == 0) return -1;
+  }
+
+  // Otherwise order based on creation time. This is mostly useful for Time Machine back-ups on
+  // HFS+ volumes, as then each file is shown in the first back-up that contains it.
+  return copysign(1, (*ent1)->fts_statp->st_birthtimespec.tv_sec -
+                     (*ent2)->fts_statp->st_birthtimespec.tv_sec);
+}
+
 /* Helper class that is used to temporarily store additional info for directories that are being
  * scanned. It stores the info that is not maintained by the DirectoryItem class yet is needed
  * while its contents are still being scanned.
@@ -170,7 +193,10 @@ CFAbsoluteTime convertTimespec(struct timespec ts) {
 
     ftsp = NULL;
 
-    hardLinkedFileNumbers = [[NSMutableSet alloc] initWithCapacity: 32];
+    // Make the initial capacity big, so that for scans of the entire volumes the capacity does
+    // not have to be increased too often. The limit of 500000 is based on the scan of my main
+    // macMini.
+    hardLinkedFileNumbers = [[NSMutableSet alloc] initWithCapacity: 500000];
     abort = NO;
     
     progressTracker =
@@ -326,18 +352,10 @@ CFAbsoluteTime convertTimespec(struct timespec ts) {
     NSLog(@"Volume format = %@", volumeFormat);
   }
 
-  ignoreHardLinksForDirectories = NO; // Default
   struct statfs volinfo;
   if (statfs(volumeRoot.path.fileSystemRepresentation, &volinfo) == 0) {
     NSLog(@"fstypename = %s", volinfo.f_fstypename);
-    if (strcmp("apfs", volinfo.f_fstypename) == 0) {
-      // APFS does not support hardlinking directories. However, directories will have a non-zero
-      // hardlink count, as each file it contains increases the count. So ignore this count when
-      // deciding if a directory should be visited in APFS
-      ignoreHardLinksForDirectories = YES;
-    }
   }
-  NSLog(@"ignoreHardLinksForDirectories = %d", ignoreHardLinksForDirectories);
 
   return [[[TreeContext alloc] initWithVolumePath: volumeRoot.path
                                   fileSizeMeasure: fileSizeMeasureName
@@ -455,6 +473,8 @@ CFAbsoluteTime convertTimespec(struct timespec ts) {
     [autoreleasePool release];
     [self stopScan];
   }
+
+  NSLog(@"#hardLinkedItems = %lu", hardLinkedFileNumbers.count);
 
   // Wait for the tree balancing to end
   dispatch_sync(treeBalanceDispatchQueue, ^{});
@@ -598,13 +618,16 @@ CFAbsoluteTime convertTimespec(struct timespec ts) {
   struct stat  *statBlock = entp->fts_statp;
   BOOL  isDirectory = S_ISDIR(statBlock->st_mode);
 
-  // Apple File System (APFS) does not support hard-links to directories, but has "hard links"
-  // for each file a directory contains (including . and ..). So a possible optimization is to skip
-  // the hardlink check for directories on APFS as this will greatly reduce the size of the set
-  // used to track the hard-linked items. Note, some directories in /System/Volumes have the same
-  // inode but their contents differ so there's no duplication in scanning each of these.
-  if (statBlock->st_nlink > 1 && !(isDirectory && ignoreHardLinksForDirectories)) {
-    flags |= FileItemIsHardlinked;
+  // Even though Apple File System (APFS) does not support hard-links to directories, it has firm-
+  // links, which can detected the same way (via their inode numbers). Unfortunately the link count
+  // for directories is always greater than one as each of its files/directories contributes to it.
+  if (statBlock->st_nlink > 1) {
+    if (!isDirectory) {
+      // Only consider hard-links for files, as the hard-link status for directories cannot be
+      // determined using their link count, the flag is not so relevant for directories, and AFPS
+      // (the most common volume format) does not support hard-links for directories.
+      flags |= FileItemIsHardlinked;
+    }
 
     if (![self visitHardLinkedItem: entp]) {
       // Do not visit descendants if the item was a directory
@@ -642,18 +665,9 @@ CFAbsoluteTime convertTimespec(struct timespec ts) {
                                  modificationTime: convertTimespec(statBlock->st_mtimespec)
                                        accessTime: convertTimespec(statBlock->st_atimespec)];
 
-    // Explicitly check if the path is the System Data volume. We do not want to scan its contents
-    // to prevent its contents from being scanned twice (as they also appear inside the root via
-    // firmlinks). Ideally, we use a more generic mechanism for this, similar to how hardlinks are
-    // handled, but there does not yet seem to be an API to support this.
-    BOOL isDataVolume = (
-                         [lastPathComponent isEqualToString: @"Data"] &&
-                         [dirChildItem.path isEqualToString: @"/System/Volumes/Data"]
-                        );
-
     // Check if directory should be scanned. It is only added as a sub-directory after scan is
     // completed, as it may be filtered.
-    if ( !isDataVolume && [treeGuide shouldDescendIntoDirectory: dirChildItem] ) {
+    if ([treeGuide shouldDescendIntoDirectory: dirChildItem]) {
       if (visitDescendants) {
         [self addToStack: dirChildItem entp: entp];
       } else {
@@ -719,7 +733,7 @@ CFAbsoluteTime convertTimespec(struct timespec ts) {
 }
 
 
-/* Returns YES if item should be included in the tree. It returns NO when the item is hard-linked
+/* Returns YES if item should be included in the tree. It returns NO when the item is hardlinked
  * and has already been encountered.
  */
 - (BOOL) visitHardLinkedItem:(FTSENT *)entp {
@@ -733,7 +747,7 @@ CFAbsoluteTime convertTimespec(struct timespec ts) {
 
 - (FTSENT *)startScan:(NSString *)path {
   char*  paths[2] = {(char *)path.UTF8String, NULL};
-  ftsp = fts_open(paths, FTS_PHYSICAL | FTS_XDEV, NULL);
+  ftsp = fts_open(paths, FTS_PHYSICAL | FTS_XDEV, scanOrder);
 
   if (ftsp == NULL) {
     NSLog(@"Error: fts_open failed for %@", path);
