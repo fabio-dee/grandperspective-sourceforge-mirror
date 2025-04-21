@@ -642,28 +642,35 @@ CFAbsoluteTime convertTimespec(struct timespec ts) {
                                  modificationTime: convertTimespec(statBlock->st_mtimespec)
                                        accessTime: convertTimespec(statBlock->st_atimespec)];
 
-    // Explicitly check if the path is the System Data volume. We do not want to scan its contents
-    // to prevent its contents from being scanned twice (as they also appear inside the root via
-    // firmlinks). Ideally, we use a more generic mechanism for this, similar to how hardlinks are
-    // handled, but there does not yet seem to be an API to support this.
-    BOOL isDataVolume = (
-                         [lastPathComponent isEqualToString: @"Data"] &&
-                         [dirChildItem.path isEqualToString: @"/System/Volumes/Data"]
-                        );
+    NSString* skipReason = nil;
+    if (statBlock->st_flags & SF_DATALESS) {
+      // Do not scan contents of folders that are not already available offline. Doing so would
+      // trigger download of their contents. This is unwanted, as the state of the volume should
+      // not change as a result of the scan. Additionally, it would slow down scanning
+      // unnecessarily (and block scanning if there is no network access).
+      skipReason = @"Skipping scan of dataless folder %s";
+    } else if ([lastPathComponent isEqualToString: @"Data"] &&
+               [dirChildItem.path isEqualToString: @"/System/Volumes/Data"]) {
+      // Do not scan the contents of the System Data volume to prevent its contents from being
+      // scanned twice (as the contents also appear inside the root via firmlinks). Ideally, we use
+      // a more generic mechanism for this, similar to how hardlinks are handled, but there does
+      // not yet seem to be an API to support this.
+      skipReason = @"Skipping scan of data volume %s";
+    } else if (![treeGuide shouldDescendIntoDirectory: dirChildItem]) {
+      skipReason = @"Skipping scan of %s (filtered out)";
+    }
 
-    // Check if directory should be scanned. It is only added as a sub-directory after scan is
-    // completed, as it may be filtered.
-    if ( !isDataVolume && [treeGuide shouldDescendIntoDirectory: dirChildItem] ) {
+    if (skipReason) {
+      NSLog(skipReason, entp->fts_path);
+      [progressTracker skippedFolder: dirChildItem];
+      visitDescendants = NO;
+    } else {
       if (visitDescendants) {
         [self addToStack: dirChildItem entp: entp];
       } else {
         // When performing a shallow scan, we cannot apply a filter based on its contents (size).
         [parent->collector addSubdir: dirChildItem];
       }
-    } else {
-      NSLog(@"Skipping scan of %s", entp->fts_path);
-      [progressTracker skippedFolder: dirChildItem];
-      visitDescendants = NO;
     }
 
     [dirChildItem release];
