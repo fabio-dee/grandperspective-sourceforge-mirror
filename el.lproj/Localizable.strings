@@ -145,6 +145,12 @@
 /* Alert message */
 "Failed to bind one or more filter tests:\n%@" = "Αποτυχία δέσμευσης ενός ή περισσοτέρων tests: %@ ";
 
+/* Error message */
+"Failed to close file" = "Αποτυχία κλεισίματος αρχείου";
+
+/* Error message */
+"Failed to create file" = "Αποτυχία δημιουργίας αρχείου";
+
 /* Alert message */
 "Failed to delete the file \"%@\"" = "Αποτυχία διαγραφής του αρχείου \"%@\"";
 
@@ -166,6 +172,9 @@
 /* Alert message */
 "Failed to open the package \"%@\"" = "Αποτυχία ανοίγματος του πακέτου \"%@\"";
 
+/* Parse error */
+"Failed to read any tree data" = "Αποτυχία ανάγνωσης δεδομένων δέντρου";
+
 /* Alert message */
 "Failed to reveal the file \"%@\"" = "Αποτυχία εμφάνισης του αρχείου \"%@\"";
 
@@ -183,6 +192,9 @@
 
 /* Alert message */
 "Failed to update one or more filters:\n%@" = "Αποτυχία ενημέρωσης ενός ή περισσοτέρων φίλτρων: %@";
+
+/* Error message */
+"Failed to write to file" = "Αποτυχία εγγραφής στο αρχείο";
 
 /* Label in Focus panel */
 "File in view:" = "Αρχείο σε προβολή:";
