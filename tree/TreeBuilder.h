@@ -96,16 +96,6 @@ typedef NS_ENUM(NSInteger, FileSizeEnum) {
 // The protected methods are only intended for use by the class itself or by TreeRefresher.
 @interface TreeBuilder (ProtectedMethods)
 
-/* Creates a tree context for the volume containing the path.
- *
- * The path should point to a directory. Returns nil if it does not. In this case, an alert
- * message is also set.
- */
-- (TreeContext *)treeContextForVolumeContaining:(NSString *)path;
-
-- (ScanTreeRoot *)treeRootForPath:(NSString *)path
-                          context:(TreeContext *)treeContext;
-
 /* Constructs a tree for the given folder. It is used to implement buildTreeForPath:. The default
  * implementation redirects to scanTreeForDirectory:atPath:.
  */

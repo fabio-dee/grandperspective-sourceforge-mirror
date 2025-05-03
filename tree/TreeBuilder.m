@@ -71,6 +71,16 @@ static const int AUTORELEASE_PERIOD = 1024;
 
 + (item_size_t) getLogicalFileSize:(FTSENT *)entp withType:(UniformType *)fileType;
 
+/* Creates a tree context for the volume containing the path.
+ *
+ * The path should point to a directory. Returns nil if it does not. In this case, an alert
+ * message is also set.
+ */
+- (TreeContext *)treeContextForVolumeContaining:(NSString *)path;
+
+- (ScanTreeRoot *)treeRootForPath:(NSString *)path
+                          context:(TreeContext *)treeContext;
+
 - (void) addToStack:(DirectoryItem *)dirItem entp:(FTSENT *)entp;
 - (BOOL) unwindStackToParent:(FTSENT *)entp;
 
@@ -282,122 +292,6 @@ CFAbsoluteTime convertTimespec(struct timespec ts) {
 
 @implementation TreeBuilder (ProtectedMethods)
 
-- (TreeContext *)treeContextForVolumeContaining:(NSString *)path {
-  NSURL  *url = [NSURL fileURLWithPath: path];
-
-  if (!url.isDirectory) {
-    // This may happen when the directory has been deleted (which can happen when rescanning)
-    NSLog(@"Path to scan %@ is not a directory.", path);
-
-    [_alertMessage release];
-
-    _alertMessage = [[AlertMessage alloc] init];
-    _alertMessage.messageText = NSLocalizedString(@"Scanning failed", @"Alert message");
-    NSString *fmt = NSLocalizedString
-      (@"The path %@ does not exist or is not a folder", @"Alert message");
-    _alertMessage.informativeText = [NSString stringWithFormat: fmt, path];
-
-    return nil;
-  }
-
-  NSError  *error = nil;
-  NSURL  *volumeRoot;
-  [url getResourceValue: &volumeRoot forKey: NSURLVolumeURLKey error: &error];
-  if (error != nil) {
-    NSLog(@"Failed to determine volume root of %@: %@", url, error.description);
-  }
-  NSLog(@"url = %@, volumeRoot = %@", url, volumeRoot);
-
-  NSNumber  *freeSpace;
-  [volumeRoot getResourceValue: &freeSpace forKey: NSURLVolumeAvailableCapacityKey error: &error];
-  if (error != nil) {
-    NSLog(@"Failed to determine free space for %@: %@", volumeRoot, error.description);
-  }
-
-  NSNumber  *volumeSize;
-  [volumeRoot getResourceValue: &volumeSize forKey: NSURLVolumeTotalCapacityKey error: &error];
-  if (error != nil) {
-    NSLog(@"Failed to determine capacity of %@: %@", volumeRoot, error.description);
-  }
-
-  NSString  *volumeFormat;
-  [volumeRoot getResourceValue: &volumeFormat forKey: NSURLVolumeLocalizedFormatDescriptionKey
-                         error: &error];
-  if (error == nil) {
-    NSLog(@"Volume format = %@", volumeFormat);
-  }
-
-  ignoreHardLinksForDirectories = NO; // Default
-  struct statfs volinfo;
-  if (statfs(volumeRoot.path.fileSystemRepresentation, &volinfo) == 0) {
-    NSLog(@"fstypename = %s", volinfo.f_fstypename);
-    if (strcmp("apfs", volinfo.f_fstypename) == 0) {
-      // APFS does not support hardlinking directories. However, directories will have a non-zero
-      // hardlink count, as each file it contains increases the count. So ignore this count when
-      // deciding if a directory should be visited in APFS
-      ignoreHardLinksForDirectories = YES;
-    }
-  }
-  NSLog(@"ignoreHardLinksForDirectories = %d", ignoreHardLinksForDirectories);
-
-  return [[[TreeContext alloc] initWithVolumePath: volumeRoot.path
-                                  fileSizeMeasure: fileSizeMeasureName
-                                       volumeSize: volumeSize.unsignedLongLongValue
-                                        freeSpace: freeSpace.unsignedLongLongValue
-                                        filterSet: filterSet
-                                      monitorPath: path] autorelease];
-}
-
-- (ScanTreeRoot *)treeRootForPath:(NSString *)path
-                          context:(TreeContext *)treeContext {
-  // Determine relative path
-  NSString  *volumePath = treeContext.volumeTree.systemPathComponent;
-  NSString  *relativePath =
-    volumePath.length < path.length ? [path substringFromIndex: volumePath.length] : @"";
-  if (relativePath.absolutePath) {
-    // Strip leading slash.
-    relativePath = [relativePath substringFromIndex: 1];
-  }
-
-  NSFileManager  *manager = NSFileManager.defaultManager;
-  if (relativePath.length > 0) {
-    NSLog(@"Scanning volume %@ [%@], starting at %@", volumePath,
-          [manager displayNameAtPath: volumePath], relativePath);
-  }
-  else {
-    NSLog(@"Scanning entire volume %@ [%@].", volumePath,
-          [manager displayNameAtPath: volumePath]);
-  }
-
-  // Get the properties
-  NSURL  *treeRootURL = [NSURL fileURLWithPath: path];
-  FileItemOptions  flags = 0;
-  if (treeRootURL.isPackage) {
-    flags |= FileItemIsPackage;
-  }
-  if (treeRootURL.isHardLinked) {
-    flags |= FileItemIsHardlinked;
-  }
-
-  ScanTreeRoot  *scanTree = [ScanTreeRoot alloc];
-  [[scanTree initWithLabel: relativePath
-                    parent: treeContext.scanTreeParent
-                     flags: flags
-              creationTime: treeRootURL.creationTime
-          modificationTime: treeRootURL.modificationTime
-                accessTime: treeRootURL.accessTime
-    ] autorelease];
-
-  // Reset other state
-  totalPhysicalSize = 0;
-  numOverestimatedFiles = 0;
-  [hardLinkedFileNumbers removeAllObjects];
-  [_alertMessage release];
-  _alertMessage = nil;
-
-  return scanTree;
-}
-
 - (BOOL) buildTreeForDirectory:(DirectoryItem *)dirItem atPath:(NSString *)path {
   return [self scanTreeForDirectory: dirItem atPath: path];
 }
@@ -533,6 +427,122 @@ CFAbsoluteTime convertTimespec(struct timespec ts) {
   } else {
     return entp->fts_statp->st_size;
   }
+}
+
+- (TreeContext *)treeContextForVolumeContaining:(NSString *)path {
+  NSURL  *url = [NSURL fileURLWithPath: path];
+
+  if (!url.isDirectory) {
+    // This may happen when the directory has been deleted (which can happen when rescanning)
+    NSLog(@"Path to scan %@ is not a directory.", path);
+
+    [_alertMessage release];
+
+    _alertMessage = [[AlertMessage alloc] init];
+    _alertMessage.messageText = NSLocalizedString(@"Scanning failed", @"Alert message");
+    NSString *fmt = NSLocalizedString
+      (@"The path %@ does not exist or is not a folder", @"Alert message");
+    _alertMessage.informativeText = [NSString stringWithFormat: fmt, path];
+
+    return nil;
+  }
+
+  NSError  *error = nil;
+  NSURL  *volumeRoot;
+  [url getResourceValue: &volumeRoot forKey: NSURLVolumeURLKey error: &error];
+  if (error != nil) {
+    NSLog(@"Failed to determine volume root of %@: %@", url, error.description);
+  }
+  NSLog(@"url = %@, volumeRoot = %@", url, volumeRoot);
+
+  NSNumber  *freeSpace;
+  [volumeRoot getResourceValue: &freeSpace forKey: NSURLVolumeAvailableCapacityKey error: &error];
+  if (error != nil) {
+    NSLog(@"Failed to determine free space for %@: %@", volumeRoot, error.description);
+  }
+
+  NSNumber  *volumeSize;
+  [volumeRoot getResourceValue: &volumeSize forKey: NSURLVolumeTotalCapacityKey error: &error];
+  if (error != nil) {
+    NSLog(@"Failed to determine capacity of %@: %@", volumeRoot, error.description);
+  }
+
+  NSString  *volumeFormat;
+  [volumeRoot getResourceValue: &volumeFormat forKey: NSURLVolumeLocalizedFormatDescriptionKey
+                         error: &error];
+  if (error == nil) {
+    NSLog(@"Volume format = %@", volumeFormat);
+  }
+
+  ignoreHardLinksForDirectories = NO; // Default
+  struct statfs volinfo;
+  if (statfs(volumeRoot.path.fileSystemRepresentation, &volinfo) == 0) {
+    NSLog(@"fstypename = %s", volinfo.f_fstypename);
+    if (strcmp("apfs", volinfo.f_fstypename) == 0) {
+      // APFS does not support hardlinking directories. However, directories will have a non-zero
+      // hardlink count, as each file it contains increases the count. So ignore this count when
+      // deciding if a directory should be visited in APFS
+      ignoreHardLinksForDirectories = YES;
+    }
+  }
+  NSLog(@"ignoreHardLinksForDirectories = %d", ignoreHardLinksForDirectories);
+
+  return [[[TreeContext alloc] initWithVolumePath: volumeRoot.path
+                                  fileSizeMeasure: fileSizeMeasureName
+                                       volumeSize: volumeSize.unsignedLongLongValue
+                                        freeSpace: freeSpace.unsignedLongLongValue
+                                        filterSet: filterSet
+                                      monitorPath: path] autorelease];
+}
+
+- (ScanTreeRoot *)treeRootForPath:(NSString *)path
+                          context:(TreeContext *)treeContext {
+  // Determine relative path
+  NSString  *volumePath = treeContext.volumeTree.systemPathComponent;
+  NSString  *relativePath =
+    volumePath.length < path.length ? [path substringFromIndex: volumePath.length] : @"";
+  if (relativePath.absolutePath) {
+    // Strip leading slash.
+    relativePath = [relativePath substringFromIndex: 1];
+  }
+
+  NSFileManager  *manager = NSFileManager.defaultManager;
+  if (relativePath.length > 0) {
+    NSLog(@"Scanning volume %@ [%@], starting at %@", volumePath,
+          [manager displayNameAtPath: volumePath], relativePath);
+  }
+  else {
+    NSLog(@"Scanning entire volume %@ [%@].", volumePath,
+          [manager displayNameAtPath: volumePath]);
+  }
+
+  // Get the properties
+  NSURL  *treeRootURL = [NSURL fileURLWithPath: path];
+  FileItemOptions  flags = 0;
+  if (treeRootURL.isPackage) {
+    flags |= FileItemIsPackage;
+  }
+  if (treeRootURL.isHardLinked) {
+    flags |= FileItemIsHardlinked;
+  }
+
+  ScanTreeRoot  *scanTree = [ScanTreeRoot alloc];
+  [[scanTree initWithLabel: relativePath
+                    parent: treeContext.scanTreeParent
+                     flags: flags
+              creationTime: treeRootURL.creationTime
+          modificationTime: treeRootURL.modificationTime
+                accessTime: treeRootURL.accessTime
+    ] autorelease];
+
+  // Reset other state
+  totalPhysicalSize = 0;
+  numOverestimatedFiles = 0;
+  [hardLinkedFileNumbers removeAllObjects];
+  [_alertMessage release];
+  _alertMessage = nil;
+
+  return scanTree;
 }
 
 - (void) addToStack:(DirectoryItem *)dirItem entp:(FTSENT *)entp {
