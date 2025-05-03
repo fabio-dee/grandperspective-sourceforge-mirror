@@ -306,6 +306,7 @@ CFAbsoluteTime convertTimespec(struct timespec ts) {
   if (error != nil) {
     NSLog(@"Failed to determine volume root of %@: %@", url, error.description);
   }
+  NSLog(@"url = %@, volumeRoot = %@", url, volumeRoot);
 
   NSNumber  *freeSpace;
   [volumeRoot getResourceValue: &freeSpace forKey: NSURLVolumeAvailableCapacityKey error: &error];
