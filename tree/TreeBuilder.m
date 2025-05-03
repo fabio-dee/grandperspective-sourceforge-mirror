@@ -71,6 +71,11 @@ static const int AUTORELEASE_PERIOD = 1024;
 
 + (item_size_t) getLogicalFileSize:(FTSENT *)entp withType:(UniformType *)fileType;
 
++ (NSURL *)getVolumeRoot:(NSURL *)url;
+
+// Create alert with details of failure
+- (void) scanFailed:(NSString *)details;
+
 /* Creates a tree context for the volume containing the path.
  *
  * The path should point to a directory. Returns nil if it does not. In this case, an alert
@@ -429,6 +434,33 @@ CFAbsoluteTime convertTimespec(struct timespec ts) {
   }
 }
 
++ (NSURL *)getVolumeRoot:(NSURL *)url {
+  NSError  *error = nil;
+  NSURL  *volumeRoot = nil;
+
+  [url getResourceValue: &volumeRoot forKey: NSURLVolumeURLKey error: &error];
+  if (error != nil) {
+    NSLog(@"Failed to determine volume root of %@: %@", url, error.description);
+    return nil;
+  }
+  NSLog(@"VolumeURLKey: url = %@, volumeRoot = %@", url, volumeRoot);
+
+  if (![url.path hasPrefix: volumeRoot.path]) {
+    NSLog(@"Volume root prefix mismatch");
+    return nil;
+  }
+
+  return volumeRoot;
+}
+
+- (void) scanFailed:(NSString *)details {
+  [_alertMessage release];
+
+  _alertMessage = [[AlertMessage alloc] init];
+  _alertMessage.messageText = NSLocalizedString(@"Scanning failed", @"Alert message");
+  _alertMessage.informativeText = details;
+}
+
 - (TreeContext *)treeContextForVolumeContaining:(NSString *)path {
   NSURL  *url = [NSURL fileURLWithPath: path];
 
@@ -436,24 +468,23 @@ CFAbsoluteTime convertTimespec(struct timespec ts) {
     // This may happen when the directory has been deleted (which can happen when rescanning)
     NSLog(@"Path to scan %@ is not a directory.", path);
 
-    [_alertMessage release];
-
-    _alertMessage = [[AlertMessage alloc] init];
-    _alertMessage.messageText = NSLocalizedString(@"Scanning failed", @"Alert message");
     NSString *fmt = NSLocalizedString
       (@"The path %@ does not exist or is not a folder", @"Alert message");
-    _alertMessage.informativeText = [NSString stringWithFormat: fmt, path];
+    [self scanFailed: [NSString stringWithFormat: fmt, path]];
 
     return nil;
   }
 
   NSError  *error = nil;
-  NSURL  *volumeRoot;
-  [url getResourceValue: &volumeRoot forKey: NSURLVolumeURLKey error: &error];
-  if (error != nil) {
-    NSLog(@"Failed to determine volume root of %@: %@", url, error.description);
+  NSURL  *volumeRoot = [TreeBuilder getVolumeRoot: url];
+  if (volumeRoot == nil) {
+    // TODO: Check if there is fallback logic that could be used instead
+
+    NSString *details = NSLocalizedString(@"Failed to determine volume root", @"Alert message");
+    [self scanFailed: details];
+
+    return nil;
   }
-  NSLog(@"url = %@, volumeRoot = %@", url, volumeRoot);
 
   NSNumber  *freeSpace;
   [volumeRoot getResourceValue: &freeSpace forKey: NSURLVolumeAvailableCapacityKey error: &error];
