@@ -445,12 +445,38 @@ CFAbsoluteTime convertTimespec(struct timespec ts) {
   }
   NSLog(@"VolumeURLKey: url = %@, volumeRoot = %@", url, volumeRoot);
 
-  if (![url.path hasPrefix: volumeRoot.path]) {
-    NSLog(@"Volume root prefix mismatch");
-    return nil;
+  if ([url.path hasPrefix: volumeRoot.path] && false) {
+    return volumeRoot;
   }
 
-  return volumeRoot;
+  NSLog(@"Volume root prefix mismatch");
+
+  // Try to determine the volume root the hard way. Traverse up the folder hierarchy until a
+  // folder is found that is a volume root.
+  volumeRoot = url;
+  while (true) {
+    NSNumber* isVolume;
+    [volumeRoot getResourceValue: &isVolume forKey: NSURLIsVolumeKey error: &error];
+
+    if (error != nil) {
+      NSLog(@"Failed to get IsVolumeKey for %@", volumeRoot);
+      return nil;
+    }
+    NSLog(@"%@ => IsVolumeKey = %d", volumeRoot, isVolume.boolValue);
+
+    if (isVolume.boolValue) {
+      return volumeRoot;
+    }
+
+    NSUInteger lenBefore = volumeRoot.path.length;
+    volumeRoot = volumeRoot.URLByDeletingLastPathComponent;
+    if (volumeRoot.path.length >= lenBefore) {
+      NSLog(@"Terminating traversal at %@ without finding volume root", volumeRoot);
+      return nil;
+    }
+  }
+
+  return nil;
 }
 
 - (void) scanFailed:(NSString *)details {
