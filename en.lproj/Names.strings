@@ -119,6 +119,12 @@
 "access" = "Last access";
 
 
+/* Draw setting */
+"files" = "Files";
+
+/* Draw setting */
+"packages and files" = "Packages & Files";
+
 /* File size type */
 "logical" = "Logical";
 

@@ -240,7 +240,7 @@ static const unsigned STICK_TO_ENDPOINT = 0xFFFF;
 - (FileItem *)selectedFileItem {
   FileItem  *selectedItem = self.selectedFileItemInTree;
   
-  return (_drawItems == DRAW_PACKAGES_AND_FILES && selectedItem.isDirectory)
+  return (_drawItems == DRAW_PACKAGES && selectedItem.isDirectory)
          ? ((DirectoryItem *)selectedItem).itemWhenHidingPackageContents
          : selectedItem;
 }
@@ -413,7 +413,7 @@ static const unsigned STICK_TO_ENDPOINT = 0xFFFF;
       break;
     }
 
-    if (_drawItems == DRAW_PACKAGES_AND_FILES &&
+    if (_drawItems == DRAW_PACKAGES &&
         fileItem.isDirectory &&
         ((DirectoryItem *)fileItem).isPackage) {
       // Got to a package whose contents should remain hidden

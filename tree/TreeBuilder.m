@@ -159,11 +159,12 @@ CFAbsoluteTime convertTimespec(struct timespec ts) {
 
 + (NSArray *)fileSizeMeasureNames {
   static NSArray  *fileSizeMeasureNames = nil;
+  static dispatch_once_t  onceToken;
 
-  if (fileSizeMeasureNames == nil) {
+  dispatch_once(&onceToken, ^{
     fileSizeMeasureNames = [@[LogicalFileSizeName, PhysicalFileSizeName, TallyFileSizeName] retain];
-  }
-  
+  });
+
   return fileSizeMeasureNames;
 }
 

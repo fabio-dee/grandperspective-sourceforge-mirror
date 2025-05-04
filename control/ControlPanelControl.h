@@ -22,11 +22,11 @@ extern NSString  *DisplaySettingsChangedEvent;
   // "Display" panel
   IBOutlet NSPopUpButton  *colorMappingPopUp;
   IBOutlet NSPopUpButton  *colorPalettePopUp;
+  IBOutlet NSPopUpButton  *drawItemsPopUp;
   IBOutlet NSPopUpButton  *maskPopUp;
   IBOutlet NSTableView  *colorLegendTable;
   IBOutlet NSButton  *maskCheckBox;
   IBOutlet NSButton  *showEntireVolumeCheckBox;
-  IBOutlet NSButton  *showPackageContentsCheckBox;
 
   // "Info" panel
   IBOutlet NSImageView  *volumeIconView;
@@ -80,7 +80,7 @@ extern NSString  *DisplaySettingsChangedEvent;
 
 // Changes to display settings that require special handling.
 - (IBAction) maskChanged:(id)sender;
-- (IBAction) showPackageContentsCheckBoxChanged:(id)sender;
+- (IBAction) drawItemsPopupChanged:(id)sender;
 
 // Invoked when a display setting is changed that does not require special handling by the control
 - (IBAction) displaySettingChanged:(id)sender;

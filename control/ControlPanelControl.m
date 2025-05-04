@@ -204,6 +204,12 @@ NSString  *DisplaySettingsChangedEvent = @"displaySettingsChanged";
                                 select: nil
                                  table: @"Names"];
 
+  [drawItemsPopUp removeAllItems];
+  [tagMaker addLocalisedNamesFor: TreeDrawerBaseSettings.drawItemsNames
+                         toPopUp: drawItemsPopUp
+                          select: nil
+                           table: @"Names"];
+
   maskPopUpControl = [[FilterPopUpControl alloc] initWithPopUpButton: maskPopUp
                                                     filterRepository: filterRepository];
   NSNotificationCenter  *nc = maskPopUpControl.notificationCenter;
@@ -315,7 +321,7 @@ NSString  *DisplaySettingsChangedEvent = @"displaySettingsChanged";
   [self fireDisplaySettingsChanged];
 }
 
-- (IBAction) showPackageContentsCheckBoxChanged:(id)sender {
+- (IBAction) drawItemsPopupChanged:(id)sender {
   [self fireDisplaySettingsChanged];
 
   // If the selected item is a package, its info will have changed.
@@ -354,7 +360,9 @@ NSString  *DisplaySettingsChangedEvent = @"displaySettingsChanged";
 
   NSString  *colorMappingKey = [tagMaker nameForTag: colorMappingPopUp.selectedItem.tag];
   NSString  *colorPaletteKey = [tagMaker nameForTag: colorPalettePopUp.selectedItem.tag];
+  NSString  *drawItemsKey = [tagMaker nameForTag: drawItemsPopUp.selectedItem.tag];
   NSString  *maskName = [tagMaker nameForTag: maskPopUp.selectedItem.tag];
+  DrawItemsEnum drawItems = [TreeDrawerBaseSettings enumForDrawItemsName: drawItemsKey];
 
   DirectoryViewDisplaySettings *ds = [DirectoryViewDisplaySettings alloc];
 
@@ -363,7 +371,7 @@ NSString  *DisplaySettingsChangedEvent = @"displaySettingsChanged";
                              maskName: maskName
                           maskEnabled: maskCheckBox.state==NSControlStateValueOn
                      showEntireVolume: showEntireVolumeCheckBox.state==NSControlStateValueOn
-                  showPackageContents: showPackageContentsCheckBox.state==NSControlStateValueOn]
+                  showPackageContents: drawItems == DRAW_FILES]
           autorelease];
 }
 
@@ -399,7 +407,7 @@ NSString  *DisplaySettingsChangedEvent = @"displaySettingsChanged";
                                              colorPalette: palette
                                             colorGradient: gradient
                                                 drawItems: (displaySettings.showPackageContents
-                                                            ? DRAW_FILES : DRAW_PACKAGES_AND_FILES)
+                                                            ? DRAW_FILES : DRAW_PACKAGES)
                                                  maskTest: maskTest
                                              displayDepth: displayDepth]
           autorelease];
@@ -475,6 +483,10 @@ NSString  *DisplaySettingsChangedEvent = @"displaySettingsChanged";
   [colorMappingPopUp selectItemWithTag: [tagMaker tagForName: displaySettings.colorMappingKey]];
   [colorPalettePopUp selectItemWithTag: [tagMaker tagForName: displaySettings.colorPaletteKey]];
 
+  DrawItemsEnum drawItems = displaySettings.showPackageContents ? DRAW_FILES : DRAW_PACKAGES;
+  NSString* drawItemsKey = [TreeDrawerBaseSettings nameForDrawItemsEnum: drawItems];
+  [drawItemsPopUp selectItemWithTag: [tagMaker tagForName: drawItemsKey]];
+
   [colorLegendControl release];
   colorLegendControl =
     [[ColorLegendTableViewControl alloc] initWithDirectoryView: dirViewControl.directoryView
@@ -492,9 +504,6 @@ NSString  *DisplaySettingsChangedEvent = @"displaySettingsChanged";
     showEntireVolumeCheckBox.state =
       displaySettings.showEntireVolume ? NSControlStateValueOn : NSControlStateValueOff;
   }
-
-  showPackageContentsCheckBox.state =
-    displaySettings.showPackageContents ? NSControlStateValueOn : NSControlStateValueOff;
 }
 
 - (void) updateInfoPanel:(DirectoryViewControl *)dirViewControl {

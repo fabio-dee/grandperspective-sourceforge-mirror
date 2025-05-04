@@ -1187,7 +1187,7 @@ CGFloat ramp(CGFloat x, CGFloat minX, CGFloat maxX) {
   return (rootItem.isDirectory
           ? [((DirectoryItem *)rootItem) maxDepth: MAX_DISPLAY_DEPTH_LIMIT
                                   packagesAsFiles: (self.treeDrawerSettings.drawItems
-                                                    == DRAW_PACKAGES_AND_FILES)]
+                                                    == DRAW_PACKAGES)]
           : 0);
 }
 

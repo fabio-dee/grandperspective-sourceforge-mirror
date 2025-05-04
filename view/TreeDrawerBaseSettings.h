@@ -13,12 +13,16 @@ extern const unsigned NO_DISPLAY_DEPTH_LIMIT;
 typedef NS_ENUM(NSInteger, DrawItemsEnum) {
   DRAW_NONE, // To be used when not set
   DRAW_FILES,
-  DRAW_PACKAGES_AND_FILES,
+  DRAW_PACKAGES,
   // TODO: DRAW_FOLDERS,
 };
 
 @interface TreeDrawerBaseSettings : NSObject {
 }
+
++ (NSArray *)drawItemsNames;
++ (DrawItemsEnum) enumForDrawItemsName:(NSString *)name;
++ (NSString *)nameForDrawItemsEnum:(DrawItemsEnum) value;
 
 // Creates default settings.
 - (instancetype) init;

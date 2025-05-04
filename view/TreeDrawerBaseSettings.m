@@ -6,7 +6,39 @@ const unsigned MIN_DISPLAY_DEPTH_LIMIT = 1;
 const unsigned MAX_DISPLAY_DEPTH_LIMIT = 8;
 const unsigned NO_DISPLAY_DEPTH_LIMIT = 0xFFFF;
 
+NSString* DrawFilesKey = @"files";
+NSString* DrawPackagesKey = @"packages and files";
+
+@interface TreeDrawerBaseSettings (PrivateMethods)
++ (NSDictionary *)drawItemsMapping;
+@end
+
 @implementation TreeDrawerBaseSettings
+
++ (NSArray *)drawItemsNames {
+  return TreeDrawerBaseSettings.drawItemsMapping.allKeys;
+}
+
++ (DrawItemsEnum) enumForDrawItemsName:(NSString *)name {
+  id value = [TreeDrawerBaseSettings.drawItemsMapping valueForKey: name];
+
+  if (value != nil) {
+    return ((NSNumber *)value).integerValue;
+  }
+
+  return DRAW_NONE;
+}
+
++ (NSString *)nameForDrawItemsEnum:(DrawItemsEnum) value {
+  id mapping = TreeDrawerBaseSettings.drawItemsMapping;
+  for (NSString* key in mapping) {
+    if (((NSNumber *)mapping[key]).integerValue == value) {
+      return key;
+    }
+  }
+
+  return DrawFilesKey;
+}
 
 // Creates default settings.
 - (instancetype) init {
@@ -37,7 +69,7 @@ const unsigned NO_DISPLAY_DEPTH_LIMIT = 0xFFFF;
 
 + (DrawItemsEnum) defaultDrawItems {
   return ([NSUserDefaults.standardUserDefaults boolForKey: ShowPackageContentsByDefaultKey]
-          ? DRAW_FILES : DRAW_PACKAGES_AND_FILES);
+          ? DRAW_FILES : DRAW_PACKAGES);
 }
 
 + (unsigned) defaultDisplayDepth {
@@ -54,6 +86,24 @@ const unsigned NO_DISPLAY_DEPTH_LIMIT = 0xFFFF;
   return (depth > MAX_DISPLAY_DEPTH_LIMIT
           ? NO_DISPLAY_DEPTH_LIMIT
           : (unsigned)MAX(depth, MIN_DISPLAY_DEPTH_LIMIT));
+}
+
+@end
+
+@implementation TreeDrawerBaseSettings (PrivateMethods)
+
++ (NSDictionary *)drawItemsMapping {
+  static NSDictionary *drawItemsMapping = nil;
+  static dispatch_once_t  onceToken;
+
+  dispatch_once(&onceToken, ^{
+    drawItemsMapping = [@{
+      DrawFilesKey: [NSNumber numberWithInteger: DRAW_FILES],
+      DrawPackagesKey: [NSNumber numberWithInteger: DRAW_PACKAGES]
+    } retain];
+  });
+
+  return drawItemsMapping;
 }
 
 @end
