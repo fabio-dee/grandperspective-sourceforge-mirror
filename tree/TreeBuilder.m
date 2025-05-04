@@ -445,7 +445,7 @@ CFAbsoluteTime convertTimespec(struct timespec ts) {
   }
   NSLog(@"VolumeURLKey: url = %@, volumeRoot = %@", url, volumeRoot);
 
-  if ([url.path hasPrefix: volumeRoot.path] && false) {
+  if ([url.path hasPrefix: volumeRoot.path]) {
     return volumeRoot;
   }
 
@@ -462,9 +462,9 @@ CFAbsoluteTime convertTimespec(struct timespec ts) {
       NSLog(@"Failed to get IsVolumeKey for %@", volumeRoot);
       return nil;
     }
-    NSLog(@"%@ => IsVolumeKey = %d", volumeRoot, isVolume.boolValue);
 
     if (isVolume.boolValue) {
+      NSLog(@"Found volume root %@", volumeRoot);
       return volumeRoot;
     }
 
