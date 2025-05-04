@@ -22,7 +22,8 @@ NSString  *ScanFilterKey = @"scanFilter";
 NSString  *MaskFilterKey = @"maskFilter";
 NSString  *DefaultColorMappingKey = @"defaultColorMapping";
 NSString  *DefaultColorPaletteKey = @"defaultColorPalette";
-NSString  *ShowPackageContentsByDefaultKey = @"showPackageContentsByDefault";
+NSString  *DefaultDrawItemsKey = @"defaultDrawItems";
+NSString  *ShowPackageContentsByDefaultKey = @"showPackageContentsByDefault"; // TODO: deprecate
 NSString  *ShowEntireVolumeByDefaultKey = @"showEntireVolumeByDefault";
 NSString  *DefaultDisplayFocusKey = @"defaultDisplayFocus";
 

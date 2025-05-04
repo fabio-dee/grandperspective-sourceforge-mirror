@@ -6,10 +6,10 @@ NS_ASSUME_NONNULL_BEGIN
 
 - (instancetype) initWithColorMappingKey:(NSString *)colorMappingKey
                          colorPaletteKey:(NSString *)colorPaletteKey
+                            drawItemsKey:(NSString *)drawItemsKey
                                 maskName:(NSString *)maskName
                              maskEnabled:(BOOL)maskEnabled
-                        showEntireVolume:(BOOL)showEntireVolume
-                     showPackageContents:(BOOL)showPackageContents NS_DESIGNATED_INITIALIZER;
+                        showEntireVolume:(BOOL)showEntireVolume NS_DESIGNATED_INITIALIZER;
 
 + (DirectoryViewDisplaySettings *)defaultSettings;
 
@@ -17,13 +17,15 @@ NS_ASSUME_NONNULL_BEGIN
 
 @property (nonatomic, copy) NSString *colorPaletteKey;
 
+@property (nonatomic, copy) NSString *drawItemsKey;
+
 @property (nonatomic, copy, nullable) NSString *maskName;
 
 @property (nonatomic) BOOL fileItemMaskEnabled;
 
 @property (nonatomic) BOOL showEntireVolume;
 
-@property (nonatomic) BOOL showPackageContents;
+@property (nonatomic) BOOL packagesAsFiles;
 
 @end
 

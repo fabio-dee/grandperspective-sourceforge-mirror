@@ -14,8 +14,13 @@ typedef NS_ENUM(NSInteger, DrawItemsEnum) {
   DRAW_NONE, // To be used when not set
   DRAW_FILES,
   DRAW_PACKAGES,
-  // TODO: DRAW_FOLDERS,
+  DRAW_FOLDERS,
 };
+
+extern NSString* DrawFilesKey;
+extern NSString* DrawPackagesKey;
+extern NSString* DrawFoldersKey;
+
 
 @interface TreeDrawerBaseSettings : NSObject {
 }

@@ -123,6 +123,9 @@
 "files" = "Files";
 
 /* Draw setting */
+"folders" = "Folders";
+
+/* Draw setting */
 "packages and files" = "Packages & Files";
 
 /* File size type */

@@ -362,16 +362,15 @@ NSString  *DisplaySettingsChangedEvent = @"displaySettingsChanged";
   NSString  *colorPaletteKey = [tagMaker nameForTag: colorPalettePopUp.selectedItem.tag];
   NSString  *drawItemsKey = [tagMaker nameForTag: drawItemsPopUp.selectedItem.tag];
   NSString  *maskName = [tagMaker nameForTag: maskPopUp.selectedItem.tag];
-  DrawItemsEnum drawItems = [TreeDrawerBaseSettings enumForDrawItemsName: drawItemsKey];
 
   DirectoryViewDisplaySettings *ds = [DirectoryViewDisplaySettings alloc];
 
   return [[ds initWithColorMappingKey: colorMappingKey
                       colorPaletteKey: colorPaletteKey
+                         drawItemsKey: drawItemsKey
                              maskName: maskName
                           maskEnabled: maskCheckBox.state==NSControlStateValueOn
-                     showEntireVolume: showEntireVolumeCheckBox.state==NSControlStateValueOn
-                  showPackageContents: drawItems == DRAW_FILES]
+                     showEntireVolume: showEntireVolumeCheckBox.state==NSControlStateValueOn]
           autorelease];
 }
 
@@ -393,6 +392,9 @@ NSString  *DisplaySettingsChangedEvent = @"displaySettingsChanged";
   }
   float  gradient = [userDefaults floatForKey: DefaultColorGradient];
 
+  DrawItemsEnum
+    drawItems = [TreeDrawerBaseSettings enumForDrawItemsName: displaySettings.drawItemsKey];
+
   FileItemTest  *maskTest = nil;
   if (displaySettings.fileItemMaskEnabled) {
     Filter  *maskFilter = [filterRepository filterForName: displaySettings.maskName];
@@ -406,8 +408,7 @@ NSString  *DisplaySettingsChangedEvent = @"displaySettingsChanged";
   return [[[TreeDrawerSettings alloc] initWithColorMapper: mapper
                                              colorPalette: palette
                                             colorGradient: gradient
-                                                drawItems: (displaySettings.showPackageContents
-                                                            ? DRAW_FILES : DRAW_PACKAGES)
+                                                drawItems: drawItems
                                                  maskTest: maskTest
                                              displayDepth: displayDepth]
           autorelease];
@@ -482,10 +483,7 @@ NSString  *DisplaySettingsChangedEvent = @"displaySettingsChanged";
 
   [colorMappingPopUp selectItemWithTag: [tagMaker tagForName: displaySettings.colorMappingKey]];
   [colorPalettePopUp selectItemWithTag: [tagMaker tagForName: displaySettings.colorPaletteKey]];
-
-  DrawItemsEnum drawItems = displaySettings.showPackageContents ? DRAW_FILES : DRAW_PACKAGES;
-  NSString* drawItemsKey = [TreeDrawerBaseSettings nameForDrawItemsEnum: drawItems];
-  [drawItemsPopUp selectItemWithTag: [tagMaker tagForName: drawItemsKey]];
+  [drawItemsPopUp selectItemWithTag: [tagMaker tagForName: displaySettings.drawItemsKey]];
 
   [colorLegendControl release];
   colorLegendControl =

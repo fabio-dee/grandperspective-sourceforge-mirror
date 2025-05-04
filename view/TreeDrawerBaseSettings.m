@@ -8,6 +8,7 @@ const unsigned NO_DISPLAY_DEPTH_LIMIT = 0xFFFF;
 
 NSString* DrawFilesKey = @"files";
 NSString* DrawPackagesKey = @"packages and files";
+NSString* DrawFoldersKey = @"folders";
 
 @interface TreeDrawerBaseSettings (PrivateMethods)
 + (NSDictionary *)drawItemsMapping;
@@ -99,7 +100,8 @@ NSString* DrawPackagesKey = @"packages and files";
   dispatch_once(&onceToken, ^{
     drawItemsMapping = [@{
       DrawFilesKey: [NSNumber numberWithInteger: DRAW_FILES],
-      DrawPackagesKey: [NSNumber numberWithInteger: DRAW_PACKAGES]
+      DrawPackagesKey: [NSNumber numberWithInteger: DRAW_PACKAGES],
+      DrawFoldersKey: [NSNumber numberWithInteger: DRAW_FOLDERS]
     } retain];
   });
 

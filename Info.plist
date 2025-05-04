@@ -63,6 +63,8 @@
 	<string>$(CURRENT_PROJECT_VERSION)</string>
 	<key>GPApplicationDefaults</key>
 	<dict>
+		<key>defaultDrawItems</key>
+		<string>files</string>
 		<key>packageCheckBehavior</key>
 		<string>adaptive</string>
 		<key>confirmFileDeletion</key>

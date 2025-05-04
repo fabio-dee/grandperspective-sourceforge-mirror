@@ -668,7 +668,7 @@ static dispatch_once_t  singletonOnceToken;
   NSMutableArray  *unboundTests = [NSMutableArray arrayWithCapacity: 8];
   FilterSet  *filterSet =
     [oldContext.filterSet filterSetWithAddedNamedFilter: namedFilter
-                                        packagesAsFiles: !displaySettings.showPackageContents
+                                        packagesAsFiles: displaySettings.packagesAsFiles
                                            unboundTests: unboundTests];
   [MainMenuControl reportUnboundTests: unboundTests];
 
@@ -699,7 +699,7 @@ static dispatch_once_t  singletonOnceToken;
                            // to avoid inconsistencies in filter behaviour
                            ? oldContext.filterSet.packagesAsFiles
                            // Let filter behaviour for packages depend on current display setting
-                           : !displaySettings.showPackageContents);
+                           : displaySettings.packagesAsFiles);
 
   NSMutableArray  *unboundTests = [NSMutableArray arrayWithCapacity: 8];
   FilterSet  *filterSet = [oldContext.filterSet filterSetWithAddedNamedFilter: filter

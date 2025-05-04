@@ -11,6 +11,7 @@ extern NSString  *FileSizeMeasureKey;
 extern NSString  *FileSizeUnitSystemKey;
 extern NSString  *DefaultColorMappingKey;
 extern NSString  *DefaultColorPaletteKey;
+extern NSString  *DefaultDrawItemsKey;
 extern NSString  *ScanFilterKey;
 extern NSString  *MaskFilterKey;
 extern NSString  *DefaultColorGradient;
