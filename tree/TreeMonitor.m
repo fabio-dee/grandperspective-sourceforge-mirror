@@ -177,8 +177,10 @@ void eventCallback(ConstFSEventStreamRef streamRef,
 
   if ([dirItem setRescanFlag: flag]) {
     ++_numChanges;
-    NSLog(@"Updated rescanFlags for %@ to %d in response to event for %@",
-          dirItem.path, dirItem.rescanFlags, path);
+    if (debugLogEnabled) {
+      NSLog(@"Updated rescanFlags for %@ to %d in response to event for %@",
+            dirItem.path, dirItem.rescanFlags, path);
+    }
   }
 }
 
