@@ -165,6 +165,21 @@ static NSLock  *rescanFlagsMutex;
           ] autorelease];
 }
 
+- (PlainFileItem *)groupedFiles {
+  UniformType  *fileType = [UniformTypeInventory.defaultUniformTypeInventory
+                            uniformTypeForExtension: self.systemPathComponent.pathExtension];
+
+  return [[[PlainFileItem alloc] initWithLabel: self.label
+                                        parent: self.parentDirectory
+                                          size: self.fileItems.itemSize
+                                          type: fileType
+                                         flags: self.fileItemFlags
+                                  creationTime: self.creationTime
+                              modificationTime: self.modificationTime
+                                    accessTime: self.accessTime
+          ] autorelease];
+}
+
 - (FileItem *)itemWhenHidingPackageContents {
   return self.isPackage ? self.directoryAsPlainFile : self;
 }

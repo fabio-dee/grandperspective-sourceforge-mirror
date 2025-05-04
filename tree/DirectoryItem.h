@@ -85,6 +85,12 @@ typedef NS_OPTIONS(UInt8, DirectoryRescanOptions) {
  */
 @property (nonatomic, readonly, strong) PlainFileItem *directoryAsPlainFile;
 
+/* Returns the directory files represented as a plain file.
+ *
+ * This excludes files in sub-directories.
+ */
+@property (nonatomic, readonly, strong) PlainFileItem *groupedFiles;
+
 /* Returns the item that represents the receiver when package contents should not be shown (i.e.
  * when the directory should be represented by a file).
  */

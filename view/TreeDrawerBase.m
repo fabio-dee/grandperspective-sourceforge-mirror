@@ -15,7 +15,7 @@
 }
 
 - (instancetype) initWithScanTree:(DirectoryItem *)scanTreeVal
-                     colorPalette: (NSColorList *)colorPalette {
+                     colorPalette:(NSColorList *)colorPalette {
   if (self = [super init]) {
     scanTree = [scanTreeVal retain];
     rectangleDrawer = [[GradientRectangleDrawer alloc] initWithColorPalette: colorPalette];
@@ -32,9 +32,6 @@
   [scanTree release];
   [rectangleDrawer release];
 
-  NSAssert(visibleTree == nil, @"visibleTree should be nil.");
-  [visibleTree release]; // For sake of completeness. Can be omitted.
-
   [super dealloc];
 }
 
@@ -50,6 +47,7 @@
 
 - (void) updateSettings:(TreeDrawerBaseSettings *)settings {
   [self setShowPackageContents: settings.drawItems == DRAW_FILES];
+  self.groupFiles = settings.drawItems == DRAW_FOLDERS;
   self.displayDepth = settings.displayDepth;
 }
 
@@ -61,12 +59,10 @@
   [rectangleDrawer setupBitmap: bounds];
 
   insideVisibleTree = NO;
-  NSAssert(visibleTree == nil, @"visibleTree should be nil.");
-  visibleTree = [visibleTreeVal retain];
+  visibleTree = visibleTreeVal;
 
   [layoutBuilder layoutItemTree: treeRoot inRect: bounds traverser: self];
 
-  [visibleTree release];
   visibleTree = nil;
 
   if (!abort) {
@@ -89,6 +85,13 @@
 
 
 - (BOOL) descendIntoItem:(Item *)item atRect:(NSRect)rect depth:(int)depth {
+  if (item == nextFilesToGroup) {
+    [self drawFileItem: groupFilesDir.groupedFiles atRect: rect depth: depth];
+    nextFilesToGroup = nil;
+
+    return NO;
+  }
+
   if (item.isVirtual) {
     return YES;
   }
@@ -151,6 +154,12 @@
     }
 
     [treeGuide descendIntoDirectory: (DirectoryItem *)file];
+
+    if (self.groupFiles) {
+      groupFilesDir = (DirectoryItem *)file;
+      nextFilesToGroup = groupFilesDir.fileItems;
+    }
+
     return YES;
   }
 

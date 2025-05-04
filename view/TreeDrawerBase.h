@@ -18,7 +18,12 @@ NS_ASSUME_NONNULL_BEGIN
 
   DirectoryItem  *scanTree;
 
+  // All variables below are temporary variables used while building the path. They are not
+  // retained, as they are only used during a single recursive invocation.
+
   FileItem  *visibleTree;
+  DirectoryItem  *groupFilesDir;
+  Item  *nextFilesToGroup;
   BOOL  insideVisibleTree;
 
   BOOL  abort;
@@ -34,6 +39,9 @@ NS_ASSUME_NONNULL_BEGIN
 
 @property (nonatomic) unsigned displayDepth;
 @property (nonatomic) BOOL showPackageContents;
+
+// Indicates if all files inside a directory should be drawn as a single item.
+@property (nonatomic) BOOL groupFiles;
 
 // Updates the drawer according to the given settings.
 - (void) updateSettings:(TreeDrawerBaseSettings *)settings;
