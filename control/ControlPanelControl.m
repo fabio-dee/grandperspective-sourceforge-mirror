@@ -398,9 +398,10 @@ NSString  *DisplaySettingsChangedEvent = @"displaySettingsChanged";
   return [[[TreeDrawerSettings alloc] initWithColorMapper: mapper
                                              colorPalette: palette
                                             colorGradient: gradient
+                                                drawItems: (displaySettings.showPackageContents
+                                                            ? DRAW_FILES : DRAW_PACKAGES_AND_FILES)
                                                  maskTest: maskTest
-                                             displayDepth: displayDepth
-                                      showPackageContents: displaySettings.showPackageContents]
+                                             displayDepth: displayDepth]
           autorelease];
 }
 

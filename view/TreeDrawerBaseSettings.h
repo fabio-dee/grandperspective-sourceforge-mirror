@@ -10,6 +10,13 @@ extern const unsigned MAX_DISPLAY_DEPTH_LIMIT;
 // The depth limit value when there is no depth limiting
 extern const unsigned NO_DISPLAY_DEPTH_LIMIT;
 
+typedef NS_ENUM(NSInteger, DrawItemsEnum) {
+  DRAW_NONE, // To be used when not set
+  DRAW_FILES,
+  DRAW_PACKAGES_AND_FILES,
+  // TODO: DRAW_FOLDERS,
+};
+
 @interface TreeDrawerBaseSettings : NSObject {
 }
 
@@ -17,18 +24,18 @@ extern const unsigned NO_DISPLAY_DEPTH_LIMIT;
 - (instancetype) init;
 
 - (instancetype) initWithDisplayDepth:(unsigned)displayDepth
-                  showPackageContents:(BOOL)showPackageContents NS_DESIGNATED_INITIALIZER;
+                            drawItems:(DrawItemsEnum)drawItems NS_DESIGNATED_INITIALIZER;
 
 - (instancetype) settingsWithChangedDisplayDepth:(unsigned)displayDepth;
-- (instancetype) settingsWithChangedShowPackageContents:(BOOL)showPackageContents;
+- (instancetype) settingsWithChangedDrawItems:(DrawItemsEnum)drawItems;
 
 // The maximum depth that the drawer visits when drawing the tree. Directories at this depth are
 // displayed a single blocks.
 @property (nonatomic, readonly) unsigned displayDepth;
 
-@property (nonatomic, readonly) BOOL showPackageContents;
+@property (nonatomic, readonly) DrawItemsEnum drawItems;
 
-@property (class, nonatomic, readonly) BOOL showPackageContentsByDefault;
+@property (class, nonatomic, readonly) DrawItemsEnum defaultDrawItems;
 @property (class, nonatomic, readonly) unsigned defaultDisplayDepth;
 
 @end

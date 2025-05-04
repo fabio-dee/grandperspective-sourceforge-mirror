@@ -1,5 +1,6 @@
 #import <Cocoa/Cocoa.h>
 
+#import "TreeDrawerBaseSettings.h"
 
 @class FileItem;
 @class DirectoryItem;
@@ -77,7 +78,7 @@ typedef NS_ENUM(NSInteger, DirectionEnum) {
 @property (nonatomic, readonly, copy) ItemPathModel *pathModel;
 
 
-@property (nonatomic) BOOL showPackageContents;
+@property (nonatomic) DrawItemsEnum drawItems;
 @property (nonatomic) unsigned displayDepth;
 
 - (void) selectItemAtPoint:(NSPoint) point
@@ -108,7 +109,7 @@ typedef NS_ENUM(NSInteger, DirectionEnum) {
 
 /* Returns the selected file item.
  *
- * It may differ from the selected file item of the item path model for three reasons:
+ * It may differ from the selected file item of the item path model for multiple reasons:
  *
  * 1) When package contents are not shown, the view will return a plain file item when the selected
  * item is a directory.

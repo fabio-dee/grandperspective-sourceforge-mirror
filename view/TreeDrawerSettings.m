@@ -15,32 +15,26 @@
 
 @implementation TreeDrawerSettings
 
-// Creates default settings.
-- (instancetype) init {
-  return [self initWithDisplayDepth: TreeDrawerBaseSettings.defaultDisplayDepth
-                showPackageContents: TreeDrawerBaseSettings.showPackageContentsByDefault];
-}
-
 - (instancetype) initWithDisplayDepth:(unsigned)displayDepth
-                  showPackageContents:(BOOL)showPackageContents {
+                            drawItems:(DrawItemsEnum)drawItems {
   NSUserDefaults  *userDefaults = NSUserDefaults.standardUserDefaults;
 
   return [self initWithColorMapper: [[[StatelessFileItemMapping alloc] init] autorelease]
                       colorPalette: TreeDrawerSettings.defaultColorPalette
                      colorGradient: [userDefaults floatForKey: DefaultColorGradient]
+                         drawItems: drawItems
                           maskTest: nil
-                      displayDepth: displayDepth
-               showPackageContents: showPackageContents];
+                      displayDepth: displayDepth];
 }
 
 
 - (instancetype) initWithColorMapper:(NSObject <FileItemMapping> *)colorMapper
                         colorPalette:(NSColorList *)colorPalette
                        colorGradient:(float)colorGradient
+                           drawItems:(DrawItemsEnum)drawItems
                             maskTest:(FileItemTest *)maskTest
-                        displayDepth:(unsigned)displayDepth
-                 showPackageContents:(BOOL)showPackageContents {
-  if (self = [super initWithDisplayDepth: displayDepth showPackageContents: showPackageContents]) {
+                        displayDepth:(unsigned)displayDepth {
+  if (self = [super initWithDisplayDepth: displayDepth drawItems: drawItems]) {
     _colorMapper = [colorMapper retain];
     _colorPalette = [colorPalette retain];
     _colorGradient = colorGradient;
@@ -63,54 +57,54 @@
   return [[[TreeDrawerSettings alloc] initWithColorMapper: colorMapper
                                              colorPalette: self.colorPalette
                                             colorGradient: self.colorGradient
+                                                drawItems: self.drawItems
                                                  maskTest: self.maskTest
-                                             displayDepth: self.displayDepth
-                                      showPackageContents: self.showPackageContents] autorelease];
+                                             displayDepth: self.displayDepth] autorelease];
 }
 
 - (instancetype) settingsWithChangedColorPalette:(NSColorList *)colorPalette {
   return [[[TreeDrawerSettings alloc] initWithColorMapper: self.colorMapper
                                              colorPalette: colorPalette
                                             colorGradient: self.colorGradient
+                                                drawItems: self.drawItems
                                                  maskTest: self.maskTest
-                                             displayDepth: self.displayDepth
-                                      showPackageContents: self.showPackageContents] autorelease];
+                                             displayDepth: self.displayDepth] autorelease];
 }
 
 - (instancetype) settingsWithChangedColorGradient:(float) colorGradient {
   return [[[TreeDrawerSettings alloc] initWithColorMapper: self.colorMapper
                                              colorPalette: self.colorPalette
                                             colorGradient: colorGradient
+                                                drawItems: self.drawItems
                                                  maskTest: self.maskTest
-                                             displayDepth: self.displayDepth
-                                      showPackageContents: self.showPackageContents] autorelease];
+                                             displayDepth: self.displayDepth] autorelease];
 }
 
 - (instancetype) settingsWithChangedMaskTest:(FileItemTest *)maskTest {
   return [[[TreeDrawerSettings alloc] initWithColorMapper: self.colorMapper
                                              colorPalette: self.colorPalette
                                             colorGradient: self.colorGradient
+                                                drawItems: self.drawItems
                                                  maskTest: maskTest
-                                             displayDepth: self.displayDepth
-                                      showPackageContents: self.showPackageContents] autorelease];
+                                             displayDepth: self.displayDepth] autorelease];
 }
 
 - (instancetype) settingsWithChangedDisplayDepth:(unsigned) displayDepth {
   return [[[TreeDrawerSettings alloc] initWithColorMapper: self.colorMapper
                                              colorPalette: self.colorPalette
                                             colorGradient: self.colorGradient
+                                                drawItems: self.drawItems
                                                  maskTest: self.maskTest
-                                             displayDepth: displayDepth
-                                      showPackageContents: self.showPackageContents] autorelease];
+                                             displayDepth: displayDepth] autorelease];
 }
 
 - (instancetype) settingsWithChangedShowPackageContents:(BOOL) showPackageContents {
   return [[[TreeDrawerSettings alloc] initWithColorMapper: self.colorMapper
                                              colorPalette: self.colorPalette
                                             colorGradient: self.colorGradient
+                                                drawItems: self.drawItems
                                                  maskTest: self.maskTest
-                                             displayDepth: self.displayDepth
-                                      showPackageContents: showPackageContents] autorelease];
+                                             displayDepth: self.displayDepth] autorelease];
 }
 
 @end // @implementation TreeDrawerSettings

@@ -49,7 +49,7 @@
 
 
 - (void) updateSettings:(TreeDrawerBaseSettings *)settings {
-  [self setShowPackageContents: settings.showPackageContents];
+  [self setShowPackageContents: settings.drawItems == DRAW_FILES];
   self.displayDepth = settings.displayDepth;
 }
 

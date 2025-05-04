@@ -152,7 +152,7 @@ CGFloat ramp(CGFloat x, CGFloat minX, CGFloat maxX) {
     [[[DrawTaskExecutor alloc] initWithTreeContext: treeContext] autorelease];
   drawTaskManager = [[AsynchronousTaskManager alloc] initWithTaskExecutor: drawTaskExecutor];
 
-  pathModelView.showPackageContents = self.treeDrawerSettings.showPackageContents;
+  pathModelView.drawItems = self.treeDrawerSettings.drawItems;
   pathModelView.displayDepth = self.treeDrawerSettings.displayDepth;
 
   OverlayDrawTaskExecutor  *overlayDrawTaskExecutor =
@@ -280,8 +280,8 @@ CGFloat ramp(CGFloat x, CGFloat minX, CGFloat maxX) {
       [self observeColorMapping];
     }
     
-    if (settings.showPackageContents != oldSettings.showPackageContents) {
-      pathModelView.showPackageContents = settings.showPackageContents;
+    if (settings.drawItems != oldSettings.drawItems) {
+      pathModelView.drawItems = settings.drawItems;
     }
 
     [oldSettings release];
@@ -1186,7 +1186,8 @@ CGFloat ramp(CGFloat x, CGFloat minX, CGFloat maxX) {
 
   return (rootItem.isDirectory
           ? [((DirectoryItem *)rootItem) maxDepth: MAX_DISPLAY_DEPTH_LIMIT
-                                  packagesAsFiles: !self.treeDrawerSettings.showPackageContents]
+                                  packagesAsFiles: (self.treeDrawerSettings.drawItems
+                                                    == DRAW_PACKAGES_AND_FILES)]
           : 0);
 }
 

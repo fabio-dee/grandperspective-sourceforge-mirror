@@ -56,7 +56,7 @@ static const unsigned STICK_TO_ENDPOINT = 0xFFFF;
     scanTreeIndex = [self indexCorrespondingToItem: pathModel.scanTree startingAt: 0];
     
     invisibleSelectedItem = nil;
-    _showPackageContents = YES;
+    _drawItems = DRAW_FILES;
     _displayDepth = NO_DISPLAY_DEPTH_LIMIT;
     
     [self updatePath];
@@ -110,9 +110,9 @@ static const unsigned STICK_TO_ENDPOINT = 0xFFFF;
 }
 
 
-- (void) setShowPackageContents:(BOOL)showPackageContents {
-  if (_showPackageContents != showPackageContents) {
-    _showPackageContents = showPackageContents;
+- (void) setDrawItems:(DrawItemsEnum)drawItems {
+  if (_drawItems != drawItems) {
+    _drawItems = drawItems;
     
     [self updatePath];
   }
@@ -240,7 +240,7 @@ static const unsigned STICK_TO_ENDPOINT = 0xFFFF;
 - (FileItem *)selectedFileItem {
   FileItem  *selectedItem = self.selectedFileItemInTree;
   
-  return (!_showPackageContents && selectedItem.isDirectory)
+  return (_drawItems == DRAW_PACKAGES_AND_FILES && selectedItem.isDirectory)
          ? ((DirectoryItem *)selectedItem).itemWhenHidingPackageContents
          : selectedItem;
 }
@@ -413,7 +413,7 @@ static const unsigned STICK_TO_ENDPOINT = 0xFFFF;
       break;
     }
 
-    if (!_showPackageContents &&
+    if (_drawItems == DRAW_PACKAGES_AND_FILES &&
         fileItem.isDirectory &&
         ((DirectoryItem *)fileItem).isPackage) {
       // Got to a package whose contents should remain hidden

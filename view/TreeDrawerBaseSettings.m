@@ -11,14 +11,14 @@ const unsigned NO_DISPLAY_DEPTH_LIMIT = 0xFFFF;
 // Creates default settings.
 - (instancetype) init {
   return [self initWithDisplayDepth: TreeDrawerBaseSettings.defaultDisplayDepth
-                showPackageContents: TreeDrawerBaseSettings.showPackageContentsByDefault];
+                          drawItems: TreeDrawerBaseSettings.defaultDrawItems];
 }
 
 - (instancetype) initWithDisplayDepth:(unsigned)displayDepth
-                  showPackageContents:(BOOL)showPackageContents {
+                            drawItems:(DrawItemsEnum)drawItems {
   if (self = [super init]) {
     _displayDepth = displayDepth;
-    _showPackageContents = showPackageContents;
+    _drawItems = drawItems;
   }
 
   return self;
@@ -27,16 +27,17 @@ const unsigned NO_DISPLAY_DEPTH_LIMIT = 0xFFFF;
 
 - (instancetype) settingsWithChangedDisplayDepth:(unsigned) displayDepth {
   return [[[TreeDrawerBaseSettings alloc] initWithDisplayDepth: displayDepth
-                                           showPackageContents: _showPackageContents] autorelease];
+                                                     drawItems: _drawItems] autorelease];
 }
 
-- (instancetype) settingsWithChangedShowPackageContents:(BOOL) showPackageContents {
+- (instancetype) settingsWithChangedDrawItems:(DrawItemsEnum) drawItems {
   return [[[TreeDrawerBaseSettings alloc] initWithDisplayDepth: _displayDepth
-                                           showPackageContents: showPackageContents] autorelease];
+                                                     drawItems: drawItems] autorelease];
 }
 
-+ (BOOL) showPackageContentsByDefault {
-  return [NSUserDefaults.standardUserDefaults boolForKey: ShowPackageContentsByDefaultKey];
++ (DrawItemsEnum) defaultDrawItems {
+  return ([NSUserDefaults.standardUserDefaults boolForKey: ShowPackageContentsByDefaultKey]
+          ? DRAW_FILES : DRAW_PACKAGES_AND_FILES);
 }
 
 + (unsigned) defaultDisplayDepth {

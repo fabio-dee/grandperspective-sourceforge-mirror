@@ -1,6 +1,5 @@
 #import "TreeDrawerBaseSettings.h"
 
-
 @protocol FileItemMapping;
 @class FileItemTest;
 
@@ -14,9 +13,9 @@
 - (instancetype) initWithColorMapper:(NSObject <FileItemMapping> *)colorMapper
                         colorPalette:(NSColorList *)colorPalette
                        colorGradient:(float)colorGradient
+                           drawItems:(DrawItemsEnum)drawItems
                             maskTest:(FileItemTest *)maskTest
-                        displayDepth:(unsigned)displayDepth
-                 showPackageContents:(BOOL)showPackageContents NS_DESIGNATED_INITIALIZER;
+                        displayDepth:(unsigned)displayDepth NS_DESIGNATED_INITIALIZER;
 
 - (instancetype) settingsWithChangedColorMapper:(NSObject <FileItemMapping> *)colorMapper;
 - (instancetype) settingsWithChangedColorPalette:(NSColorList *)colorPalette;

@@ -808,8 +808,8 @@ NSString  *ViewWillCloseEvent = @"viewWillClose";
     itemPath = selectedItem.path;
 
     if (selectedItem.isDirectory
-        && (!selectedItem.isPackage || mainView.treeDrawerSettings.showPackageContents)) {
-      // Append to indicate that the item is not a plain file. This is especially helpful
+        && (!selectedItem.isPackage || mainView.treeDrawerSettings.drawItems == DRAW_FILES)) {
+      // Append slash to indicate that the item is not a plain file. This is especially helpful
       // when the files in the directory are hidden by the display focus as the view then does not
       // show that the item is a directory.
       itemPath = [itemPath stringByAppendingString: @"/"];
