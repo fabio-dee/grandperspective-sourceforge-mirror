@@ -123,17 +123,12 @@
         [treeGuide descendIntoDirectory: (DirectoryItem *)file];
         return YES;
       }
-      else {
-        return NO;
-      }
     }
-    else {
-      if (!file.isPhysical && [file.label isEqualToString: FreeSpace]) {
-        [self drawFreeSpaceAtRect: rect];
-      }
+    else if (!file.isPhysical && [file.label isEqualToString: FreeSpace]) {
+      [self drawFreeSpaceAtRect: rect];
+    }
 
-      return NO;
-    }
+    return NO;
   }
 
   // Inside the visible tree. Check if the item is masked
