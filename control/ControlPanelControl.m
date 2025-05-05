@@ -205,10 +205,10 @@ NSString  *DisplaySettingsChangedEvent = @"displaySettingsChanged";
                                  table: @"Names"];
 
   [drawItemsPopUp removeAllItems];
-  [tagMaker addLocalisedNamesFor: TreeDrawerBaseSettings.drawItemsNames
-                         toPopUp: drawItemsPopUp
-                          select: nil
-                           table: @"Names"];
+  [tagMaker addSortedLocalisedNamesFor: TreeDrawerBaseSettings.drawItemsNames
+                               toPopUp: drawItemsPopUp
+                                select: nil
+                                 table: @"Names"];
 
   maskPopUpControl = [[FilterPopUpControl alloc] initWithPopUpButton: maskPopUp
                                                     filterRepository: filterRepository];

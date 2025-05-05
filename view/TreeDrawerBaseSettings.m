@@ -17,7 +17,16 @@ NSString* DrawFoldersKey = @"folders";
 @implementation TreeDrawerBaseSettings
 
 + (NSArray *)drawItemsNames {
-  return TreeDrawerBaseSettings.drawItemsMapping.allKeys;
+  // Not return keys from mapping but constructing array to control order. This ensures that the
+  // options appear in a logical order in the pop-up
+  static NSArray *drawItemsNames = nil;
+  static dispatch_once_t  onceToken;
+
+  dispatch_once(&onceToken, ^{
+    drawItemsNames = [@[DrawFilesKey, DrawPackagesKey, DrawFoldersKey] retain];
+  });
+
+  return drawItemsNames;
 }
 
 + (DrawItemsEnum) enumForDrawItemsName:(NSString *)name {
