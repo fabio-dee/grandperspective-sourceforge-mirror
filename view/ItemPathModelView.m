@@ -356,7 +356,7 @@ static const unsigned STICK_TO_ENDPOINT = 0xFFFF;
   // Set the visible item
   visibleTreeIndex = [self indexCorrespondingToItem: pathModel.visibleTree
                                          startingAt: scanTreeIndex];
-  
+
   // Set the selected item
   selectedItemIndex = [self indexCorrespondingToItem: pathModel.selectedFileItem
                                           startingAt: visibleTreeIndex
@@ -401,25 +401,33 @@ static const unsigned STICK_TO_ENDPOINT = 0xFFFF;
 }
 
 - (unsigned) indexCorrespondingToItem:(FileItem *)targetItem
-                           startingAt:(unsigned) index
+                           startingAt:(unsigned) startIndex
                                stopAt:(unsigned) maxIndex {
+  unsigned index = startIndex;
   maxIndex = MIN(maxIndex, (unsigned)fileItemPath.count - 1);
 
   while (YES) {
     FileItem  *fileItem = fileItemPath[index];
     
-    if (fileItem == targetItem) {
-      // Got to the visible tree
+    if (_drawItems == DRAW_FOLDERS && !fileItem.isDirectory) {
+      // Reached a file. Retreat to parent folder.
+      NSAssert(index > startIndex, @"Cannot back-up to parent folder");
+      --index;
       break;
     }
 
-    if (_drawItems == DRAW_PACKAGES &&
-        fileItem.isDirectory &&
-        ((DirectoryItem *)fileItem).isPackage) {
-      // Got to a package whose contents should remain hidden
+    if (fileItem == targetItem) {
+      // Found the target item
       break;
     }
-    
+
+    if ((_drawItems == DRAW_PACKAGES || _drawItems == DRAW_FOLDERS) &&
+        fileItem.isDirectory &&
+        ((DirectoryItem *)fileItem).isPackage) {
+      // Reached a package whose contents should remain hidden
+      break;
+    }
+
     if (index == maxIndex) {
       // Reached the end of the array
       break;
