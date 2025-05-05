@@ -78,8 +78,8 @@ NSString* DrawFoldersKey = @"folders";
 }
 
 + (DrawItemsEnum) defaultDrawItems {
-  return ([NSUserDefaults.standardUserDefaults boolForKey: ShowPackageContentsByDefaultKey]
-          ? DRAW_FILES : DRAW_PACKAGES);
+  return [TreeDrawerBaseSettings enumForDrawItemsName:
+          [NSUserDefaults.standardUserDefaults stringForKey: DefaultDrawItemsKey]];
 }
 
 + (unsigned) defaultDisplayDepth {

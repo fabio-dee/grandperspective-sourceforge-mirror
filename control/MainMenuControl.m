@@ -918,9 +918,10 @@ static dispatch_once_t  singletonOnceToken;
   [openPanel setAllowsMultipleSelection: NO];
 
   NSUserDefaults  *userDefaults = NSUserDefaults.standardUserDefaults;
-  openPanel.treatsFilePackagesAsDirectories =
-    [userDefaults boolForKey: ShowPackageContentsByDefaultKey];
-  
+  DrawItemsEnum  drawItems = [TreeDrawerBaseSettings enumForDrawItemsName:
+                              [userDefaults stringForKey: DefaultDrawItemsKey]];
+  openPanel.treatsFilePackagesAsDirectories = drawItems == DRAW_FILES;
+
   [openPanel setTitle: NSLocalizedString(@"Scan folder", @"Title of open panel")];
   [openPanel setPrompt: NSLocalizedString(@"Scan", @"Prompt in open panel")];
 
@@ -959,13 +960,15 @@ static dispatch_once_t  singletonOnceToken;
   FilterSet  *filterSet = nil;
 
   if (filters != nil && filters.count > 0) {
-    BOOL  showPackageContentsByDefault =
-      [NSUserDefaults.standardUserDefaults boolForKey: ShowPackageContentsByDefaultKey];
+    NSUserDefaults  *userDefaults = NSUserDefaults.standardUserDefaults;
+    DrawItemsEnum  drawItems = [TreeDrawerBaseSettings enumForDrawItemsName:
+                                [userDefaults stringForKey: DefaultDrawItemsKey]];
+    BOOL  packagesAsFiles = drawItems != DRAW_FILES;
 
     NSMutableArray  *unboundFilters = [NSMutableArray arrayWithCapacity: 8];
     NSMutableArray  *unboundTests = [NSMutableArray arrayWithCapacity: 8];
     filterSet = [FilterSet filterSetWithNamedFilters: filters
-                                     packagesAsFiles: !showPackageContentsByDefault
+                                     packagesAsFiles: packagesAsFiles
                                       unboundFilters: unboundFilters
                                         unboundTests: unboundTests];
     [MainMenuControl reportUnboundFilters: unboundFilters];

@@ -20,12 +20,14 @@ NSString  *FileSizeMeasureKey = @"fileSizeMeasure";
 NSString  *FileSizeUnitSystemKey = @"fileSizeUnitSystem";
 NSString  *ScanFilterKey = @"scanFilter";
 NSString  *MaskFilterKey = @"maskFilter";
+NSString  *DefaultDrawItemsKey = @"defaultDrawItems";
 NSString  *DefaultColorMappingKey = @"defaultColorMapping";
 NSString  *DefaultColorPaletteKey = @"defaultColorPalette";
-NSString  *DefaultDrawItemsKey = @"defaultDrawItems";
-NSString  *ShowPackageContentsByDefaultKey = @"showPackageContentsByDefault"; // TODO: deprecate
 NSString  *ShowEntireVolumeByDefaultKey = @"showEntireVolumeByDefault";
 NSString  *DefaultDisplayFocusKey = @"defaultDisplayFocus";
+
+// Deprecated since 3.5.3
+NSString  *ShowPackageContentsByDefaultKey_Deprecated = @"showPackageContentsByDefault";
 
 // Deprecated since 3.1.0
 NSString  *DefaultFilterKey_Deprecated = @"defaultFilter";
@@ -120,6 +122,9 @@ static BOOL appHasDeletePermission;
   [self setupPopUp: fileSizeUnitSystemPopUp
                key: FileSizeUnitSystemKey
            content: FileItem.fileSizeUnitSystemNames];
+  [self setupPopUp: defaultDrawItemsPopUp
+               key: DefaultDrawItemsKey
+           content: TreeDrawerBaseSettings.drawItemsNames];
   [self setupPopUp: defaultColorMappingPopUp
                key: DefaultColorMappingKey
            content: FileItemMappingCollection.defaultFileItemMappingCollection.allKeys];
@@ -135,12 +140,22 @@ static BOOL appHasDeletePermission;
     [self setPopUp: fileDeletionPopUp toValue: DeleteNothing];
   }
 
-  // Convert old setting that was stored under a different key before v3.1.0.
-  NSString  *oldFilterSetting = [userDefaults stringForKey: DefaultFilterKey_Deprecated];
-  if (oldFilterSetting != nil) {
+  // Convert old deprecated settings
+  NSString  *oldStringSetting = [userDefaults stringForKey: DefaultFilterKey_Deprecated];
+  if (oldStringSetting != nil) {
     NSLog(@"Read default mask from %@", DefaultFilterKey_Deprecated);
-    [userDefaults setObject: oldFilterSetting forKey: MaskFilterKey];
+    [userDefaults setObject: oldStringSetting forKey: MaskFilterKey];
     [userDefaults removeObjectForKey: DefaultFilterKey_Deprecated];
+  }
+  NSObject  *oldSetting = [userDefaults objectForKey: ShowPackageContentsByDefaultKey_Deprecated];
+  if (oldSetting != nil) {
+    NSLog(@"Read old view setting from %@", ShowPackageContentsByDefaultKey_Deprecated);
+    BOOL  showPackageContents = ((NSNumber *)oldSetting).boolValue;
+    DrawItemsEnum  newSetting = showPackageContents ? DRAW_FILES : DRAW_PACKAGES;
+
+    [userDefaults setObject: [TreeDrawerBaseSettings nameForDrawItemsEnum: newSetting]
+                     forKey: DefaultDrawItemsKey];
+    [userDefaults removeObjectForKey: ShowPackageContentsByDefaultKey_Deprecated];
   }
 
   UniqueTagsTransformer  *tagMaker = UniqueTagsTransformer.defaultUniqueTagsTransformer;
@@ -161,9 +176,6 @@ static BOOL appHasDeletePermission;
 
   fileDeletionConfirmationCheckBox.state =
     [userDefaults boolForKey: ConfirmFileDeletionKey]
-    ? NSControlStateValueOn : NSControlStateValueOff;
-  showPackageContentsByDefaultCheckBox.state =
-    [userDefaults boolForKey: ShowPackageContentsByDefaultKey]
     ? NSControlStateValueOn : NSControlStateValueOff;
   showEntireVolumeByDefaultCheckBox.state =
     [userDefaults boolForKey: ShowEntireVolumeByDefaultKey]
@@ -197,11 +209,6 @@ static BOOL appHasDeletePermission;
     BOOL  enabled = [sender state] == NSControlStateValueOn;
 
     [userDefaults setBool: enabled forKey: ConfirmFileDeletionKey];
-  }
-  else if (sender == showPackageContentsByDefaultCheckBox) {
-    BOOL  enabled = [sender state] == NSControlStateValueOn;
-    
-    [userDefaults setBool: enabled forKey: ShowPackageContentsByDefaultKey];
   }
   else if (sender == showEntireVolumeByDefaultCheckBox) {
     BOOL  enabled = [sender state] == NSControlStateValueOn;
