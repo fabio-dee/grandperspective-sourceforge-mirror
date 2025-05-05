@@ -43,11 +43,17 @@
 /* Color palette */
 "FengShui" = "Feng Shui";
 
+/* Draw setting */
+"files" = "Bestanden";
+
 /* Color palette */
 "FlyingGeese" = "Magenta magie";
 
 /* Color mapping scheme */
 "folder" = "Map";
+
+/* Draw setting */
+"folders" = "Pakketten & Mappen";
 
 /* Name of "special" file in the viewer */
 "free" = "Beschikbare ruimte";
@@ -132,6 +138,9 @@
 
 /* Filter test */
 "Packages" = "Pakketten";
+
+/* Draw setting */
+"packages and files" = "Pakketten & Bestanden";
 
 /* File size type */
 "physical" = "Fysisch";
