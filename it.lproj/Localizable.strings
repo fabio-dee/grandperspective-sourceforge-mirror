@@ -157,6 +157,9 @@
 /* Alert message */
 "Failed to delete the folder \"%@\"" = "Impossibile cancellare la cartella \"%@\"";
 
+/* Alert message */
+"Failed to determine volume root" = "Impossibile determinare la radice del volume";
+
 /* Error message */
 "Failed to get path from pasteboard" = "Impossibile ottenere il percorso dagli appunti";
 
