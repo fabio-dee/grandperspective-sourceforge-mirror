@@ -10,9 +10,6 @@
 /* Privacy - Downloads Folder Usage Description */
 "NSDownloadsFolderUsageDescription" = "L’application vérifie l’espace disque utilisé par vos Téléchargements";
 
-/* Copyright (human-readable) */
-"NSHumanReadableCopyright" = "Copyright © Eriban Software, 2005-2023";
-
 /* Privacy - Photo Library Usage Description */
 "NSPhotoLibraryUsageDescription" = "L'application vérifie l'espace disque utilisé par vos Photos";
 

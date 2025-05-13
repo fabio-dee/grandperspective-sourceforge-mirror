@@ -19,9 +19,6 @@
 /* Class = "NSTextFieldCell"; title = "Palette:"; ObjectID = "167"; */
 "167.title" = "Palette:";
 
-/* Class = "NSButtonCell"; title = "Show package contents"; ObjectID = "171"; */
-"171.title" = "Afficher le contenu du paquet";
-
 /* Class = "NSTextFieldCell"; title = "Color by:"; ObjectID = "172"; */
 "172.title" = "Colorier par:";
 
@@ -48,6 +45,9 @@
 
 /* Class = "NSTextFieldCell"; title = "Default filter:"; ObjectID = "bAf-Lb-Hos"; */
 "bAf-Lb-Hos.title" = "Filtre par défaut:";
+
+/* Class = "NSTextFieldCell"; title = "Show:"; ObjectID = "fpR-JL-BuW"; */
+"fpR-JL-BuW.title" = "Afficher:";
 
 /* Class = "NSTextFieldCell"; title = "After closing last view:"; ObjectID = "KFu-2k-t7Z"; */
 "KFu-2k-t7Z.title" = "Après clôture de la dernière vue:";
