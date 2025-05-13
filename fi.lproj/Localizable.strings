@@ -157,6 +157,9 @@
 /* Alert message */
 "Failed to delete the folder \"%@\"" = "Hakemiston \"%@\" poisto epäonnistui";
 
+/* Alert message */
+"Failed to determine volume root" = "Levyn juuren määrittäminen epäonnistui";
+
 /* Error message */
 "Failed to get path from pasteboard" = "Polun hakeminen leikepöydältä epäonnistui";
 

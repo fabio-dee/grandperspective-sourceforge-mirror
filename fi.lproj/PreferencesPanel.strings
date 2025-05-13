@@ -19,9 +19,6 @@
 /* Class = "NSTextFieldCell"; title = "Palette:"; ObjectID = "167"; */
 "167.title" = "Paletti:";
 
-/* Class = "NSButtonCell"; title = "Show package contents"; ObjectID = "171"; */
-"171.title" = "Näytä paketin sisältö";
-
 /* Class = "NSTextFieldCell"; title = "Color by:"; ObjectID = "172"; */
 "172.title" = "Väritä:";
 
@@ -48,6 +45,9 @@
 
 /* Class = "NSTextFieldCell"; title = "Default filter:"; ObjectID = "bAf-Lb-Hos"; */
 "bAf-Lb-Hos.title" = "Oletussuodatin:";
+
+/* Class = "NSTextFieldCell"; title = "Show:"; ObjectID = "fpR-JL-BuW"; */
+"fpR-JL-BuW.title" = "Näytä:";
 
 /* Class = "NSTextFieldCell"; title = "After closing last view:"; ObjectID = "KFu-2k-t7Z"; */
 "KFu-2k-t7Z.title" = "Viimeisen näkymän suljettua:";
