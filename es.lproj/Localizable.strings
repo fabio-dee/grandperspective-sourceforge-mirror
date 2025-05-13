@@ -145,11 +145,20 @@
 /* Alert message */
 "Failed to bind one or more filter tests:\n%@" = "Fallo al enlazar uno o más filtros:\n%@";
 
+/* Error message */
+"Failed to close file" = "Fallo cerrando archivo";
+
+/* Error message */
+"Failed to create file" = "Fallo creando archivo";
+
 /* Alert message */
 "Failed to delete the file \"%@\"" = "Fallo al eliminar el fichero \"%@\"";
 
 /* Alert message */
 "Failed to delete the folder \"%@\"" = "Fallo al eliminar la carpeta \"%@\"";
+
+/* Alert message */
+"Failed to determine volume root" = "Fallo identificando unidad raíz";
 
 /* Error message */
 "Failed to get path from pasteboard" = "Fallo al tomar la ruta desde el portapapeles";
@@ -165,6 +174,9 @@
 
 /* Alert message */
 "Failed to open the package \"%@\"" = "Fallo al abrir el contenedor \"%@\"";
+
+/* Parse error */
+"Failed to read any tree data" = "Fallo leyendo directorios";
 
 /* Alert message */
 "Failed to reveal the file \"%@\"" = "Fallo al mostrar el archivo \"%@\"";
@@ -183,6 +195,9 @@
 
 /* Alert message */
 "Failed to update one or more filters:\n%@" = "Fallo al actualizar uno o más filtros:\n%@";
+
+/* Error message */
+"Failed to write to file" = "Fallo escribiendo archivo";
 
 /* Label in Focus panel */
 "File in view:" = "Archivo mostrado:";

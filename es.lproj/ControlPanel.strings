@@ -61,9 +61,6 @@
 /* Class = "NSButtonCell"; title = "Show entire volume"; ObjectID = "938"; */
 "938.title" = "Mostrar la unidad completa";
 
-/* Class = "NSButtonCell"; title = "Show package contents"; ObjectID = "939"; */
-"939.title" = "Mostrar el contenido de los paquetes";
-
 /* Class = "NSTextFieldCell"; title = "File type:"; ObjectID = "946"; */
 "946.title" = "Tipo de archivo";
 
@@ -78,6 +75,9 @@
 
 /* Class = "NSTextFieldCell"; title = "Accessed:"; ObjectID = "984"; */
 "984.title" = "Accedido:";
+
+/* Class = "NSTextFieldCell"; title = "Show:"; ObjectID = "GbF-h3-YU9"; */
+"GbF-h3-YU9.title" = "Mostrar:";
 
 /* Class = "NSWindow"; title = "Control"; ObjectID = "GHT-tk-zeb"; */
 "GHT-tk-zeb.title" = "Control";
