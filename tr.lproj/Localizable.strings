@@ -14,7 +14,7 @@
 "%@, or %@" = "%1$@ veya %2$@";
 
 /* Legend for Time-based mapping schemes. */
-"%d - %d days ago" = "%1$d - %2$d gün önce";
+"%d - %d days ago" = "%1$d — %2$d gün önce";
 
 /* Legend for Time-based mapping schemes. */
 "%d days ago" = "%d gün önce";
@@ -44,16 +44,16 @@
 "%qu files" = "%qu dosya";
 
 /* Alert message */
-"A filter named \"%@\" already exists" = "\"%@\" adlı bir süzgeç zaten var";
+"A filter named \"%@\" already exists" = "“%@” adlı bir süzgeç zaten var";
 
 /* Alert message (Note: 'it' can refer to a file or a folder) */
 "A possible reason is that it does not exist anymore" = "Olası bir neden artık var olmaması olabilir";
 
 /* Alert message */
-"A test named \"%@\" already exists" = "\"%@\" adlı bir sınama zaten var";
+"A test named \"%@\" already exists" = "“%@” adlı bir sınama zaten var";
 
 /* Alert message (with filename arg) */
-"Aborted saving the scan data to \"%@\"" = "Tarama verilerinin \"%@\" adıyla kaydedilmesi durduruldu";
+"Aborted saving the scan data to \"%@\"" = "Tarama verilerinin “%@” adıyla kaydedilmesi durduruldu";
 
 /* Header in exported text file */
 "Accessed" = "Erişildi";
@@ -89,31 +89,31 @@
 "Display focus changed to %@" = "Görüntüleme odağı %@ olarak değişti";
 
 /* Alert message */
-"Do you want to delete the file \"%@\"?" = "\"%@\" dosyasını silmek istiyor musunuz?";
+"Do you want to delete the file \"%@\"?" = "“%@” dosyasını silmek istiyor musunuz?";
 
 /* Alert message */
-"Do you want to delete the folder \"%@\"?" = "\"%@\" klasörünü silmek istiyor musunuz?";
+"Do you want to delete the folder \"%@\"?" = "“%@” klasörünü silmek istiyor musunuz?";
 
 /* Alert message */
-"Do you want to delete the package \"%@\"?" = "\"%@\" paketini silmek istiyor musunuz?";
+"Do you want to delete the package \"%@\"?" = "“%@” paketini silmek istiyor musunuz?";
 
 /* Parse error */
 "Encountered filter after folder" = "Klasörden sonra süzgeç bulundu";
 
 /* Parse error */
-"Encountered more than one root element" = "Birden fazla kök öge bulundu";
+"Encountered more than one root element" = "Birden fazla kök öğe bulundu";
 
 /* Parse error */
 "Encountered more than one root folder" = "Birden fazla kök klasör bulundu";
 
 /* Parse error */
-"Encountered multiple %@ elements" = "Birden çok %@ öge bulundu";
+"Encountered multiple %@ elements" = "Birden çok %@ öğe bulundu";
 
 /* Parse error */
-"Error parsing \"%@\" attribute: %@" = "\"%1$@\" özniteliği ayrıştırılırken hata: %2$@";
+"Error parsing \"%@\" attribute: %@" = "“%1$@” özniteliği ayrıştırılırken hata: %2$@";
 
 /* Parse error */
-"Expected %@ element" = "%@ ögesi bekleniyordu";
+"Expected %@ element" = "%@ öğesi bekleniyordu";
 
 /* Error message */
 "Expected a folder" = "Bir klasör bekleniyordu";
@@ -152,43 +152,46 @@
 "Failed to create file" = "Dosya oluşturulamadı";
 
 /* Alert message */
-"Failed to delete the file \"%@\"" = "\"%@\" dosyası silinemedi";
+"Failed to delete the file \"%@\"" = "“%@” dosyası silinemedi";
 
 /* Alert message */
-"Failed to delete the folder \"%@\"" = "\"%@\" klasörü silinemedi";
+"Failed to delete the folder \"%@\"" = "“%@” klasörü silinemedi";
+
+/* Alert message */
+"Failed to determine volume root" = "Bölüm kökü algılanamadı";
 
 /* Error message */
 "Failed to get path from pasteboard" = "Yolu panodan alırken hata oluştu";
 
 /* Alert message (with filename arg) */
-"Failed to load the scan data from \"%@\"" = "Tarama verisini \"%@\" konumundan yüklerken hata oluştu";
+"Failed to load the scan data from \"%@\"" = "Tarama verisini “%@” konumundan yüklerken hata oluştu";
 
 /* Alert message */
-"Failed to open the file \"%@\"" = "\"%@\" dosyası açılamadı";
+"Failed to open the file \"%@\"" = "“%@” dosyası açılamadı";
 
 /* Alert message */
-"Failed to open the folder \"%@\"" = "\"%@\" klasörü açılamadı";
+"Failed to open the folder \"%@\"" = "“%@” klasörü açılamadı";
 
 /* Alert message */
-"Failed to open the package \"%@\"" = "\"%@\" paketi açılamadı";
+"Failed to open the package \"%@\"" = "“%@” paketi açılamadı";
 
 /* Parse error */
 "Failed to read any tree data" = "Herhangi bir ağaç verisi okunamadı";
 
 /* Alert message */
-"Failed to reveal the file \"%@\"" = "\"%@\" dosyası ortaya çıkarılamadı";
+"Failed to reveal the file \"%@\"" = "“%@” dosyası ortaya çıkarılamadı";
 
 /* Alert message */
-"Failed to reveal the folder \"%@\"" = "\"%@\" klasörü ortaya çıkarılamadı";
+"Failed to reveal the folder \"%@\"" = "“%@” klasörü ortaya çıkarılamadı";
 
 /* Alert message */
-"Failed to reveal the package \"%@\"" = "\"%@\" paketi ortaya çıkarılamadı";
+"Failed to reveal the package \"%@\"" = "“%@” paketi ortaya çıkarılamadı";
 
 /* Alert message */
 "Failed to save the image" = "Görsel kaydedilemedi";
 
 /* Alert message (with filename arg) */
-"Failed to save the scan data to \"%@\"" = "Tarama verisi \"%@\" konumuna kaydedilemedi";
+"Failed to save the scan data to \"%@\"" = "Tarama verisi “%@” konumuna kaydedilemedi";
 
 /* Alert message */
 "Failed to update one or more filters:\n%@" = "Bir veya birden fazla süzgeç güncellenemedi:\n%@";
@@ -203,10 +206,10 @@
 "Filename" = "Dosya adı";
 
 /* Window title */
-"Filter - %@" = "Süzgeç - %@";
+"Filter - %@" = "Süzgeç — %@";
 
 /* Window title */
-"Filter test - %@" = "Süzgeç sınaması - %@";
+"Filter test - %@" = "Süzgeç sınaması — %@";
 
 /* Message in progress panel while filtering */
 "Filtering %@" = "%@ süzülüyor";
@@ -299,10 +302,10 @@
 "Remove" = "Kaldır";
 
 /* Alert message */
-"Remove the filter named \"%@\"?" = "\"%@\" adlı süzgeci kaldırmak istiyor musunuz?";
+"Remove the filter named \"%@\"?" = "“%@” adlı süzgeci kaldırmak istiyor musunuz?";
 
 /* Alert message */
-"Remove the test named \"%@\"?" = "\"%@\" adlı süzgeci kaldırmak istiyor musunuz?";
+"Remove the test named \"%@\"?" = "“%@” adlı süzgeci kaldırmak istiyor musunuz?";
 
 /* Title of save panel */
 "Save scan data" = "Tarama verisini kaydet";
@@ -353,13 +356,13 @@
 "Size" = "Boyut";
 
 /* Alert message (with filename arg) */
-"Successfully saved the scan data to \"%@\"" = "Tarama verisi \"%@\" konumuna başarıyla kaydedildi";
+"Successfully saved the scan data to \"%@\"" = "Tarama verisi “%@” konumuna başarıyla kaydedildi";
 
 /* File size unit for terabytes. */
 "TB" = "TB";
 
 /* Alert message */
-"The actual (physical) size is %.1f%% of the reported (logical) size. Consider rescanning using the Physical file size measure" = "Gerçek (fiziksel) boyut, raporlanan (mantıksal) boyutun %.1f%% kadarıdır. Fiziksel dosya boyutu seçeneğini kullanarak yeniden taramayı deneyin";
+"The actual (physical) size is %.1f%% of the reported (logical) size. Consider rescanning using the Physical file size measure" = "Gerçek (fiziksel) boyut, raporlanan (mantıksal) boyutun %%%.1f kadarıdır. Fiziksel dosya boyutu seçeneğini kullanarak yeniden taramayı deneyin.";
 
 /* Alert message */
 "The filter must have a name" = "Süzgecin bir adı olmalı";
@@ -374,7 +377,7 @@
 "The path %@ does not exist or is not a folder" = "%@ yolu yok veya bir klasör değil";
 
 /* Alert message */
-"The refreshed content may not be fully accurate. Hard-linked items may occur more than once or could be missing. Perform a rescan to ensure that each hard-linked item occurs only once" = "Yenilenmiş içerik tümüyle doğru olmayabilir. Sabit bağlantılı ögeler birden çok veya kaybolmuş olabilir. Her bir sabit bağlantılı ögenin yalnızca bir kez göründüğünden emin olmak için bir yeniden tarama gerçekleştirin";
+"The refreshed content may not be fully accurate. Hard-linked items may occur more than once or could be missing. Perform a rescan to ensure that each hard-linked item occurs only once" = "Yenilenmiş içerik tümüyle doğru olmayabilir. Sabit bağlantılı öğeler birden çok veya kaybolmuş olabilir. Her bir sabit bağlantılı öğenin yalnızca bir kez göründüğünden emin olmak için bir yeniden tarama gerçekleştirin.";
 
 /* Alert message */
 "The reported size of some files is larger than their actual size on disk" = "Bazı dosyaların raporlanan boyutu, onların kendi gerçek boyutlarından daha büyüktür";
@@ -386,13 +389,13 @@
 "The resulting file is valid but incomplete" = "Ortaya çıkan dosya geçerli; ancak tam değil";
 
 /* Alert informative text */
-"The selected file will be moved to Trash" = "Seçilen dosya Çöp Sepeti'ne taşınacaktır";
+"The selected file will be moved to Trash" = "Seçilen dosya Çöp Sepeti’ne taşınacaktır";
 
 /* Alert informative text */
-"The selected folder, with all its contents, will be moved to Trash. Beware, any files in the folder that are not shown in the view will also be deleted" = "Seçilen klasör, tüm içeriği ile birlikte Çöp Sepeti'ne taşınacaktır. Dikkat! Bu klasörde olan ve görüntülenmeyen tüm dosyalar da silinecektir";
+"The selected folder, with all its contents, will be moved to Trash. Beware, any files in the folder that are not shown in the view will also be deleted" = "Seçilen klasör, tüm içeriği ile birlikte Çöp Sepeti’ne taşınacaktır. Dikkat! Bu klasörde olan ve görüntülenmeyen tüm dosyalar da silinecektir.";
 
 /* Alert informative text */
-"The selected package will be moved to Trash" = "Seçili paket Çöp Sepeti'ne taşınacaktır";
+"The selected package will be moved to Trash" = "Seçili paket Çöp Sepeti’ne taşınacaktır";
 
 /* Alert message */
 "The test must have a name" = "Sınamanın bir adı olmalı";

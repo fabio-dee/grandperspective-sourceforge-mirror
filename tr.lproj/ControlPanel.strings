@@ -61,14 +61,11 @@
 /* Class = "NSButtonCell"; title = "Show entire volume"; ObjectID = "938"; */
 "938.title" = "Tüm bölümü göster";
 
-/* Class = "NSButtonCell"; title = "Show package contents"; ObjectID = "939"; */
-"939.title" = "Paket içeriğini göster";
-
 /* Class = "NSTextFieldCell"; title = "File type:"; ObjectID = "946"; */
 "946.title" = "Dosya türü:";
 
 /* Class = "NSTextFieldCell"; title = "File type identifier"; ObjectID = "947"; */
-"947.title" = "Dosya türü tanımlayıcı";
+"947.title" = "Dosya türü tanımlayıcısı";
 
 /* Class = "NSTextFieldCell"; title = "Created:"; ObjectID = "974"; */
 "974.title" = "Oluşturulma:";
@@ -78,6 +75,9 @@
 
 /* Class = "NSTextFieldCell"; title = "Accessed:"; ObjectID = "984"; */
 "984.title" = "Erişilme:";
+
+/* Class = "NSTextFieldCell"; title = "Show:"; ObjectID = "GbF-h3-YU9"; */
+"GbF-h3-YU9.title" = "Göster:";
 
 /* Class = "NSWindow"; title = "Control"; ObjectID = "GHT-tk-zeb"; */
 "GHT-tk-zeb.title" = "Denetim";

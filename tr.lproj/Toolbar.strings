@@ -17,7 +17,7 @@
 "Move focus up" = "Odağı yukarı al";
 
 /* Tooltip */
-"Move to trash" = "Çöp Sepeti'ne taşı";
+"Move to trash" = "Çöp Sepeti’ne taşı";
 
 /* Toolbar action */
 "Open" = "Aç";
@@ -53,7 +53,7 @@
 "Reveal" = "Göster";
 
 /* Tooltip */
-"Reveal in Finder" = "Finder'da Göster ";
+"Reveal in Finder" = "Finder’da Göster ";
 
 /* Tooltip */
 "Search files by name" = "Dosyaları ada göre ara";

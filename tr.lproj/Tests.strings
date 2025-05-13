@@ -53,22 +53,22 @@
 "folders: %@" = "klasörler: %@";
 
 /* File/folder flags sub test */
-"item is a package" = "öge bir paket";
+"item is a package" = "öğe bir paket";
 
 /* File/folder flags sub test */
-"item is hard-linked" = "öge sabit bağlantılı";
+"item is hard-linked" = "öğe sabit bağlantılı";
 
 /* File/folder flags sub test */
-"item is not a package" = "öge bir paket değil";
+"item is not a package" = "öğe bir paket değil";
 
 /* File/folder flags sub test */
-"item is not hard-linked" = "öge sabit bağlantılı değil";
+"item is not hard-linked" = "öğe sabit bağlantılı değil";
 
 /* A filename as the subject of a string test */
 "name" = "ad";
 
 /* NOT-test with 1: sub test */
-"not (%@)" = "()%@) değil";
+"not (%@)" = "(%@) değil";
 
 /* A pathname as the subject of a string test */
 "path" = "yol";

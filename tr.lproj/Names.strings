@@ -43,11 +43,17 @@
 /* Color palette */
 "FengShui" = "Feng Shui";
 
+/* Draw setting */
+"files" = "Dosyalar";
+
 /* Color palette */
 "FlyingGeese" = "Fuşya sihiri";
 
 /* Color mapping scheme */
 "folder" = "Klasör";
+
+/* Draw setting */
+"folders" = "Paketler ve klasörler";
 
 /* Name of "special" file in the viewer */
 "free" = "Boş alan";
@@ -132,6 +138,9 @@
 
 /* Filter test */
 "Packages" = "Paketler";
+
+/* Draw setting */
+"packages and files" = "Paketler ve dosyalar";
 
 /* File size type */
 "physical" = "Fiziksel";
