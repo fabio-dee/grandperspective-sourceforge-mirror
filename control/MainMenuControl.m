@@ -29,6 +29,7 @@
 
 #import "WindowManager.h"
 
+#import "AsynchronousTaskManager.h"
 #import "VisibleAsynchronousTaskManager.h"
 #import "ScanProgressPanelControl.h"
 #import "ScanTaskInput.h"
@@ -193,8 +194,9 @@ NSString  *AfterClosingLastViewDoNothing = @"do nothing";
 
 - (void) viewWillOpen:(NSNotification *)notification;
 - (void) viewWillClose:(NSNotification *)notification;
-- (void) readTaskAborted:(NSNotification *)notification;
-- (void) scanTaskAborted:(NSNotification *)notification;
+- (void) viewProducingTaskStarted:(NSNotification *)notification;
+- (void) viewProducingTaskCompleted:(NSNotification *)notification;
+
 - (void) checkShowWelcomeWindow:(BOOL)allowAutoQuit;
 
 @end // @interface MainMenuControl (PrivateMethods)
@@ -322,6 +324,7 @@ static dispatch_once_t  singletonOnceToken;
     exportAsTextDialogControl = nil;
 
     viewCount = 0;
+    viewTaskCount = 0;
 
     NSNotificationCenter  *nc = NSNotificationCenter.defaultCenter;
     [nc addObserver: self
@@ -332,14 +335,18 @@ static dispatch_once_t  singletonOnceToken;
            selector: @selector(viewWillClose:)
                name: ViewWillCloseEvent
              object: nil];
-    [nc addObserver: self
-           selector: @selector(readTaskAborted:)
-               name: ReadTaskAbortedEvent
-             object: nil];
-    [nc addObserver: self
-           selector: @selector(scanTaskAborted:)
-               name: ScanTaskAbortedEvent
-             object: nil];
+
+    NSArray*  viewProducingTaskManagers = @[scanTaskManager, filterTaskManager, xmlReadTaskManager];
+    for (NSObject*  taskManager in [viewProducingTaskManagers objectEnumerator]) {
+      [nc addObserver: self
+             selector: @selector(viewProducingTaskStarted:)
+                 name: TaskStartedEvent
+               object: taskManager];
+      [nc addObserver: self
+             selector: @selector(viewProducingTaskCompleted:)
+                 name: TaskCompletedEvent
+               object: taskManager];
+    }
 
     showWelcomeWindow = YES; // Default
 
@@ -1233,18 +1240,23 @@ static dispatch_once_t  singletonOnceToken;
 
 - (void) viewWillOpen:(NSNotification *)notification {
   viewCount++;
+  NSLog(@"viewCount = %d, viewTaskCount = %d", viewCount, viewTaskCount);
 }
 
 - (void) viewWillClose:(NSNotification *)notification {
   viewCount--;
+  NSLog(@"viewCount = %d, viewTaskCount = %d", viewCount, viewTaskCount);
   [self checkShowWelcomeWindow: YES];
 }
 
-- (void) readTaskAborted:(NSNotification *)notification {
-  [self checkShowWelcomeWindow: NO];
+- (void) viewProducingTaskStarted:(NSNotification *)notification {
+  viewTaskCount++;
+  NSLog(@"viewCount = %d, viewTaskCount = %d", viewCount, viewTaskCount);
 }
 
-- (void) scanTaskAborted:(NSNotification *)notification {
+- (void) viewProducingTaskCompleted:(NSNotification *)notification {
+  viewTaskCount--;
+  NSLog(@"viewCount = %d, viewTaskCount = %d", viewCount, viewTaskCount);
   [self checkShowWelcomeWindow: NO];
 }
 
@@ -1259,6 +1271,10 @@ static dispatch_once_t  singletonOnceToken;
   [self performSelectorOnMainThread: @selector(hideControlPanel)
                          withObject: nil
                       waitUntilDone: NO];
+
+  if (viewTaskCount > 0) {
+    return;
+  }
 
   NSString  *action = [NSUserDefaults.standardUserDefaults stringForKey: NoViewsBehaviourKey];
   if ([action isEqualToString: AfterClosingLastViewQuit]) {

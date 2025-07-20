@@ -7,8 +7,6 @@
 #import "ProgressTracker.h"
 
 
-NSString  *ScanTaskAbortedEvent = @"scanTaskAborted";
-
 @implementation ScanTaskExecutor
 
 - (instancetype) init {
@@ -66,8 +64,6 @@ NSString  *ScanTaskAbortedEvent = @"scanTaskAborted";
       scanResult = [ScanTaskOutput failedScanTaskOutput: treeBuilder.alertMessage];
     } else {
       NSLog(@"Scanning aborted.");
-      [NSNotificationCenter.defaultCenter postNotificationName: ScanTaskAbortedEvent
-                                                        object: self];
     }
   }
 

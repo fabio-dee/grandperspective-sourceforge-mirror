@@ -28,6 +28,8 @@
   BOOL  showWelcomeWindow;
   // The number of open directory view windows
   int  viewCount;
+  // The number of running view-producing tasks
+  int  viewTaskCount;
 }
 
 @property (class, nonatomic, readonly) MainMenuControl *singletonInstance;

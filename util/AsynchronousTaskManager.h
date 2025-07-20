@@ -3,6 +3,15 @@
 
 @protocol TaskExecutor;
 
+
+// Fired when a new task is started.
+extern NSString  *TaskStartedEvent;
+
+// Fired when a task completed, successfully or not.
+// It also fires when the task terminated because of an error, or it was aborted by the user.
+extern NSString  *TaskCompletedEvent;
+
+
 /* Manager that can run a task in a background thread. It only runs one task at most.
  */
 @interface AsynchronousTaskManager : NSObject {

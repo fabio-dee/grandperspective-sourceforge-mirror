@@ -5,6 +5,13 @@
 #import "ProgressPanelControl.h"
 
 
+@interface VisibleAsynchronousTaskManager (PrivateMethods)
+
+- (void) notificationFired:(NSNotification *)notification;
+
+@end
+
+
 @interface CallbackHandler : NSObject { 
   ProgressPanelControl  *progressPanelControl;
 
@@ -32,6 +39,11 @@
     
     taskManager = [[AsynchronousTaskManager alloc] initWithTaskExecutor:
                    progressPanelControl.taskExecutor];
+
+    [NSNotificationCenter.defaultCenter addObserver: self
+                                           selector: @selector(notificationFired:)
+                                               name: nil
+                                             object: taskManager];
   }
 
   return self;
@@ -79,6 +91,15 @@
 }
 
 @end // @implementation VisibleAsynchronousTaskManager
+
+
+@implementation VisibleAsynchronousTaskManager (PrivateMethods)
+
+- (void) notificationFired:(NSNotification *)notification {
+  [NSNotificationCenter.defaultCenter postNotificationName: notification.name object: self];
+}
+
+@end // @implementation VisibleAsynchronousTaskManager (PrivateMethods)
 
 
 @implementation CallbackHandler

@@ -4,8 +4,6 @@
 #import "ReadTaskInput.h"
 
 
-NSString  *ReadTaskAbortedEvent = @"readTaskAborted";
-
 @implementation ReadTaskExecutor
 
 - (instancetype) init {
@@ -40,10 +38,6 @@ NSString  *ReadTaskAbortedEvent = @"readTaskAborted";
 
   [treeReader readTreeFromFile: myInput.sourceUrl];
   TreeReader  *retVal = [[treeReader retain] autorelease];
-
-  if (treeReader.aborted) {
-    [NSNotificationCenter.defaultCenter postNotificationName: ReadTaskAbortedEvent object: self];
-  }
 
   [taskLock lock];
   [treeReader release];

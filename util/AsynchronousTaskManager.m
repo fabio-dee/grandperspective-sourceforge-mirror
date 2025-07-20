@@ -4,6 +4,14 @@
 #import "TaskExecutor.h"
 
 
+// Fired when a new task is started.
+NSString  *TaskStartedEvent = @"taskStarted";
+
+// Fired when a task completed, successfully or not.
+// It also fires when the task terminated because of an error, or it was aborted by the user.
+NSString  *TaskCompletedEvent = @"taskCompleted";
+
+
 enum {
   // Indicates that there is a task in progress or ready to be executed.
   BACKGROUND_THREAD_BUSY = 456,
@@ -151,14 +159,22 @@ enum {
       // not handle the last request to abort the task. 
       [executor prepareToRunTask];
 
+      [NSNotificationCenter.defaultCenter postNotificationName: TaskStartedEvent object: self];
+
       [settingsLock unlock]; // Don't lock settings while running the task.
       id  taskOutput = [executor runTaskWithInput: taskInput];
-      [settingsLock lock];
-      
+
+      // Wait for callback to be done. This ensures that the task is handled (which could create
+      // a view) before signalling completion of the task (which could trigger check on the
+      // number of views).
       [taskCallback performSelectorOnMainThread: taskCallbackSelector
                                      withObject: taskOutput
-                                  waitUntilDone: NO];
-            
+                                  waitUntilDone: YES];
+
+      [settingsLock lock];
+
+      [NSNotificationCenter.defaultCenter postNotificationName: TaskCompletedEvent object: self];
+
       if (!alive) {
         // The manager has been disposed of while BUSY.
         [workLock unlockWithCondition: BACKGROUND_THREAD_SHUTDOWN];
