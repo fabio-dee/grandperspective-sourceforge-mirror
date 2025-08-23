@@ -163,4 +163,8 @@
                            @"Misc. description for File type mapping scheme.");
 }
 
+- (BOOL) reverseOrder {
+  return NO;
+}
+
 @end

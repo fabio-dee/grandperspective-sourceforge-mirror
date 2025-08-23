@@ -50,4 +50,11 @@
 
 @property (nonatomic, readonly, copy) NSString *descriptionForRemainingHashes;
 
+/* Returns "YES" if the item with hash zero should map to the last color in the palette.
+ *
+ * This is used to ensure that for the heatmap palettes, which are ordered from cold to hot, the
+ * coloring is meaningful.
+ */
+@property (nonatomic, readonly) BOOL reverseOrder;
+
 @end

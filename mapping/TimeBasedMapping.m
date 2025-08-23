@@ -90,6 +90,10 @@ const int  minTimeDelta = 60;
                            @"Legend for Time-based mapping schemes.");
 }
 
+- (BOOL) reverseOrder {
+  return NO;
+}
+
 @end // @implementation TimeBasedMapping
 
 

@@ -97,7 +97,13 @@
 - (void) drawFileItem:(FileItem *)fileItem atRect:(NSRect) rect depth:(int) depth {
   NSUInteger  colorIndex = [colorMapper hashForFileItem: fileItem atDepth: depth];
   if (colorMapper.canProvideLegend) {
-    colorIndex = MIN(colorIndex, rectangleDrawer.numGradientColors - 1);
+    LegendProvidingFileItemMapping  *legendProvider = (LegendProvidingFileItemMapping *)colorMapper;
+
+    NSUInteger  maxIndex = rectangleDrawer.numGradientColors - 1;
+    colorIndex = MIN(colorIndex, maxIndex);
+    if (legendProvider.reverseOrder) {
+      colorIndex = maxIndex - colorIndex;
+    }
   }
   else {
     colorIndex = colorIndex % rectangleDrawer.numGradientColors;

@@ -127,25 +127,29 @@ NSString  *ColorDescriptionColumnIdentifier = @"colorDescription";
 //-----------------------------------------------------------------------------
 
 - (NSString *)descriptionForRow:(NSUInteger)row {
-  NSObject <FileItemMapping>  *colorMapper = [[dirView treeDrawerSettings] colorMapper];
+  NSObject <FileItemMapping>  *colorMapper = dirView.treeDrawerSettings.colorMapper;
 
-  if (colorMapper.canProvideLegend) {
-    LegendProvidingFileItemMapping  *legendProvider = (LegendProvidingFileItemMapping *)colorMapper;
-  
-    if (row < colorImages.count - 1) {
-      return [legendProvider descriptionForHash: row];
-    }
-    else {
-      if ([legendProvider descriptionForHash: row + 1] != nil) {
-        return legendProvider.descriptionForRemainingHashes;
-      }
-      else {
-        return [legendProvider descriptionForHash: row];
-      }
-    }
+  if (!colorMapper.canProvideLegend) {
+    return nil;
+  }
+
+  LegendProvidingFileItemMapping  *legendProvider = (LegendProvidingFileItemMapping *)colorMapper;
+  NSUInteger  maxIndex = colorImages.count - 1;
+  NSUInteger  hash = legendProvider.reverseOrder ? maxIndex - row : row;
+  BOOL  lastEntry = hash == maxIndex;
+
+  if (!lastEntry) {
+    return [legendProvider descriptionForHash: hash];
   }
   else {
-    return nil;
+    if ([legendProvider descriptionForHash: hash + 1] == nil) {
+      // If there is only one more entry with a legend, return that
+      return [legendProvider descriptionForHash: hash];
+    }
+    else {
+      // Otherwise return an aggregate description
+      return legendProvider.descriptionForRemainingHashes;
+    }
   }
 }
 

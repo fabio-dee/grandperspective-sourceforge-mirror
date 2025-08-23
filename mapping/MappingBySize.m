@@ -66,31 +66,45 @@ const item_size_t  minUpperBound = 1024;
   return YES;
 }
 
+- (BOOL) reverseOrder {
+  // Ensure large items are colored "hot" in the heatmap palettes
+  return YES;
+}
+
 
 //----------------------------------------------------------------------------
 // Implementation of LegendProvidingFileItemMapping
 
 - (NSString *)descriptionForHash: (NSUInteger)hash {
-  CFAbsoluteTime  lowerBound = maxItemSizeLimit;
-  CFAbsoluteTime  upperBound = 0;
+  if (hash == 0) {
+    NSString *fmt = NSLocalizedString(@"More than %@",
+                                      @"Legend for Size-based mapping scheme.");
+    return [NSString stringWithFormat: fmt, [FileItem stringForFileItemSize: maxItemSizeLimit]];
+  }
+
+  item_size_t  lowerBound = maxItemSizeLimit;
+  item_size_t  upperBound = 0;
 
   NSUInteger  i = hash;
-  while (i > 0) {
+  while (i > 0 && lowerBound >= minUpperBound) {
     upperBound = lowerBound;
     lowerBound /= 2;
     i--;
   }
 
-  if (hash == 0) {
-    NSString *fmt = NSLocalizedString(@"More than %@",
-                                      @"Legend for Size-based mapping scheme.");
-    return [NSString stringWithFormat: fmt, [FileItem stringForFileItemSize: lowerBound]];
-  } else {
+  if (upperBound > minUpperBound) {
     NSString *fmt = NSLocalizedString(@"%@ - %@",
                                       @"Legend for Size-based mapping scheme.");
     return [NSString stringWithFormat: fmt,
-            [FileItem stringForFileItemSize: upperBound],
-            [FileItem stringForFileItemSize: lowerBound]];
+            [FileItem stringForFileItemSize: lowerBound],
+            [FileItem stringForFileItemSize: upperBound]];
+  } else if (i == 0) {
+    NSString *fmt = NSLocalizedString(@"Less than %@",
+                                      @"Legend for Size-based mapping scheme.");
+    return [NSString stringWithFormat: fmt,
+            [FileItem stringForFileItemSize: upperBound]];
+  } else {
+    return nil;
   }
 }
 
