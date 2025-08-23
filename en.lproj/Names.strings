@@ -118,6 +118,9 @@
 /* Color mapping scheme */
 "access" = "Last access";
 
+/* Color mapping scheme */
+"size" = "Size";
+
 
 /* Draw setting */
 "files" = "Files";

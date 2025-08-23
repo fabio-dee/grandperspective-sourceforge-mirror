@@ -8,6 +8,7 @@
 #import "AccessMappingScheme.h"
 #import "CreationMappingScheme.h"
 #import "ModificationMappingScheme.h"
+#import "MappingBySize.h"
 
 @interface MappingByLevel : StatelessFileItemMapping
 @end
@@ -162,6 +163,8 @@
                                    key: @"modification"];
     [instance addFileItemMappingScheme: [[[AccessMappingScheme alloc] init] autorelease]
                                    key: @"access"];
+    [instance addFileItemMappingScheme: [[[MappingBySize alloc] init] autorelease]
+                                   key: @"size"];
     defaultFileItemMappingCollectionInstance = [instance retain];
   });
   

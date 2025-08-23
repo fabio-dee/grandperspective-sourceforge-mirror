@@ -162,6 +162,7 @@
 		AAE476C51D0D947E007CF42F /* StartWindowControl.m in Sources */ = {isa = PBXBuildFile; fileRef = AAE476C41D0D947E007CF42F /* StartWindowControl.m */; };
 		AAE4982E1CD158C6003F0A29 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = AAE4982D1CD158C6003F0A29 /* Images.xcassets */; };
 		AAE498311CD15BAF003F0A29 /* StartWindow.xib in Resources */ = {isa = PBXBuildFile; fileRef = AAE4982F1CD15BAF003F0A29 /* StartWindow.xib */; };
+		AAE4AC2F2E59E244007C2482 /* MappingBySize.m in Sources */ = {isa = PBXBuildFile; fileRef = AAE4AC2E2E59E244007C2482 /* MappingBySize.m */; };
 		AAE87FDA0CE10B9B00A99883 /* UniformTypeInventory.m in Sources */ = {isa = PBXBuildFile; fileRef = AAE87FD80CE10B9B00A99883 /* UniformTypeInventory.m */; };
 		AAEF42831081136100468832 /* LocalizableStrings.m in Sources */ = {isa = PBXBuildFile; fileRef = AAEF42821081136100468832 /* LocalizableStrings.m */; };
 		AAEF43771081E0EE00468832 /* FilterTestRef.m in Sources */ = {isa = PBXBuildFile; fileRef = AAEF43761081E0EE00468832 /* FilterTestRef.m */; };
@@ -668,6 +669,8 @@
 		AAE476C31D0D946E007CF42F /* StartWindowControl.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = StartWindowControl.h; path = control/StartWindowControl.h; sourceTree = "<group>"; };
 		AAE476C41D0D947E007CF42F /* StartWindowControl.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = StartWindowControl.m; path = control/StartWindowControl.m; sourceTree = "<group>"; };
 		AAE4982D1CD158C6003F0A29 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
+		AAE4AC2D2E59E116007C2482 /* MappingBySize.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MappingBySize.h; sourceTree = "<group>"; };
+		AAE4AC2E2E59E244007C2482 /* MappingBySize.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MappingBySize.m; sourceTree = "<group>"; };
 		AAE87FD80CE10B9B00A99883 /* UniformTypeInventory.m */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.objc; name = UniformTypeInventory.m; path = util/UniformTypeInventory.m; sourceTree = "<group>"; };
 		AAE87FD90CE10B9B00A99883 /* UniformTypeInventory.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; name = UniformTypeInventory.h; path = util/UniformTypeInventory.h; sourceTree = "<group>"; };
 		AAEF42811081136100468832 /* LocalizableStrings.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = LocalizableStrings.h; path = util/LocalizableStrings.h; sourceTree = "<group>"; };
@@ -972,6 +975,8 @@
 				AA0CDE76154882BE0018D583 /* ModificationMappingScheme.m */,
 				AA5FE4D6154D56DC0050856C /* AccessMappingScheme.h */,
 				AA5FE4D7154D56DC0050856C /* AccessMappingScheme.m */,
+				AAE4AC2D2E59E116007C2482 /* MappingBySize.h */,
+				AAE4AC2E2E59E244007C2482 /* MappingBySize.m */,
 			);
 			path = mapping;
 			sourceTree = "<group>";
@@ -1384,6 +1389,7 @@
 				AA83A65410F67A2E002542E4 /* FilterPopUpControl.m in Sources */,
 				AAA4FF1123C8F7C300A51C97 /* ColorListCollection.m in Sources */,
 				AA83A70F10F8AE5E002542E4 /* FilterTestEditor.m in Sources */,
+				AAE4AC2F2E59E244007C2482 /* MappingBySize.m in Sources */,
 				AA52461D110202F50018897B /* FilterSelectionPanelControl.m in Sources */,
 				AA52461E110202F50018897B /* FiltersWindowControl.m in Sources */,
 				AA524627110203070018897B /* FilterTestWindowControl.m in Sources */,

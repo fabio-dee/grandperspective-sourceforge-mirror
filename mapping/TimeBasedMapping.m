@@ -36,16 +36,15 @@ const int  minTimeDelta = 60;
   CFAbsoluteTime  refTime = nowTime - minTime;
   NSUInteger  hash = 0;
   
-  while (YES) {
+  while (refTime > minTimeDelta) {
     if (itemTime > refTime) {
       return hash;
     }
     hash++;
-    refTime = refTime / 2;
-    if (refTime < minTimeDelta) {
-      return hash;
-    }
+    refTime /= 2;
   }
+
+  return hash;
 }
 
 
