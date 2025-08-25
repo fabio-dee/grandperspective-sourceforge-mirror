@@ -2,10 +2,17 @@
 
 #import "DirectoryItem.h"
 #import "FileItemMapping.h"
+#import "FileItemMappingScheme.h"
 #import "FilteredTreeGuide.h"
 #import "GradientRectangleDrawer.h"
 #import "TreeDrawerSettings.h"
 
+
+@interface TreeDrawer (PrivateMethod)
+
+- (void) colorSchemeChanged:(NSNotification *)notification;
+
+@end // @interface TreeDrawer (PrivateMethod)
 
 @implementation TreeDrawer
 
@@ -24,9 +31,6 @@
                treeDrawerSettings:(TreeDrawerSettings *)settings {
   if (self = [super initWithScanTree: scanTreeVal
                         colorPalette: settings.colorPalette]) {
-    // Make sure values are set before calling updateSettings.
-    colorMapper = nil;
-
     [self updateSettings: settings];
     
     freeSpaceColor = [rectangleDrawer intValueForColor: NSColor.blackColor];
@@ -37,23 +41,29 @@
 }
 
 - (void) dealloc {
-  [colorMapper release];
+  [NSNotificationCenter.defaultCenter removeObserver: self];
 
   [super dealloc];
 }
 
 
-- (void) setColorMapper:(NSObject <FileItemMapping> *)colorMapperVal {
-  NSAssert(colorMapperVal != nil, @"Cannot set an invalid color mapper.");
+- (void) setColorScheme:(NSObject <FileItemMappingScheme> *)colorScheme {
+  if (colorScheme != _colorScheme) {
+    NSNotificationCenter  *nc = NSNotificationCenter.defaultCenter;
 
-  if (colorMapperVal != colorMapper) {
-    [colorMapper release];
-    colorMapper = [colorMapperVal retain];
+    [nc removeObserver: self
+                  name: MappingSchemeChangedEvent
+                object: _colorScheme];
+
+    _colorScheme = colorScheme;
+
+    [nc addObserver: self
+           selector: @selector(colorSchemeChanged:)
+               name: MappingSchemeChangedEvent
+             object: _colorScheme];
+
+    [self colorSchemeChanged: nil];
   }
-}
-
-- (NSObject <FileItemMapping> *)colorMapper {
-  return colorMapper;
 }
 
 
@@ -69,7 +79,8 @@
 - (void) updateSettings:(TreeDrawerSettings *)settings {
   [super updateSettings: settings];
 
-  [self setColorMapper: settings.colorMapper];
+  self.colorScheme = settings.colorScheme;
+
   [rectangleDrawer setColorPalette: settings.colorPalette];
   [rectangleDrawer setColorGradient: settings.colorGradient];
   [self setMaskTest: settings.maskTest];
@@ -95,21 +106,22 @@
 }
 
 - (void) drawFileItem:(FileItem *)fileItem atRect:(NSRect) rect depth:(int) depth {
-  NSUInteger  colorIndex = [colorMapper hashForFileItem: fileItem atDepth: depth];
-  if (colorMapper.canProvideLegend) {
-    LegendProvidingFileItemMapping  *legendProvider = (LegendProvidingFileItemMapping *)colorMapper;
-
-    NSUInteger  maxIndex = rectangleDrawer.numGradientColors - 1;
-    colorIndex = MIN(colorIndex, maxIndex);
-    if (legendProvider.reverseOrder) {
-      colorIndex = maxIndex - colorIndex;
-    }
-  }
-  else {
-    colorIndex = colorIndex % rectangleDrawer.numGradientColors;
-  }
+  NSUInteger  hash = [_colorMapper hashForFileItem: fileItem atDepth: depth];
+  NSUInteger  colorIndex = [_colorMapper colorIndexForHash: hash
+                                                 numColors: rectangleDrawer.numGradientColors];
 
   [rectangleDrawer drawGradientFilledRect: rect colorIndex: colorIndex];
 }
 
 @end // @implementation TreeDrawer
+
+@implementation TreeDrawer (PrivateMethod)
+
+- (void) colorSchemeChanged:(NSNotification *)notification {
+  _colorMapper = [self.colorScheme fileItemMappingForTree: scanTree];
+
+  [NSNotificationCenter.defaultCenter postNotificationName: ColorMappingChangedEvent
+                                                    object: self];
+}
+
+@end // @implementation TreeDrawer (PrivateMethod)

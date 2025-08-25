@@ -61,6 +61,8 @@ CGFloat ramp(CGFloat x, CGFloat minX, CGFloat maxX) {
 - (void) startOverlayDrawTask;
 - (void) overlayImageReady:(id)image;
 
+@property (nonatomic, readonly) TreeDrawer *treeDrawer;
+
 @property (nonatomic, readonly) float animatedOverlayStrength;
 - (void) refreshDisplay;
 - (void) enablePeriodicRedraw:(BOOL) enable;
@@ -87,7 +89,6 @@ CGFloat ramp(CGFloat x, CGFloat minX, CGFloat maxX) {
 
 - (void) updateAcceptMouseMovedEvents;
 
-- (void) observeColorMapping;
 - (void) colorMappingChanged:(NSNotification *)notification;
 
 - (void) updateSelectedItem:(NSPoint)point;
@@ -128,9 +129,7 @@ CGFloat ramp(CGFloat x, CGFloat minX, CGFloat maxX) {
   [_overlayTest release];
   [pathDrawer release];
   [selectedItemLocator release];
-  
-  [observedColorMapping release];
-  
+
   [pathModelView release];
   
   [treeImage release];
@@ -160,8 +159,6 @@ CGFloat ramp(CGFloat x, CGFloat minX, CGFloat maxX) {
   overlayDrawTaskManager =
     [[AsynchronousTaskManager alloc] initWithTaskExecutor: overlayDrawTaskExecutor];
 
-  [self observeColorMapping];
-  
   NSNotificationCenter  *nc = NSNotificationCenter.defaultCenter;
 
   [nc addObserver: self
@@ -176,6 +173,11 @@ CGFloat ramp(CGFloat x, CGFloat minX, CGFloat maxX) {
          selector: @selector(visiblePathLockingChanged:)
              name: VisiblePathLockingChangedEvent
            object: pathModelView.pathModel];
+
+  [nc addObserver: self
+         selector: @selector(colorMappingChanged:)
+             name: MappingSchemeChangedEvent
+           object: self.treeDrawer];
 
   [nc addObserver: self
          selector: @selector(windowMainStatusChanged:)
@@ -196,6 +198,10 @@ CGFloat ramp(CGFloat x, CGFloat minX, CGFloat maxX) {
           
   [self visiblePathLockingChanged: nil];
   [self refreshDisplay];
+}
+
+- (FileItemMapping *)colorMapper {
+  return self.treeDrawer.colorMapper;
 }
 
 
@@ -272,12 +278,8 @@ CGFloat ramp(CGFloat x, CGFloat minX, CGFloat maxX) {
       [self postColorPaletteChanged]; 
     }
     
-    if (settings.colorMapper != oldSettings.colorMapper) {
-      [self postColorMappingChanged]; 
-
-      // Observe the color mapping (for possible changes to its hashing
-      // implementation)
-      [self observeColorMapping];
+    if (settings.colorScheme != oldSettings.colorScheme) {
+      [self postColorMappingChanged];
     }
     
     if (settings.drawItems != oldSettings.drawItems) {
@@ -903,6 +905,10 @@ CGFloat ramp(CGFloat x, CGFloat minX, CGFloat maxX) {
           : 0.7);
 }
 
+- (TreeDrawer *)treeDrawer {
+  return ((DrawTaskExecutor *)drawTaskManager.taskExecutor).treeDrawer;
+}
+
 - (void) refreshDisplay {
   [self setNeedsDisplay: YES];
 }
@@ -1133,36 +1139,9 @@ CGFloat ramp(CGFloat x, CGFloat minX, CGFloat maxX) {
 }
 
 
-- (void) observeColorMapping {
-  NSObject <FileItemMappingScheme>  *colorMapping =
-    self.treeDrawerSettings.colorMapper.fileItemMappingScheme;
-    
-  if (colorMapping != observedColorMapping) {
-    NSNotificationCenter  *nc = NSNotificationCenter.defaultCenter;
-    
-    if (observedColorMapping != nil) {
-      [nc removeObserver: self
-                    name: MappingSchemeChangedEvent
-                  object: observedColorMapping];
-      [observedColorMapping release];
-    }
-
-    [nc addObserver: self
-           selector: @selector(colorMappingChanged:)
-               name: MappingSchemeChangedEvent
-             object: colorMapping];
-    observedColorMapping = [colorMapping retain];
-  }
-}
-
 - (void) colorMappingChanged:(NSNotification *) notification {
-  // Replace the mapper that is used by a new one (still from the same scheme)
-  NSObject <FileItemMapping>  *newMapping =
-    [observedColorMapping fileItemMappingForTree: pathModelView.scanTree];
-
-  [self setTreeDrawerSettings: [self.treeDrawerSettings settingsWithChangedColorMapper: newMapping]];
-
-  [self postColorMappingChanged]; 
+  // Propagate event fired by internal TreeDrawer to DirectoryView's observers
+  [self postColorMappingChanged];
 }
 
 

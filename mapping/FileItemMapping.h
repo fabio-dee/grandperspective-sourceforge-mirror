@@ -2,16 +2,14 @@
 
 @class FileItem;
 @class PlainFileItem;
-@protocol FileItemMappingScheme;
 
 /* An implementation of a particular file item mapping scheme. It can map file items to hash values.
  *
  * Implementations are not (necessarily) thread-safe. Each thread should get an instance it can
  * safely use by invoking -fileItemMapping on the file item mapping scheme.
  */
-@protocol FileItemMapping
-
-@property (nonatomic, readonly, strong) NSObject<FileItemMappingScheme> *fileItemMappingScheme;
+@interface FileItemMapping : NSObject {
+}
 
 /* Calculates a hash value for a file item in a tree, when the item is encountered while traversing
  * the tree. The calculation may use the "depth" of the file item relative to the root of the tree,
@@ -28,33 +26,15 @@
  */
 - (NSUInteger) hashForFileItem:(FileItem *)item inTree:(FileItem *)treeRoot;
 
-/* Returns "YES" iff there are meaningful descriptions for each hash value. In this case, the range
- * of hash values is expected to be the consecutive numbers from zero upwards, as many as are
- * needed. For each these values, the method -descriptionForHash will provide a short descriptive
- * string.
+/* Returns the color index for the given hash, given the number of available colors.
  */
-@property (nonatomic, readonly) BOOL canProvideLegend;
+- (NSUInteger) colorIndexForHash:(NSUInteger)hash numColors:(NSUInteger)numColors;
 
-@end
+- (BOOL)providesLegend;
 
-
-/* Informal protocol to be implemented by FileItemMapping schemes for which -canProvideLegend
- * returns "YES".
+/* Description for the given color index, if any. Returns nil if no suitable description can be
+ * provided.
  */
-@interface LegendProvidingFileItemMapping
-
-/* Short descriptive string for the given hash value. Returns "nil" if no description can be given
- * (i.e. when -canProvideLegend returns "NO"), or if the hash value is outside of the valid range.
- */
-- (NSString *)descriptionForHash:(NSUInteger)hash;
-
-@property (nonatomic, readonly, copy) NSString *descriptionForRemainingHashes;
-
-/* Returns "YES" if the item with hash zero should map to the last color in the palette.
- *
- * This is used to ensure that for the heatmap palettes, which are ordered from cold to hot, the
- * coloring is meaningful.
- */
-@property (nonatomic, readonly) BOOL reverseOrder;
+- (NSString *)legendForColorIndex:(NSUInteger)colorIndex numColors:(NSUInteger)numColors;
 
 @end

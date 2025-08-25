@@ -18,6 +18,7 @@ extern NSString  *DisplayFocusChangedEvent;
 @class TreeLayoutBuilder;
 @class FileItem;
 @class FileItemTest;
+@class FileItemMapping;
 @class TreeDrawerSettings;
 @class ItemPathDrawer;
 @class ItemPathModelView;
@@ -36,9 +37,6 @@ extern NSString  *DisplayFocusChangedEvent;
   ItemPathDrawer  *pathDrawer;
   ItemPathModelView  *pathModelView;
   ItemLocator  *selectedItemLocator;
-  
-  // The current color mapping, which is being observed for any changes to the scheme.
-  NSObject <FileItemMappingScheme>  *observedColorMapping;
 
   BOOL  showEntireVolume;
 
@@ -92,6 +90,7 @@ extern NSString  *DisplayFocusChangedEvent;
 - (NSImage *)imageInViewForItemAtEndOfPath:(NSArray *)itemPath;
 
 @property (nonatomic, strong) TreeDrawerSettings *treeDrawerSettings;
+@property (nonatomic, readonly) FileItemMapping *colorMapper;
 @property (nonatomic, strong) FileItemTest *overlayTest;
 
 // Property used during zoom animation.

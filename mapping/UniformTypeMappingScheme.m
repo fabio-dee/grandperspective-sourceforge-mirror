@@ -1,6 +1,6 @@
 #import "UniformTypeMappingScheme.h"
 
-#import "StatefulFileItemMapping.h"
+#import "FileItemMapping.h"
 #import "PlainFileItem.h"
 #import "UniformType.h"
 #import "UniformTypeRanking.h"
@@ -13,13 +13,18 @@
 @end
 
 
-@interface MappingByUniformType : StatefulFileItemMapping {
+@interface MappingByUniformType : FileItemMapping {
 
   // Cache mapping UTIs (NSString) to integer values (NSNumber)
   NSMutableDictionary  *hashForUTICache;
   
   NSArray  *orderedTypes;
 }
+
+- (instancetype) init NS_UNAVAILABLE;
+
+- (instancetype) initWithUniformTypeRanking:(UniformTypeRanking *)typeRanking
+  NS_DESIGNATED_INITIALIZER;
 
 @end
 
@@ -58,8 +63,9 @@
 //----------------------------------------------------------------------------
 // Implementation of FileItemMappingScheme protocol
 
-- (NSObject <FileItemMapping> *)fileItemMappingForTree:(DirectoryItem *)tree {
-  return [[[MappingByUniformType alloc] initWithFileItemMappingScheme: self] autorelease];
+- (FileItemMapping *)fileItemMappingForTree:(DirectoryItem *)tree {
+  return [[[MappingByUniformType alloc] initWithUniformTypeRanking: _uniformTypeRanking]
+          autorelease];
 }
 
 @end // @implementation UniformTypeMappingScheme
@@ -78,13 +84,10 @@
 
 @implementation MappingByUniformType
 
-- (instancetype) initWithFileItemMappingScheme:(NSObject <FileItemMappingScheme> *)schemeVal {
+- (instancetype) initWithUniformTypeRanking:(UniformTypeRanking *)typeRanking {
 
-  if (self = [super initWithFileItemMappingScheme: schemeVal]) {
+  if (self = [super init]) {
     hashForUTICache = [[NSMutableDictionary dictionaryWithCapacity: 16] retain];
-    
-    UniformTypeRanking  *typeRanking = ((UniformTypeMappingScheme *)schemeVal).uniformTypeRanking;
-    
     orderedTypes = [typeRanking.undominatedRankedUniformTypes retain];
   }
   
@@ -93,7 +96,6 @@
 
 - (void) dealloc {
   [hashForUTICache release];
-
   [orderedTypes release];
   
   [super dealloc];
@@ -138,33 +140,29 @@
   return 0;
 }
 
+- (NSUInteger) colorIndexForHash:(NSUInteger)hash numColors:(NSUInteger)numColors {
+  return MIN(hash, numColors - 1);
+}
 
-- (BOOL) canProvideLegend {
+- (BOOL)providesLegend {
   return YES;
 }
 
-//----------------------------------------------------------------------------
-// Implementation of informal LegendProvidingFileItemMapping protocol
-
-- (NSString *)descriptionForHash:(NSUInteger)hash {
-  if (hash >= orderedTypes.count) {
+- (NSString *)legendForColorIndex:(NSUInteger)colorIndex numColors:(NSUInteger)numColors {
+  if (colorIndex >= orderedTypes.count) {
     return nil;
   }
+
+  if (colorIndex == numColors - 1) {
+    return NSLocalizedString(@"other file types",
+                             @"Misc. description for File type mapping scheme.");
+  }
   
-  UniformType  *type = orderedTypes[hash];
+  UniformType  *type = orderedTypes[colorIndex];
   
   NSString  *descr = type.description;
    
   return (descr != nil) ? descr : type.uniformTypeIdentifier;
-}
-
-- (NSString *)descriptionForRemainingHashes {
-  return NSLocalizedString(@"other file types",
-                           @"Misc. description for File type mapping scheme.");
-}
-
-- (BOOL) reverseOrder {
-  return NO;
 }
 
 @end

@@ -9,5 +9,5 @@
  * Given that the implementation is stateless, the corresponding file item mapping scheme can always
  * return the same file item mapping instance, which therefore can also represent the scheme.
  */
-@interface StatelessFileItemMapping : NSObject <FileItemMappingScheme, FileItemMapping>
+@interface StatelessFileItemMapping : FileItemMapping <FileItemMappingScheme>
 @end

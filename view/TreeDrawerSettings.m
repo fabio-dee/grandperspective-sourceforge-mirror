@@ -19,7 +19,7 @@
                             drawItems:(DrawItemsEnum)drawItems {
   NSUserDefaults  *userDefaults = NSUserDefaults.standardUserDefaults;
 
-  return [self initWithColorMapper: [[[StatelessFileItemMapping alloc] init] autorelease]
+  return [self initWithColorScheme: [[[StatelessFileItemMapping alloc] init] autorelease]
                       colorPalette: TreeDrawerSettings.defaultColorPalette
                      colorGradient: [userDefaults floatForKey: DefaultColorGradient]
                          drawItems: drawItems
@@ -28,14 +28,14 @@
 }
 
 
-- (instancetype) initWithColorMapper:(NSObject <FileItemMapping> *)colorMapper
+- (instancetype) initWithColorScheme:(NSObject <FileItemMappingScheme> *)colorScheme
                         colorPalette:(NSColorList *)colorPalette
                        colorGradient:(float)colorGradient
                            drawItems:(DrawItemsEnum)drawItems
                             maskTest:(FileItemTest *)maskTest
                         displayDepth:(unsigned)displayDepth {
   if (self = [super initWithDisplayDepth: displayDepth drawItems: drawItems]) {
-    _colorMapper = [colorMapper retain];
+    _colorScheme = [colorScheme retain];
     _colorPalette = [colorPalette retain];
     _colorGradient = colorGradient;
     _maskTest = [maskTest retain];
@@ -45,7 +45,7 @@
 }
 
 - (void) dealloc {
-  [_colorMapper release];
+  [_colorScheme release];
   [_colorPalette release];
   [_maskTest release];
   
@@ -53,8 +53,8 @@
 }
 
 
-- (instancetype) settingsWithChangedColorMapper:(NSObject <FileItemMapping> *)colorMapper {
-  return [[[TreeDrawerSettings alloc] initWithColorMapper: colorMapper
+- (instancetype) settingsWithChangedColorScheme:(NSObject <FileItemMappingScheme> *)colorScheme {
+  return [[[TreeDrawerSettings alloc] initWithColorScheme: colorScheme
                                              colorPalette: self.colorPalette
                                             colorGradient: self.colorGradient
                                                 drawItems: self.drawItems
@@ -63,7 +63,7 @@
 }
 
 - (instancetype) settingsWithChangedColorPalette:(NSColorList *)colorPalette {
-  return [[[TreeDrawerSettings alloc] initWithColorMapper: self.colorMapper
+  return [[[TreeDrawerSettings alloc] initWithColorScheme: self.colorScheme
                                              colorPalette: colorPalette
                                             colorGradient: self.colorGradient
                                                 drawItems: self.drawItems
@@ -72,7 +72,7 @@
 }
 
 - (instancetype) settingsWithChangedColorGradient:(float) colorGradient {
-  return [[[TreeDrawerSettings alloc] initWithColorMapper: self.colorMapper
+  return [[[TreeDrawerSettings alloc] initWithColorScheme: self.colorScheme
                                              colorPalette: self.colorPalette
                                             colorGradient: colorGradient
                                                 drawItems: self.drawItems
@@ -81,7 +81,7 @@
 }
 
 - (instancetype) settingsWithChangedMaskTest:(FileItemTest *)maskTest {
-  return [[[TreeDrawerSettings alloc] initWithColorMapper: self.colorMapper
+  return [[[TreeDrawerSettings alloc] initWithColorScheme: self.colorScheme
                                              colorPalette: self.colorPalette
                                             colorGradient: self.colorGradient
                                                 drawItems: self.drawItems
@@ -90,7 +90,7 @@
 }
 
 - (instancetype) settingsWithChangedDisplayDepth:(unsigned) displayDepth {
-  return [[[TreeDrawerSettings alloc] initWithColorMapper: self.colorMapper
+  return [[[TreeDrawerSettings alloc] initWithColorScheme: self.colorScheme
                                              colorPalette: self.colorPalette
                                             colorGradient: self.colorGradient
                                                 drawItems: self.drawItems
@@ -99,7 +99,7 @@
 }
 
 - (instancetype) settingsWithChangedShowPackageContents:(BOOL) showPackageContents {
-  return [[[TreeDrawerSettings alloc] initWithColorMapper: self.colorMapper
+  return [[[TreeDrawerSettings alloc] initWithColorScheme: self.colorScheme
                                              colorPalette: self.colorPalette
                                             colorGradient: self.colorGradient
                                                 drawItems: self.drawItems

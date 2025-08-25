@@ -4,10 +4,16 @@
 
 @class TreeDrawerSettings;
 @class FileItemTest;
-@protocol FileItemMapping;
+@class FileItemMapping;
+@protocol FileItemMappingScheme;
+
+/* Event fired when the color mapper has changed. This is the case when the color mapping scheme
+ * changed, or when the scheme changed the way it maps file items to hash values.
+ */
+extern NSString  *ColorMappingChangedEvent;
 
 @interface TreeDrawer : TreeDrawerBase {
-  NSObject <FileItemMapping>  *colorMapper;
+//  NSObject <FileItemMappingScheme>  *colorScheme;
   
   UInt32  freeSpaceColor;
   UInt32  usedSpaceColor;
@@ -19,6 +25,7 @@
 
 @property (nonatomic, strong) FileItemTest *maskTest;
 
-@property (nonatomic, strong) NSObject<FileItemMapping> *colorMapper;
+@property (nonatomic, strong) NSObject<FileItemMappingScheme> *colorScheme;
+@property (nonatomic, strong, readonly) FileItemMapping *colorMapper;
 
 @end

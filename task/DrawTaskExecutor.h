@@ -11,8 +11,6 @@
 @interface DrawTaskExecutor : NSObject <TaskExecutor> {
   TreeContext  *treeContext;
 
-  TreeDrawer  *treeDrawer;
-
   NSLock  *settingsLock;
 }
 
@@ -23,6 +21,7 @@
 - (instancetype) initWithTreeContext:(TreeContext *)treeContext
                      drawingSettings:(TreeDrawerSettings *)settings NS_DESIGNATED_INITIALIZER;
 
+@property (nonatomic, strong, readonly) TreeDrawer *treeDrawer;
 @property (nonatomic, strong) TreeDrawerSettings *treeDrawerSettings;
 
 @end

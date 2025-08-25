@@ -22,9 +22,8 @@ const int  secondsPerDay = 60 * 60 * 24;
 // Set minimum time granularity to a minute 
 const int  minTimeDelta = 60;
 
-- (instancetype) initWithFileItemMappingScheme:(NSObject <FileItemMappingScheme> *)schemeVal
-                                          tree:(DirectoryItem *)tree {
-  if (self = [super initWithFileItemMappingScheme: schemeVal]) {
+- (instancetype) initWithTree:(DirectoryItem *)tree {
+  if (self = [super init]) {
     [self initTimeBounds: tree];
   }
   return self;
@@ -47,20 +46,19 @@ const int  minTimeDelta = 60;
   return hash;
 }
 
+- (NSUInteger) colorIndexForHash:(NSUInteger)hash numColors:(NSUInteger)numColors {
+  return MIN(hash, numColors - 1);
+}
 
-- (BOOL) canProvideLegend {
+- (BOOL)providesLegend {
   return YES;
 }
 
-
-//----------------------------------------------------------------------------
-// Implementation of LegendProvidingFileItemMapping
-
-- (NSString *)descriptionForHash: (NSUInteger)hash {
+- (NSString *)legendForColorIndex:(NSUInteger)colorIndex numColors:(NSUInteger)numColors {
   CFAbsoluteTime  lowerBound = 0;
   CFAbsoluteTime  upperBound = minTime;
   
-  NSUInteger  i = hash;
+  NSUInteger  i = colorIndex;
   while (i > 0) {
     lowerBound = upperBound;
     upperBound = lowerBound + (nowTime - lowerBound) / 2;
@@ -70,28 +68,24 @@ const int  minTimeDelta = 60;
   int  maxDelta = (int) floor((nowTime - lowerBound) / secondsPerDay);
   int  minDelta = (int) ceil((nowTime - upperBound) / secondsPerDay);
   
-  if (hash == 0) {
+  if (colorIndex == 0) {
     NSString *fmt = NSLocalizedString(@"%d days ago or more",
                                       @"Legend for Time-based mapping schemes.");
     return [NSString stringWithFormat: fmt, minDelta];
   } else if (minDelta < maxDelta) {
-    NSString *fmt = NSLocalizedString(@"%d - %d days ago",
-                                      @"Legend for Time-based mapping schemes.");
-    return [NSString stringWithFormat: fmt, minDelta, maxDelta];
+    if (colorIndex < numColors - 1) {
+      NSString *fmt = NSLocalizedString(@"%d - %d days ago",
+                                        @"Legend for Time-based mapping schemes.");
+      return [NSString stringWithFormat: fmt, minDelta, maxDelta];
+    } else {
+      return NSLocalizedString(@"More recent",
+                               @"Legend for Time-based mapping schemes.");
+    }
   } else {
     NSString *fmt = NSLocalizedString(@"%d days ago",
                                       @"Legend for Time-based mapping schemes.");
     return [NSString stringWithFormat: fmt, maxDelta];
   }
-}
-
-- (NSString *) descriptionForRemainingHashes {
-  return NSLocalizedString(@"More recent",
-                           @"Legend for Time-based mapping schemes.");
-}
-
-- (BOOL) reverseOrder {
-  return NO;
 }
 
 @end // @implementation TimeBasedMapping

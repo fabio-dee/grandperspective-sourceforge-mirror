@@ -377,19 +377,15 @@ NSString  *DisplaySettingsChangedEvent = @"displaySettingsChanged";
 - (TreeDrawerSettings *)instantiateDisplaySettings:(DirectoryViewDisplaySettings *)displaySettings
                                            forTree:(DirectoryItem *)tree
                                       displayDepth:(unsigned)displayDepth {
-  NSUserDefaults  *userDefaults = NSUserDefaults.standardUserDefaults;
-
   NSObject <FileItemMappingScheme>
-    *mapping = [colorMappings fileItemMappingSchemeForKey: displaySettings.colorMappingKey];
-  NSObject <FileItemMapping>  *mapper = nil;
-  if (mapping != nil) {
-    mapper = [mapping fileItemMappingForTree: tree];
-  }
+    *colorScheme = [colorMappings fileItemMappingSchemeForKey: displaySettings.colorMappingKey];
 
   NSColorList  *palette = [colorPalettes colorListForKey: displaySettings.colorPaletteKey];
   if (palette == nil) {
     palette = colorPalettes.fallbackColorList;
   }
+
+  NSUserDefaults  *userDefaults = NSUserDefaults.standardUserDefaults;
   float  gradient = [userDefaults floatForKey: DefaultColorGradient];
 
   DrawItemsEnum
@@ -405,7 +401,7 @@ NSString  *DisplaySettingsChangedEvent = @"displaySettingsChanged";
     }
   }
 
-  return [[[TreeDrawerSettings alloc] initWithColorMapper: mapper
+  return [[[TreeDrawerSettings alloc] initWithColorScheme: colorScheme
                                              colorPalette: palette
                                             colorGradient: gradient
                                                 drawItems: drawItems

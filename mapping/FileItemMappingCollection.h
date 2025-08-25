@@ -15,7 +15,6 @@
 
 - (void) addFileItemMappingScheme:(NSObject <FileItemMappingScheme> *)scheme
                               key:(NSString *)key;
-- (void) removeFileItemMappingSchemeForKey:(NSString *)key;
 
 @property (nonatomic, readonly, copy) NSArray *allKeys;
 - (NSObject <FileItemMappingScheme> *)fileItemMappingSchemeForKey:(NSString *)key;

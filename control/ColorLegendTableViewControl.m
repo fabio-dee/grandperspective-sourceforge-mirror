@@ -127,30 +127,9 @@ NSString  *ColorDescriptionColumnIdentifier = @"colorDescription";
 //-----------------------------------------------------------------------------
 
 - (NSString *)descriptionForRow:(NSUInteger)row {
-  NSObject <FileItemMapping>  *colorMapper = dirView.treeDrawerSettings.colorMapper;
+  FileItemMapping  *colorMapper = dirView.colorMapper;
 
-  if (!colorMapper.canProvideLegend) {
-    return nil;
-  }
-
-  LegendProvidingFileItemMapping  *legendProvider = (LegendProvidingFileItemMapping *)colorMapper;
-  NSUInteger  maxIndex = colorImages.count - 1;
-  NSUInteger  hash = legendProvider.reverseOrder ? maxIndex - row : row;
-  BOOL  lastEntry = hash == maxIndex;
-
-  if (!lastEntry) {
-    return [legendProvider descriptionForHash: hash];
-  }
-  else {
-    if ([legendProvider descriptionForHash: hash + 1] == nil) {
-      // If there is only one more entry with a legend, return that
-      return [legendProvider descriptionForHash: hash];
-    }
-    else {
-      // Otherwise return an aggregate description
-      return legendProvider.descriptionForRemainingHashes;
-    }
-  }
+  return [colorMapper legendForColorIndex: row numColors: colorImages.count];
 }
 
 
@@ -182,25 +161,16 @@ NSString  *ColorDescriptionColumnIdentifier = @"colorDescription";
   
   // TODO: Determine if more attributes need to be provided for sizeWithAttributes: to always return
   // the right width. So far, it appears as if the font is all that is needed.
-  NSDictionary  *attribs = 
-    [[[NSDictionary alloc] initWithObjectsAndKeys: dataCell.font, NSFontAttributeName, nil]
-     autorelease];
+  NSDictionary  *attribs = @{ NSFontAttributeName: dataCell.font };
 
   NSUInteger  numColors = colorImages.count;
-  NSUInteger  i = 0;
   float  maxWidth = 0;
-  while (i < numColors) {
+  for (int i = 0; i < numColors; ++i) {
     NSString  *descr = [self descriptionForRow: i];
 
     if (descr != nil) {
-      float  width = [descr sizeWithAttributes: attribs].width;
-    
-      if (width > maxWidth) {
-        maxWidth = width;
-      }
+      maxWidth = MAX(maxWidth, [descr sizeWithAttributes: attribs].width);
     }
-    
-    i++;
   }
   
   // Increase for the space at the right and left.
@@ -221,12 +191,11 @@ NSString  *ColorDescriptionColumnIdentifier = @"colorDescription";
   BOOL  rowSelected = NO;
 
   if (selectedItem != nil && selectedItem.isPhysical) {
-    NSObject <FileItemMapping>  *colorMapper = dirView.treeDrawerSettings.colorMapper;
+    FileItemMapping  *colorMapper = dirView.colorMapper;
 
-    if (colorMapper.canProvideLegend) {
-      NSUInteger  colorIndex = [colorMapper hashForFileItem: selectedItem
-                                                     inTree: dirView.treeInView];
-      NSUInteger  row = MIN(colorIndex, tableView.numberOfRows - 1);
+    if (colorMapper.providesLegend) {
+      NSUInteger  hash = [colorMapper hashForFileItem: selectedItem inTree: dirView.treeInView];
+      NSUInteger  row = [colorMapper colorIndexForHash: hash numColors: tableView.numberOfRows - 1];
       
       [tableView selectRowIndexes: [NSIndexSet indexSetWithIndex: row]
              byExtendingSelection: NO];

@@ -12,8 +12,8 @@
 //----------------------------------------------------------------------------
 // Implementation of FileItemMappingScheme protocol
 
-- (NSObject <FileItemMapping> *)fileItemMappingForTree:(DirectoryItem *)tree {
-  return [[[MappingByAccess alloc] initWithFileItemMappingScheme: self tree: tree] autorelease];
+- (FileItemMapping *)fileItemMappingForTree:(DirectoryItem *)tree {
+  return [[[MappingByAccess alloc] initWithTree: tree] autorelease];
 }
 
 @end // @implementation AccessMappingScheme

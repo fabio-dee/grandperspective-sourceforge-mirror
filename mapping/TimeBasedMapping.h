@@ -1,6 +1,6 @@
 #import <Foundation/Foundation.h>
 
-#import "StatefulFileItemMapping.h"
+#import "FileItemMapping.h"
 
 @class DirectoryItem;
 @class FileItem;
@@ -8,17 +8,14 @@
 /* Mapping scheme that maps each file item to a hash based on a time that is associated with the
  * file item.
  */
-@interface TimeBasedMapping : StatefulFileItemMapping {
+@interface TimeBasedMapping : FileItemMapping {
   CFAbsoluteTime  minTime;
   CFAbsoluteTime  maxTime;
   CFAbsoluteTime  nowTime;
 }
 
-// Overrides designated initialiser
-- (instancetype) initWithFileItemMappingScheme:(NSObject <FileItemMappingScheme> *)schemeVal NS_UNAVAILABLE;
-
-- (instancetype) initWithFileItemMappingScheme:(NSObject <FileItemMappingScheme> *)scheme
-                                          tree:(DirectoryItem *)tree NS_DESIGNATED_INITIALIZER;
+- (instancetype) init NS_UNAVAILABLE;
+- (instancetype) initWithTree:(DirectoryItem *)tree NS_DESIGNATED_INITIALIZER;
 
 @end // @interface TimeBasedMapping
 

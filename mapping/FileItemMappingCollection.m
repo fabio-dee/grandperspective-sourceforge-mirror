@@ -53,26 +53,21 @@
   return depth;
 }
 
-
-- (BOOL) canProvideLegend {
-  return YES;
+- (NSUInteger) colorIndexForHash:(NSUInteger)hash numColors:(NSUInteger)numColors {
+  return MIN(hash, numColors - 1);
 }
 
-//----------------------------------------------------------------------------
-// Implementation of informal LegendProvidingFileItemMapping protocol
-
-- (NSString *)descriptionForHash:(NSUInteger)hash {
-  if (hash == 0) {
+- (NSString *)descriptionForColorIndex:(NSUInteger)colorIndex numColors:(NSUInteger)numColors {
+  if (colorIndex == 0) {
     return NSLocalizedString(@"Outermost level", @"Legend for Level mapping scheme.");
   }
-  else {
+  else if (colorIndex < numColors - 1) {
     NSString  *fmt = NSLocalizedString(@"Level %d", @"Legend for Level mapping scheme.");
-    return [NSString stringWithFormat: fmt, hash];
+    return [NSString stringWithFormat: fmt, colorIndex];
   }
-}
-
-- (NSString *)descriptionForRemainingHashes {
-  return NSLocalizedString(@"Lower levels", @"Misc. description for Level mapping scheme.");
+  else {
+    return NSLocalizedString(@"Lower levels", @"Misc. description for Level mapping scheme.");
+  }
 }
 
 @end // @implementation MappingByLevel
@@ -192,10 +187,6 @@
 - (void) addFileItemMappingScheme:(NSObject <FileItemMappingScheme> *)scheme
                               key:(NSString *)key {
   schemesDictionary[key] = scheme;
-}
-
-- (void) removeFileItemMappingSchemeForKey:(NSString *)key {
-  [schemesDictionary removeObjectForKey: key];
 }
 
 - (NSArray *)allKeys {

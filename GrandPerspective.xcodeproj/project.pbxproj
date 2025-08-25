@@ -106,7 +106,6 @@
 		AA8877EB0D0C0E3500F52571 /* TreeContext.m in Sources */ = {isa = PBXBuildFile; fileRef = AA8877E90D0C0E3500F52571 /* TreeContext.m */; };
 		AA8A38080D7B437300DB872C /* FileItemMappingCollection.m in Sources */ = {isa = PBXBuildFile; fileRef = AA8A37FD0D7B437300DB872C /* FileItemMappingCollection.m */; };
 		AA8A380A0D7B437300DB872C /* FileItemMappingScheme.m in Sources */ = {isa = PBXBuildFile; fileRef = AA8A37FF0D7B437300DB872C /* FileItemMappingScheme.m */; };
-		AA8A380C0D7B437300DB872C /* StatefulFileItemMapping.m in Sources */ = {isa = PBXBuildFile; fileRef = AA8A38010D7B437300DB872C /* StatefulFileItemMapping.m */; };
 		AA8A380E0D7B437300DB872C /* StatelessFileItemMapping.m in Sources */ = {isa = PBXBuildFile; fileRef = AA8A38030D7B437300DB872C /* StatelessFileItemMapping.m */; };
 		AA8A38100D7B437300DB872C /* UniformTypeMappingScheme.m in Sources */ = {isa = PBXBuildFile; fileRef = AA8A38050D7B437300DB872C /* UniformTypeMappingScheme.m */; };
 		AA8FEB2B0B6CC2D90049FF42 /* Names.strings in Resources */ = {isa = PBXBuildFile; fileRef = AA8FEB290B6CC2D80049FF42 /* Names.strings */; };
@@ -163,6 +162,7 @@
 		AAE4982E1CD158C6003F0A29 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = AAE4982D1CD158C6003F0A29 /* Images.xcassets */; };
 		AAE498311CD15BAF003F0A29 /* StartWindow.xib in Resources */ = {isa = PBXBuildFile; fileRef = AAE4982F1CD15BAF003F0A29 /* StartWindow.xib */; };
 		AAE4AC2F2E59E244007C2482 /* MappingBySize.m in Sources */ = {isa = PBXBuildFile; fileRef = AAE4AC2E2E59E244007C2482 /* MappingBySize.m */; };
+		AAE4AC312E5BA2A8007C2482 /* FileItemMapping.m in Sources */ = {isa = PBXBuildFile; fileRef = AAE4AC302E5BA2A7007C2482 /* FileItemMapping.m */; };
 		AAE87FDA0CE10B9B00A99883 /* UniformTypeInventory.m in Sources */ = {isa = PBXBuildFile; fileRef = AAE87FD80CE10B9B00A99883 /* UniformTypeInventory.m */; };
 		AAEF42831081136100468832 /* LocalizableStrings.m in Sources */ = {isa = PBXBuildFile; fileRef = AAEF42821081136100468832 /* LocalizableStrings.m */; };
 		AAEF43771081E0EE00468832 /* FilterTestRef.m in Sources */ = {isa = PBXBuildFile; fileRef = AAEF43761081E0EE00468832 /* FilterTestRef.m */; };
@@ -441,8 +441,6 @@
 		AA8A37FD0D7B437300DB872C /* FileItemMappingCollection.m */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.objc; path = FileItemMappingCollection.m; sourceTree = "<group>"; };
 		AA8A37FE0D7B437300DB872C /* FileItemMappingScheme.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = FileItemMappingScheme.h; sourceTree = "<group>"; };
 		AA8A37FF0D7B437300DB872C /* FileItemMappingScheme.m */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.objc; path = FileItemMappingScheme.m; sourceTree = "<group>"; };
-		AA8A38000D7B437300DB872C /* StatefulFileItemMapping.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = StatefulFileItemMapping.h; sourceTree = "<group>"; };
-		AA8A38010D7B437300DB872C /* StatefulFileItemMapping.m */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.objc; path = StatefulFileItemMapping.m; sourceTree = "<group>"; };
 		AA8A38020D7B437300DB872C /* StatelessFileItemMapping.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = StatelessFileItemMapping.h; sourceTree = "<group>"; };
 		AA8A38030D7B437300DB872C /* StatelessFileItemMapping.m */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.objc; path = StatelessFileItemMapping.m; sourceTree = "<group>"; };
 		AA8A38040D7B437300DB872C /* UniformTypeMappingScheme.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = UniformTypeMappingScheme.h; sourceTree = "<group>"; };
@@ -671,6 +669,7 @@
 		AAE4982D1CD158C6003F0A29 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
 		AAE4AC2D2E59E116007C2482 /* MappingBySize.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MappingBySize.h; sourceTree = "<group>"; };
 		AAE4AC2E2E59E244007C2482 /* MappingBySize.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MappingBySize.m; sourceTree = "<group>"; };
+		AAE4AC302E5BA2A7007C2482 /* FileItemMapping.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = FileItemMapping.m; sourceTree = "<group>"; };
 		AAE87FD80CE10B9B00A99883 /* UniformTypeInventory.m */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.objc; name = UniformTypeInventory.m; path = util/UniformTypeInventory.m; sourceTree = "<group>"; };
 		AAE87FD90CE10B9B00A99883 /* UniformTypeInventory.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; name = UniformTypeInventory.h; path = util/UniformTypeInventory.h; sourceTree = "<group>"; };
 		AAEF42811081136100468832 /* LocalizableStrings.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = LocalizableStrings.h; path = util/LocalizableStrings.h; sourceTree = "<group>"; };
@@ -957,14 +956,13 @@
 			isa = PBXGroup;
 			children = (
 				AA8A37FB0D7B437300DB872C /* FileItemMapping.h */,
-				AA8A37FC0D7B437300DB872C /* FileItemMappingCollection.h */,
-				AA8A37FD0D7B437300DB872C /* FileItemMappingCollection.m */,
+				AAE4AC302E5BA2A7007C2482 /* FileItemMapping.m */,
 				AA8A37FE0D7B437300DB872C /* FileItemMappingScheme.h */,
 				AA8A37FF0D7B437300DB872C /* FileItemMappingScheme.m */,
-				AA8A38000D7B437300DB872C /* StatefulFileItemMapping.h */,
-				AA8A38010D7B437300DB872C /* StatefulFileItemMapping.m */,
 				AA8A38020D7B437300DB872C /* StatelessFileItemMapping.h */,
 				AA8A38030D7B437300DB872C /* StatelessFileItemMapping.m */,
+				AA8A37FC0D7B437300DB872C /* FileItemMappingCollection.h */,
+				AA8A37FD0D7B437300DB872C /* FileItemMappingCollection.m */,
 				AA8A38040D7B437300DB872C /* UniformTypeMappingScheme.h */,
 				AA8A38050D7B437300DB872C /* UniformTypeMappingScheme.m */,
 				AA0CDE6F1544995C0018D583 /* TimeBasedMapping.h */,
@@ -1316,7 +1314,6 @@
 				AA7BF5BB1E61E44000A42F0F /* ItemLocator.m in Sources */,
 				AA7BF5B81E61E28900A42F0F /* ItemPathModelView.m in Sources */,
 				AAA923FC2CDFA41800ED4551 /* CompressedInput.m in Sources */,
-				AA8A380C0D7B437300DB872C /* StatefulFileItemMapping.m in Sources */,
 				AA8A380E0D7B437300DB872C /* StatelessFileItemMapping.m in Sources */,
 				AA8A38100D7B437300DB872C /* UniformTypeMappingScheme.m in Sources */,
 				AA987F610DF16D0300A6EA33 /* FilteredTreeGuide.m in Sources */,
@@ -1342,6 +1339,7 @@
 				AA9881BD0DF57C6B00A6EA33 /* StringSuffixTest.m in Sources */,
 				AA9882BF0DF71B8900A6EA33 /* ItemSizeTestFinder.m in Sources */,
 				AA837DBF0E29ECE5005384E0 /* XmlTreeWriter.m in Sources */,
+				AAE4AC312E5BA2A8007C2482 /* FileItemMapping.m in Sources */,
 				AA837E740E2D171D005384E0 /* TreeReader.m in Sources */,
 				AA7A7E0D0E4EE29D00EB366E /* WriteTaskInput.m in Sources */,
 				AA7A7E110E4EE3DA00EB366E /* WriteTaskExecutor.m in Sources */,
