@@ -1139,12 +1139,17 @@ CGFloat ramp(CGFloat x, CGFloat minX, CGFloat maxX) {
   // Propagate event fired by internal TreeDrawer to DirectoryView's observers. Ensure that this
   // is dispatched from the main thread (instead of from the drawing task's thread)
   dispatch_async(dispatch_get_main_queue(), ^{
-    [self forceRedraw];
-
     [self postColorMappingChanged];
+
+    if (((NSNumber *)notification.userInfo[@"isInternal"]).boolValue) {
+      NSLog(@"DirectorView - internal color mapping change");
+
+      // The mapping change was due to a change not known/triggered by this directory view, so
+      // no redraw was triggered yet. We should therefore do so now.
+      [self forceRedraw];
+    }
   });
 }
-
 
 - (void) updateSelectedItem: (NSPoint) point {
   [pathModelView selectItemAtPoint: point 

@@ -120,8 +120,13 @@
 - (void) colorSchemeChanged:(NSNotification *)notification {
   self.colorMapper = [self.colorScheme fileItemMappingForTree: scanTree];
 
-  [NSNotificationCenter.defaultCenter postNotificationName: ColorMappingChangedEvent
-                                                    object: self];
+  // Indicate if the trigger was internal (the same scheme is still active, but something changed
+  // internally that may impact the mapping) or external (a different scheme was configured)
+  BOOL  isInternal = notification != nil;
+  NSNotificationCenter  *nc = NSNotificationCenter.defaultCenter;
+  [nc postNotificationName: ColorMappingChangedEvent
+                    object: self
+                  userInfo: @{@"isInternal": [NSNumber numberWithBool: isInternal]}];
 }
 
 @end // @implementation TreeDrawer (PrivateMethod)
