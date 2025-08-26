@@ -195,7 +195,7 @@ NSString  *ColorDescriptionColumnIdentifier = @"colorDescription";
 
     if (colorMapper.providesLegend) {
       NSUInteger  hash = [colorMapper hashForFileItem: selectedItem inTree: dirView.treeInView];
-      NSUInteger  row = [colorMapper colorIndexForHash: hash numColors: tableView.numberOfRows - 1];
+      NSUInteger  row = [colorMapper colorIndexForHash: hash numColors: tableView.numberOfRows];
       
       [tableView selectRowIndexes: [NSIndexSet indexSetWithIndex: row]
              byExtendingSelection: NO];

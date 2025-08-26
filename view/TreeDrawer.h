@@ -26,6 +26,6 @@ extern NSString  *ColorMappingChangedEvent;
 @property (nonatomic, strong) FileItemTest *maskTest;
 
 @property (nonatomic, strong) NSObject<FileItemMappingScheme> *colorScheme;
-@property (nonatomic, strong, readonly) FileItemMapping *colorMapper;
+@property (nonatomic, strong) FileItemMapping *colorMapper;
 
 @end

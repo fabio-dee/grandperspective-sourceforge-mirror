@@ -118,7 +118,7 @@
 @implementation TreeDrawer (PrivateMethod)
 
 - (void) colorSchemeChanged:(NSNotification *)notification {
-  _colorMapper = [self.colorScheme fileItemMappingForTree: scanTree];
+  self.colorMapper = [self.colorScheme fileItemMappingForTree: scanTree];
 
   [NSNotificationCenter.defaultCenter postNotificationName: ColorMappingChangedEvent
                                                     object: self];

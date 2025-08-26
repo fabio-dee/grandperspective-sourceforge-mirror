@@ -176,7 +176,7 @@ CGFloat ramp(CGFloat x, CGFloat minX, CGFloat maxX) {
 
   [nc addObserver: self
          selector: @selector(colorMappingChanged:)
-             name: MappingSchemeChangedEvent
+             name: ColorMappingChangedEvent
            object: self.treeDrawer];
 
   [nc addObserver: self
@@ -277,11 +277,7 @@ CGFloat ramp(CGFloat x, CGFloat minX, CGFloat maxX) {
     if (settings.colorPalette != oldSettings.colorPalette) {
       [self postColorPaletteChanged]; 
     }
-    
-    if (settings.colorScheme != oldSettings.colorScheme) {
-      [self postColorMappingChanged];
-    }
-    
+
     if (settings.drawItems != oldSettings.drawItems) {
       pathModelView.drawItems = settings.drawItems;
     }
@@ -1140,8 +1136,13 @@ CGFloat ramp(CGFloat x, CGFloat minX, CGFloat maxX) {
 
 
 - (void) colorMappingChanged:(NSNotification *) notification {
-  // Propagate event fired by internal TreeDrawer to DirectoryView's observers
-  [self postColorMappingChanged];
+  // Propagate event fired by internal TreeDrawer to DirectoryView's observers. Ensure that this
+  // is dispatched from the main thread (instead of from the drawing task's thread)
+  dispatch_async(dispatch_get_main_queue(), ^{
+    [self forceRedraw];
+
+    [self postColorMappingChanged];
+  });
 }
 
 
