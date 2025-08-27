@@ -20,43 +20,19 @@ Any used space that is not accounted for by GrandPerspective based on the size o
 Basically, it is unclear what is taking up this space.
 So if there is a lot of miscellaneous used space and you want to find out what it consists of, you need to scan more.
 More specifically:
+</p>
 
 <ul>
 <li>Scan your entire volume, not just one of its folders</li>
 <li>Use the <a href="FileSizes.html">physical file size measure</a></li>
 <li>Do not use a <a href="MasksAndFilters.html">filter</a>, i.e. do not use <b>Filtered Scan</b></li>
-<li>Ensure the application has Full Disk Access</li>
+<li>Ensure the application has <a href="FullDiskAccess.html">Full Disk Access</a></li>
 </ul>
-</p>
-
-<h2>Grant GrandPerspective Full Disk Access</h2>
 
 <p>
-You should grant the application Full Disk Access.
-This can be done via "System Preferences" &gt; "Security &amp; Privacy" &gt; "Privacy".
-In the permission pane at the left, find "Full Disk Access" and select it.
-(Note, this permission setting is only available in recent versions of macOS.)
-Click the lock to make changes, and add GrandPerspective to the application pane at the right;
-you can do so via drag and drop.
+Note: there will always be some miscellaneous used space, as <a href="FullDiskAccess.html#limitations">GrandPerspective cannot scan all files</a>.
+However, these are files that you cannot or should not remove, so for helping you free up disk space, it should not matter.
 </p>
-
-<h2>Limitations</h2>
-
-<p>
-Even with Full Disk Access enabled, GrandPerspective cannot read all files.
-In particular, it is not able to scan the following:
-</p>
-
-<ul>
-<li><em>Files owned by other users.</em>
-These can be scanned by letting their owners scan their home directory themselves
-</li>
-
-<li><em>Certain system files.</em>
-Data Vaults, for example, are directories that are only readable by a process that has a specific entitlement.
-Being root will not give you access, nor will enabling FDA.
-</li>
-</ul>
 
 </body>
 </html>
