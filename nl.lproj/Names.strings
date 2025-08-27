@@ -160,6 +160,9 @@
 /* Preference option for what to do after last view is closed */
 "show welcome" = "Toon Welkom venster";
 
+/* Color mapping scheme */
+"size" = "Grootte";
+
 /* Filter test */
 "Small files" = "Kleine bestanden";
 

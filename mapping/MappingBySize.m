@@ -72,7 +72,7 @@ const item_size_t  minUpperBound = 1024;
   NSUInteger hash = maxIndex - colorIndex;
 
   if (hash == 0) {
-    NSString *fmt = NSLocalizedString(@"More than %@",
+    NSString *fmt = NSLocalizedString(@"Larger than %@",
                                       @"Legend for Size-based mapping scheme.");
     return [NSString stringWithFormat: fmt, [FileItem stringForFileItemSize: maxItemSizeLimit]];
   }
@@ -95,11 +95,11 @@ const item_size_t  minUpperBound = 1024;
               [FileItem stringForFileItemSize: lowerBound],
               [FileItem stringForFileItemSize: upperBound]];
     } else {
-      return NSLocalizedString(@"Smaller",
+      return NSLocalizedString(@"Smallest",
                                @"Legend for Size-based mapping scheme.");
     }
   } else if (i == 0) {
-    NSString *fmt = NSLocalizedString(@"Less than %@",
+    NSString *fmt = NSLocalizedString(@"Smaller than %@",
                                       @"Legend for Size-based mapping scheme.");
     return [NSString stringWithFormat: fmt,
             [FileItem stringForFileItemSize: upperBound]];

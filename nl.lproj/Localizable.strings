@@ -1,3 +1,6 @@
+/* Legend for Size-based mapping scheme. */
+"%@ - %@" = "%1$@ - %2$@";
+
 /* Enumeration of two items */
 "%@ and %@" = "%1$@ en %2$@";
 
@@ -235,6 +238,9 @@
 /* File size unit for kilobytes. */
 "kB" = "kB";
 
+/* Legend for Size-based mapping scheme. */
+"Larger than %@" = "Groter dan %@";
+
 /* Legend for Level mapping scheme. */
 "Level %d" = "Nivo %d";
 
@@ -354,6 +360,12 @@
 
 /* Header in exported text file */
 "Size" = "Grootte";
+
+/* Legend for Size-based mapping scheme. */
+"Smaller than %@" = "Kleiner dan %@";
+
+/* Legend for Size-based mapping scheme. */
+"Smallest" = "Kleinst";
 
 /* Alert message (with filename arg) */
 "Successfully saved the scan data to \"%@\"" = "Opslag van data naar \"%@\" is voltooid";
