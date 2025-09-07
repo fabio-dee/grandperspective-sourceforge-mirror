@@ -1,3 +1,6 @@
+/* Legend for Size-based mapping scheme. */
+"%@ - %@" = "%1$@ - %2$@";
+
 /* Enumeration of two items */
 "%@ and %@" = "%1$@ ve %2$@";
 
@@ -235,6 +238,9 @@
 /* File size unit for kilobytes. */
 "kB" = "kB";
 
+/* Legend for Size-based mapping scheme. */
+"Larger than %@" = "Şundan daha büyük: %@";
+
 /* Legend for Level mapping scheme. */
 "Level %d" = "Düzey %d";
 
@@ -354,6 +360,12 @@
 
 /* Header in exported text file */
 "Size" = "Boyut";
+
+/* Legend for Size-based mapping scheme. */
+"Smaller than %@" = "Şundan daha küçük: %@";
+
+/* Legend for Size-based mapping scheme. */
+"Smallest" = "En küçük";
 
 /* Alert message (with filename arg) */
 "Successfully saved the scan data to \"%@\"" = "Tarama verisi “%@” konumuna başarıyla kaydedildi";

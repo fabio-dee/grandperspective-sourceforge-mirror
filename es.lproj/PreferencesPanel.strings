@@ -4,29 +4,17 @@
 /* Class = "NSBox"; title = "Display"; ObjectID = "29"; */
 "29.title" = "Pantalla";
 
-/* Class = "NSMenu"; title = "OtherViews"; ObjectID = "53"; */
-"53.title" = "OtherViews";
-
 /* Class = "NSBox"; title = "Scanning"; ObjectID = "57"; */
 "57.title" = "Información";
 
 /* Class = "NSMenuItem"; title = "Item1"; ObjectID = "61"; */
 "61.title" = "OtrasVistas";
 
-/* Class = "NSMenu"; title = "OtherViews"; ObjectID = "62"; */
-"62.title" = "OtherViews";
-
 /* Class = "NSBox"; title = "Actions"; ObjectID = "72"; */
 "72.title" = "Acciones";
 
-/* Class = "NSMenu"; title = "OtherViews"; ObjectID = "74"; */
-"74.title" = "OtherViews";
-
 /* Class = "NSMenuItem"; title = "Files and folders"; ObjectID = "78"; */
 "78.title" = "Archivos y carpetas";
-
-/* Class = "NSMenu"; title = "OtherViews"; ObjectID = "152"; */
-"152.title" = "OtherViews";
 
 /* Class = "NSMenuItem"; title = "Close old window"; ObjectID = "153"; */
 "153.title" = "Cerrar ventana antigua";

@@ -160,6 +160,9 @@
 /* Preference option for what to do after last view is closed */
 "show welcome" = "Hoş Geldiniz penceresini göster";
 
+/* Color mapping scheme */
+"size" = "Büyüklük";
+
 /* Filter test */
 "Small files" = "Küçük dosyalar";
 

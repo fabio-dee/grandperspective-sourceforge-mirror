@@ -1,3 +1,6 @@
+/* Legend for Size-based mapping scheme. */
+"%@ - %@" = "%1$@ - %2$@";
+
 /* Enumeration of two items */
 "%@ and %@" = "%1$@ e %2$@";
 
@@ -235,6 +238,9 @@
 /* File size unit for kilobytes. */
 "kB" = "kB";
 
+/* Legend for Size-based mapping scheme. */
+"Larger than %@" = "Più grande di %@";
+
 /* Legend for Level mapping scheme. */
 "Level %d" = "Livello %d";
 
@@ -354,6 +360,12 @@
 
 /* Header in exported text file */
 "Size" = "Dimensione";
+
+/* Legend for Size-based mapping scheme. */
+"Smaller than %@" = "Più piccolo di %@";
+
+/* Legend for Size-based mapping scheme. */
+"Smallest" = "Il più piccolo";
 
 /* Alert message (with filename arg) */
 "Successfully saved the scan data to \"%@\"" = "Salvataggio dati scansioni su \"%@\" terminato con successo";
