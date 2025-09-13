@@ -160,6 +160,9 @@
 /* Preference option for what to do after last view is closed */
 "show welcome" = "Afficher l'écran de bienvenue";
 
+/* Color mapping scheme */
+"size" = "Taille";
+
 /* Filter test */
 "Small files" = "Fichiers petits";
 
