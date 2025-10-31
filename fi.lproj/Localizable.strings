@@ -1,3 +1,6 @@
+/* Legend for Size-based mapping scheme. */
+"%@ - %@" = "%1$@ - %2$@";
+
 /* Enumeration of two items */
 "%@ and %@" = "%1$@ ja %2$@";
 
@@ -235,6 +238,9 @@
 /* File size unit for kilobytes. */
 "kB" = "Kt";
 
+/* Legend for Size-based mapping scheme. */
+"Larger than %@" = "Suurempi kuin %@";
+
 /* Legend for Level mapping scheme. */
 "Level %d" = "Taso %d";
 
@@ -354,6 +360,12 @@
 
 /* Header in exported text file */
 "Size" = "Koko";
+
+/* Legend for Size-based mapping scheme. */
+"Smaller than %@" = "Pienempi kuin %@";
+
+/* Legend for Size-based mapping scheme. */
+"Smallest" = "Pienin";
 
 /* Alert message (with filename arg) */
 "Successfully saved the scan data to \"%@\"" = "Skannitulokset tallennettiin kohteeseen \"%@\"";

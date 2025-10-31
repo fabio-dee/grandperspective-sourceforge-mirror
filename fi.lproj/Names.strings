@@ -160,6 +160,9 @@
 /* Preference option for what to do after last view is closed */
 "show welcome" = "Näytä tervetuloa-ikkuna";
 
+/* Color mapping scheme */
+"size" = "Koko";
+
 /* Filter test */
 "Small files" = "Pienet tiedostot";
 
