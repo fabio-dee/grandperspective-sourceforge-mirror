@@ -194,7 +194,7 @@ NSString  *AfterClosingLastViewDoNothing = @"do nothing";
 
 - (void) viewWillOpen:(NSNotification *)notification;
 - (void) viewWillClose:(NSNotification *)notification;
-- (void) viewProducingTaskStarted:(NSNotification *)notification;
+- (void) viewProducingTaskScheduled:(NSNotification *)notification;
 - (void) viewProducingTaskCompleted:(NSNotification *)notification;
 
 - (void) checkShowWelcomeWindow:(BOOL)allowAutoQuit;
@@ -339,8 +339,8 @@ static dispatch_once_t  singletonOnceToken;
     NSArray*  viewProducingTaskManagers = @[scanTaskManager, filterTaskManager, xmlReadTaskManager];
     for (NSObject*  taskManager in [viewProducingTaskManagers objectEnumerator]) {
       [nc addObserver: self
-             selector: @selector(viewProducingTaskStarted:)
-                 name: TaskStartedEvent
+             selector: @selector(viewProducingTaskScheduled:)
+                 name: TaskScheduledEvent
                object: taskManager];
       [nc addObserver: self
              selector: @selector(viewProducingTaskCompleted:)
@@ -620,12 +620,12 @@ static dispatch_once_t  singletonOnceToken;
 
   NSString  *rescanBehaviour = [NSUserDefaults.standardUserDefaults
                                 stringForKey: RescanBehaviourKey];
+  TreeContext  *oldContext = oldControl.treeContext;
+  [self rescanItem: oldContext.scanTree deriveFrom: oldControl];
+
   if ([rescanBehaviour isEqualToString: RescanClosesOldWindow]) {
     [oldControl.window close];
   }
-  
-  TreeContext  *oldContext = oldControl.treeContext;
-  [self rescanItem: oldContext.scanTree deriveFrom: oldControl];
 }
 
 - (IBAction) rescanVisible:(id)sender {
@@ -1249,7 +1249,7 @@ static dispatch_once_t  singletonOnceToken;
   [self checkShowWelcomeWindow: YES];
 }
 
-- (void) viewProducingTaskStarted:(NSNotification *)notification {
+- (void) viewProducingTaskScheduled:(NSNotification *)notification {
   viewTaskCount++;
   NSLog(@"viewCount = %d, viewTaskCount = %d", viewCount, viewTaskCount);
 }

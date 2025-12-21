@@ -3,8 +3,10 @@
 
 @protocol TaskExecutor;
 
+// Fired when a new task is scheduled.
+extern NSString  *TaskScheduledEvent;
 
-// Fired when a new task is started.
+// Fired when a new task started executing.
 extern NSString  *TaskStartedEvent;
 
 // Fired when a task completed, successfully or not.

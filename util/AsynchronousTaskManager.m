@@ -3,8 +3,10 @@
 
 #import "TaskExecutor.h"
 
+// Fired when a new task is scheduled.
+NSString  *TaskScheduledEvent = @"taskScheduled";
 
-// Fired when a new task is started.
+// Fired when a new task is started executing.
 NSString  *TaskStartedEvent = @"taskStarted";
 
 // Fired when a task completed, successfully or not.
@@ -105,11 +107,14 @@ enum {
 - (void) asynchronouslyRunTaskWithInput:(id)input
                                callback:(id)callback
                                selector:(SEL)selector {
+  BOOL  taskWasScheduled = NO;
 
   [settingsLock lock];
   NSAssert(alive, @"Disturbing a dead task manager.");
   
   if (input != nextTaskInput) {
+    taskWasScheduled = nextTaskInput != nil;
+
     [nextTaskInput release];
     nextTaskInput = [input retain];
   }
@@ -132,6 +137,13 @@ enum {
   }
 
   [settingsLock unlock];
+
+  if (!taskWasScheduled) {
+    // Note: Only fire an event when there was not already a scheduled task. In the latter case,
+    // the old scheduled task is replaced by a new task, but the overall task execution status
+    // did not change. This simplifies task count related bookkeeping.
+    [NSNotificationCenter.defaultCenter postNotificationName: TaskScheduledEvent object: self];
+  }
 }
 
 @end
