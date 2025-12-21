@@ -269,19 +269,21 @@ NSString*  checkFdaPermissionsPath = @"~/Library/Containers/com.apple.stocks";
 - (void) showFdaWarningSheet {
   NSAlert *alert = [[[NSAlert alloc] init] autorelease];
 
-  [alert addButtonWithTitle: @"Edit Preferences"]; // Main/default action
+  // First button is for the main/default action
+  [alert addButtonWithTitle: NSLocalizedString(@"Edit System Preferences", @"FDA warning sheet")];
   [alert addButtonWithTitle: CANCEL_BUTTON_TITLE];
   alert.messageText = NSLocalizedString
     (@"GrandPerspective seems to lack Full Disk Access permissions",
      @"FDA warning sheet");
   [alert setInformativeText: NSLocalizedString
-    (@"This may limit the disk content it can see. To remedy this, you can grant permissions via the preferences.",
+    (@"This may limit the disk content it can see. To remedy this, you can grant the permissions via the System Preferences.",
      @"FDA warning sheet")
   ];
 
   alert.showsSuppressionButton = YES;
   alert.suppressionButton.target = self;
   alert.suppressionButton.action = @selector(handleSuppressFdaWarningButton:);
+  alert.suppressionButton.title = NSLocalizedString(@"Do not show again", @"FDA warning sheet");
 
   NSUserDefaults  *userDefaults = NSUserDefaults.standardUserDefaults;
   BOOL suppressSheet = [userDefaults boolForKey: SuppressFdaWarningSheetKey];

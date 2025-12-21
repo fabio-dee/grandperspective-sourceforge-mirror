@@ -91,6 +91,9 @@
 /* Status update message */
 "Display focus changed to %@" = "Weergave focus is gewijzigd naar %@";
 
+/* FDA warning sheet */
+"Do not show again" = "Toon niet nog een keer";
+
 /* Alert message */
 "Do you want to delete the file \"%@\"?" = "Wilt u het bestand \"%@\" verwijderen?";
 
@@ -99,6 +102,9 @@
 
 /* Alert message */
 "Do you want to delete the package \"%@\"?" = "Wilt u het pakket \"%@\" verwijderen?";
+
+/* FDA warning sheet */
+"Edit System Preferences" = "Wijzig Systeem Voorkeuren";
 
 /* Parse error */
 "Encountered filter after folder" = "Een filter volgde na een folder";
@@ -228,6 +234,9 @@
 
 /* File size unit for gigabytes. */
 "GB" = "GB";
+
+/* FDA warning sheet */
+"GrandPerspective seems to lack Full Disk Access permissions" = "GrandPerspective lijkt geen Volledige Schijftoegang te hebben";
 
 /* Menu item */
 "Hide Control Panel" = "Verberg Besturingspaneel";
@@ -423,6 +432,9 @@
 
 /* Alert informative text */
 "These filters do not exist anymore. Their old definition is used instead" = "Deze filters bestaan niet meer. Hun oorspronkelijke definitie zal daarom gebruikt worden";
+
+/* FDA warning sheet */
+"This may limit the disk content it can see. To remedy this, you can grant the permissions via the System Preferences." = "Dit beperkt mogelijk de schijfinhoud die het kan zien. Dit kan verholpen worden door de rechten toe te kennen in de Systeem Voorkeuren.";
 
 /* Part of tool tip for uniform types */
 "Top-level type" = "Basistype";
