@@ -3,15 +3,25 @@
 #import "NSURL.h"
 #import "RecentDocumentTableCellView.h"
 #import "LocalizableStrings.h"
+#import "ControlConstants.h"
+#import "PreferencesPanelControl.h"
 
 NSString*  TaglineTable = @"Taglines";
 NSString*  NumTaglines = @"num-taglines";
 NSString*  TaglineFormat = @"tagline-%d";
 
+NSString*  fdaPreferencesUrl =
+  @"x-apple.systempreferences:com.apple.preference.security?Privacy_AllFiles";
+
 @interface StartWindowControl (PrivateMethods)
 
 - (void) setTagLineField;
 - (void) startScan:(NSInteger)selectedRow sender:(id)sender;
+
+- (BOOL) shouldShowFdaWarningSheet;
+- (void) showFdaWarningSheet;
+- (void) handleSuppressFdaWarningButton:(id)sender;
+- (void) handleEditFdaPreferences;
 
 @end // @interface StartWindowControl (PrivateMethods)
 
@@ -162,6 +172,10 @@ NSString*  TaglineFormat = @"tagline-%d";
     NSDocumentController.sharedDocumentController.recentDocumentURLs.count > 0;
 
   [super showWindow: sender];
+
+  if ([self shouldShowFdaWarningSheet]) {
+    [self showFdaWarningSheet];
+  }
 }
 
 // Invoked because the controller is the delegate for the window.
@@ -204,6 +218,55 @@ NSString*  TaglineFormat = @"tagline-%d";
     // Let user select the folder to scan
     [mainMenuControl scanDirectoryView: sender];
   }
+}
+
+- (BOOL) shouldShowFdaWarningSheet {
+  NSUserDefaults  *userDefaults = NSUserDefaults.standardUserDefaults;
+
+  BOOL suppressSheet = [userDefaults boolForKey: SuppressFdaWarningSheetKey];
+
+  return !suppressSheet || YES;
+}
+
+- (void) showFdaWarningSheet {
+  NSAlert *alert = [[[NSAlert alloc] init] autorelease];
+
+  [alert addButtonWithTitle: @"Edit Preferences"]; // Main/default action
+  [alert addButtonWithTitle: CANCEL_BUTTON_TITLE];
+  alert.messageText = NSLocalizedString
+    (@"GrandPerspective seems to lack Full Disk Access permissions",
+     @"FDA warning sheet");
+  [alert setInformativeText: NSLocalizedString
+    (@"This may limit the disk content it can see. To remedy this, you can grant permissions via the preferences.",
+     @"FDA warning sheet")
+  ];
+
+  alert.showsSuppressionButton = YES;
+  alert.suppressionButton.target = self;
+  alert.suppressionButton.action = @selector(handleSuppressFdaWarningButton:);
+
+  NSUserDefaults  *userDefaults = NSUserDefaults.standardUserDefaults;
+  BOOL suppressSheet = [userDefaults boolForKey: SuppressFdaWarningSheetKey];
+  alert.suppressionButton.state = suppressSheet ? NSControlStateValueOn : NSControlStateValueOff;
+
+  [alert beginSheetModalForWindow: self.window completionHandler: ^(NSModalResponse returnCode) {
+    if (returnCode == NSAlertFirstButtonReturn) {
+      [self handleEditFdaPreferences];
+    }
+  }];
+}
+
+- (void) handleSuppressFdaWarningButton:(id)sender {
+  NSUserDefaults  *userDefaults = NSUserDefaults.standardUserDefaults;
+  [userDefaults setBool: [sender state] == NSControlStateValueOn
+                 forKey: SuppressFdaWarningSheetKey];
+}
+
+- (void) handleEditFdaPreferences {
+  NSLog(@"Edit FDA preferences");
+
+  NSURL *url = [NSURL URLWithString: fdaPreferencesUrl];
+  [NSWorkspace.sharedWorkspace openURL: url];
 }
 
 @end // @interface StartWindowControl (PrivateMethods)

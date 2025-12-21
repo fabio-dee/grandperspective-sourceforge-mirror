@@ -32,6 +32,8 @@ NSString  *ShowPackageContentsByDefaultKey_Deprecated = @"showPackageContentsByD
 // Deprecated since 3.1.0
 NSString  *DefaultFilterKey_Deprecated = @"defaultFilter";
 
+// Can be set from the FDA warning sheet
+NSString  *SuppressFdaWarningSheetKey = @"suppressFdaWarningSheet";
 
 /* Note: The preferences below cannot currently be changed from the preferences panel; they are set
  * by the application defaults and can be changed by manually editing the user preferences file.
