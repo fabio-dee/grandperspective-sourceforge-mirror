@@ -13,11 +13,14 @@ NSString*  TaglineFormat = @"tagline-%d";
 NSString*  fdaPreferencesUrl =
   @"x-apple.systempreferences:com.apple.preference.security?Privacy_AllFiles";
 
+NSString*  checkFdaPermissionsPath = @"~/Library/Containers/com.apple.stocks";
+
 @interface StartWindowControl (PrivateMethods)
 
 - (void) setTagLineField;
 - (void) startScan:(NSInteger)selectedRow sender:(id)sender;
 
+- (BOOL) hasFdaPermissions;
 - (BOOL) shouldShowFdaWarningSheet;
 - (void) showFdaWarningSheet;
 - (void) handleSuppressFdaWarningButton:(id)sender;
@@ -220,12 +223,47 @@ NSString*  fdaPreferencesUrl =
   }
 }
 
+- (BOOL) hasFdaPermissions {
+  NSString *path = checkFdaPermissionsPath.stringByExpandingTildeInPath;
+  NSString *tildeReplacement = [path substringToIndex:
+                                path.length - checkFdaPermissionsPath.length + 1];
+
+  NSRange range = [tildeReplacement rangeOfString: @"/Library/Containers"];
+  if (range.location != NSNotFound) {
+    // Path is sand-boxed. Replace sandbox home path by actual user home.
+
+    NSString *userHome = [tildeReplacement substringToIndex: range.location];
+    path = [userHome stringByAppendingPathComponent:
+            [checkFdaPermissionsPath substringFromIndex: 2]];
+  }
+
+  NSError *error = nil;
+  [NSFileManager.defaultManager contentsOfDirectoryAtPath: path error: &error];
+
+  if (error) {
+    NSLog(@"FDA permission check using %@ failed, error: %@", path, error);
+    return YES;
+  }
+
+  NSLog(@"FDA permission check using %@ succeeded", path);
+
+  return NO;
+
+}
+
 - (BOOL) shouldShowFdaWarningSheet {
+  // Always check, even when warning should be suppressed. This way, the log always contains the
+  // outcome of the FDA check, which can be helpful for trouble-shooting.
+  if ([self hasFdaPermissions]) {
+    return NO;
+  }
+
   NSUserDefaults  *userDefaults = NSUserDefaults.standardUserDefaults;
+  if ([userDefaults boolForKey: SuppressFdaWarningSheetKey]) {
+    return NO;
+  }
 
-  BOOL suppressSheet = [userDefaults boolForKey: SuppressFdaWarningSheetKey];
-
-  return !suppressSheet || YES;
+  return YES;
 }
 
 - (void) showFdaWarningSheet {
@@ -263,8 +301,6 @@ NSString*  fdaPreferencesUrl =
 }
 
 - (void) handleEditFdaPreferences {
-  NSLog(@"Edit FDA preferences");
-
   NSURL *url = [NSURL URLWithString: fdaPreferencesUrl];
   [NSWorkspace.sharedWorkspace openURL: url];
 }
