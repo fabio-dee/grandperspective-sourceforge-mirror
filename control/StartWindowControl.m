@@ -20,7 +20,10 @@ NSString*  checkFdaPermissionsPath = @"~/Library/Containers/com.apple.stocks";
 - (void) setTagLineField;
 - (void) startScan:(NSInteger)selectedRow sender:(id)sender;
 
+@property (nonatomic, readonly) NSString *appVersionString;
+
 - (BOOL) hasFdaPermissions;
+- (BOOL) suppressFdaSheetEnabled;
 - (BOOL) shouldShowFdaWarningSheet;
 - (void) showFdaWarningSheet;
 - (void) handleSuppressFdaWarningButton:(id)sender;
@@ -223,6 +226,10 @@ NSString*  checkFdaPermissionsPath = @"~/Library/Containers/com.apple.stocks";
   }
 }
 
+- (NSString *)appVersionString {
+  return [NSBundle.mainBundle objectForInfoDictionaryKey: @"CFBundleShortVersionString"];
+}
+
 - (BOOL) hasFdaPermissions {
   NSString *path = checkFdaPermissionsPath.stringByExpandingTildeInPath;
   NSString *tildeReplacement = [path substringToIndex:
@@ -248,7 +255,13 @@ NSString*  checkFdaPermissionsPath = @"~/Library/Containers/com.apple.stocks";
   NSLog(@"FDA permission check using %@ succeeded", path);
 
   return NO;
+}
 
+- (BOOL) suppressFdaSheetEnabled {
+  NSUserDefaults  *userDefaults = NSUserDefaults.standardUserDefaults;
+  NSString  *suppressVersion = [userDefaults stringForKey: SuppressFdaWarningSheetKey];
+
+  return [suppressVersion isEqualToString: self.appVersionString];
 }
 
 - (BOOL) shouldShowFdaWarningSheet {
@@ -258,8 +271,7 @@ NSString*  checkFdaPermissionsPath = @"~/Library/Containers/com.apple.stocks";
     return NO;
   }
 
-  NSUserDefaults  *userDefaults = NSUserDefaults.standardUserDefaults;
-  if ([userDefaults boolForKey: SuppressFdaWarningSheetKey]) {
+  if ([self suppressFdaSheetEnabled]) {
     return NO;
   }
 
@@ -285,9 +297,8 @@ NSString*  checkFdaPermissionsPath = @"~/Library/Containers/com.apple.stocks";
   alert.suppressionButton.action = @selector(handleSuppressFdaWarningButton:);
   alert.suppressionButton.title = NSLocalizedString(@"Do not show again", @"FDA warning sheet");
 
-  NSUserDefaults  *userDefaults = NSUserDefaults.standardUserDefaults;
-  BOOL suppressSheet = [userDefaults boolForKey: SuppressFdaWarningSheetKey];
-  alert.suppressionButton.state = suppressSheet ? NSControlStateValueOn : NSControlStateValueOff;
+  alert.suppressionButton.state = ([self suppressFdaSheetEnabled]
+                                   ? NSControlStateValueOn : NSControlStateValueOff);
 
   [alert beginSheetModalForWindow: self.window completionHandler: ^(NSModalResponse returnCode) {
     if (returnCode == NSAlertFirstButtonReturn) {
@@ -298,8 +309,11 @@ NSString*  checkFdaPermissionsPath = @"~/Library/Containers/com.apple.stocks";
 
 - (void) handleSuppressFdaWarningButton:(id)sender {
   NSUserDefaults  *userDefaults = NSUserDefaults.standardUserDefaults;
-  [userDefaults setBool: [sender state] == NSControlStateValueOn
-                 forKey: SuppressFdaWarningSheetKey];
+  if ([sender state] == NSControlStateValueOn) {
+    [userDefaults setObject: self.appVersionString forKey: SuppressFdaWarningSheetKey];
+  } else {
+    [userDefaults removeObjectForKey: SuppressFdaWarningSheetKey];
+  }
 }
 
 - (void) handleEditFdaPreferences {
