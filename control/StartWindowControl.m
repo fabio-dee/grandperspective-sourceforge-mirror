@@ -249,12 +249,11 @@ NSString*  checkFdaPermissionsPath = @"~/Library/Containers/com.apple.stocks";
 
   if (error) {
     NSLog(@"FDA permission check using %@ failed, error: %@", path, error);
-    return YES;
+    return NO;
   }
 
   NSLog(@"FDA permission check using %@ succeeded", path);
-
-  return NO;
+  return YES;
 }
 
 - (BOOL) suppressFdaSheetEnabled {
