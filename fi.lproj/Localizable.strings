@@ -91,6 +91,9 @@
 /* Status update message */
 "Display focus changed to %@" = "Kohdistus on nyt %@";
 
+/* FDA warning sheet */
+"Do not show again" = "Älä näytä uudelleen";
+
 /* Alert message */
 "Do you want to delete the file \"%@\"?" = "Haluatko poistaa tiedoston \"%@\"?";
 
@@ -99,6 +102,9 @@
 
 /* Alert message */
 "Do you want to delete the package \"%@\"?" = "Haluatko poistaa paketin \"%@\"?";
+
+/* FDA warning sheet */
+"Edit System Preferences" = "Muokkaa Järjestelmäasetuksia";
 
 /* Parse error */
 "Encountered filter after folder" = "Suodatin kohdattiin hakemiston jälkeen";
@@ -228,6 +234,9 @@
 
 /* File size unit for gigabytes. */
 "GB" = "Gt";
+
+/* FDA warning sheet */
+"GrandPerspective seems to lack Full Disk Access permissions" = "Vaikuttaa siltä, että GrandPerspectivella ei ole Täysi levyn käyttö -oikeutta";
 
 /* Menu item */
 "Hide Control Panel" = "Piilota hallintapaneeli";
@@ -423,6 +432,9 @@
 
 /* Alert informative text */
 "These filters do not exist anymore. Their old definition is used instead" = "Näitä suotimia ei ole enää olemassa. Sen sijaan käytössä on niiden vanha määritelmä";
+
+/* FDA warning sheet */
+"This may limit the disk content it can see. To remedy this, you can grant the permissions via the System Preferences." = "Tämä saattaa rajoittaa, mitä levyn sisältöä se voi nähdä. Ongelman voi korjata myöntämällä oikeuden Järjestelmäasetuksissa";
 
 /* Part of tool tip for uniform types */
 "Top-level type" = "Ylätason tyyppi";

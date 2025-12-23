@@ -35,8 +35,8 @@
 "183.title" = "Nombre:";
 
 /* Class = "NSTextFieldCell"; title = "Match none"; ObjectID = "IC9-7o-Jmg"; */
-"IC9-7o-Jmg.title" = "No coincidentes";
+"IC9-7o-Jmg.title" = "sin coincidencia";
 
 /* Class = "NSTextFieldCell"; title = "Match any"; ObjectID = "K2j-w8-a6Z"; */
-"K2j-w8-a6Z.title" = "Cualquiera coincidente";
+"K2j-w8-a6Z.title" = "Cualquier coincidencia";
 

@@ -2,10 +2,10 @@
 "6.title" = "Preferencias";
 
 /* Class = "NSBox"; title = "Display"; ObjectID = "29"; */
-"29.title" = "Pantalla";
+"29.title" = "Mostrar";
 
 /* Class = "NSBox"; title = "Scanning"; ObjectID = "57"; */
-"57.title" = "Información";
+"57.title" = "Escaneando";
 
 /* Class = "NSMenuItem"; title = "Item1"; ObjectID = "61"; */
 "61.title" = "OtrasVistas";

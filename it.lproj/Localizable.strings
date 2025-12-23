@@ -91,6 +91,9 @@
 /* Status update message */
 "Display focus changed to %@" = "Focus area cambiata a %@";
 
+/* FDA warning sheet */
+"Do not show again" = "Non mostrare più";
+
 /* Alert message */
 "Do you want to delete the file \"%@\"?" = "Vuoi cancellare il file \"%@\"?";
 
@@ -99,6 +102,9 @@
 
 /* Alert message */
 "Do you want to delete the package \"%@\"?" = "Vuoi cancellare il pacchetto \"%@\"?";
+
+/* FDA warning sheet */
+"Edit System Preferences" = "Modifica Impostazioni di Sistema";
 
 /* Parse error */
 "Encountered filter after folder" = "Filtro incontrato dopo la cartella";
@@ -228,6 +234,9 @@
 
 /* File size unit for gigabytes. */
 "GB" = "GB";
+
+/* FDA warning sheet */
+"GrandPerspective seems to lack Full Disk Access permissions" = "GrandPerspective sembra non avere Accesso al Disco Intero";
 
 /* Menu item */
 "Hide Control Panel" = "Nascondi Pannello Di Controllo";
@@ -423,6 +432,9 @@
 
 /* Alert informative text */
 "These filters do not exist anymore. Their old definition is used instead" = "Questi filtri non esistono più. Al loro posto sarà utilizzata la loro vecchia definizione";
+
+/* FDA warning sheet */
+"This may limit the disk content it can see. To remedy this, you can grant the permissions via the System Preferences." = "Questo può limitare il contenuto del disco che è visualizzato. Per risolvere consenti accesso via Impostazioni di Sistema.";
 
 /* Part of tool tip for uniform types */
 "Top-level type" = "Tipo di livello superiore";

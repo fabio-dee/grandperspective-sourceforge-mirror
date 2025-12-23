@@ -91,6 +91,9 @@
 /* Status update message */
 "Display focus changed to %@" = "Mostrar enfoque cambiado a %@";
 
+/* FDA warning sheet */
+"Do not show again" = "No mostrar de nuevo";
+
 /* Alert message */
 "Do you want to delete the file \"%@\"?" = "¿Quieres borrar el archivo  \"%@\"?";
 
@@ -99,6 +102,9 @@
 
 /* Alert message */
 "Do you want to delete the package \"%@\"?" = "¿Quieres borrar el contenedor  \"%@\"?";
+
+/* FDA warning sheet */
+"Edit System Preferences" = "Editar preferencias del sistema";
 
 /* Parse error */
 "Encountered filter after folder" = "Filtro encontrado después de la carpeta";
@@ -229,6 +235,9 @@
 /* File size unit for gigabytes. */
 "GB" = "GB";
 
+/* FDA warning sheet */
+"GrandPerspective seems to lack Full Disk Access permissions" = "GrandPerspective parece no tener permiso total de acceso al disco.";
+
 /* Menu item */
 "Hide Control Panel" = "Ocultar el Panel de Control";
 
@@ -290,7 +299,7 @@
 "Package in view:" = "Contenedor mostrado:";
 
 /* Parse error */
-"Parse error (line %d): %@" = "Error de análisis (línea %d). %@";
+"Parse error (line %d): %@" = "Error de análisis (línea %d). %2$@";
 
 /* Parse error */
 "Parsing aborted" = "Análisis abortado";
@@ -386,7 +395,7 @@
 "The filter will be replaced by the default filter with this name" = "El filtro se reemplazará con el filtro por defecto con este nombre";
 
 /* Alert message */
-"The path %@ does not exist or is not a folder" = "La ruta %@ no existe o no es una ruta";
+"The path %@ does not exist or is not a folder" = "La ruta %@ no existe o no es una carpeta";
 
 /* Alert message */
 "The refreshed content may not be fully accurate. Hard-linked items may occur more than once or could be missing. Perform a rescan to ensure that each hard-linked item occurs only once" = "El contenido actualizado puede no ser totalmente exacto. Los elementos vinculados pueden aparecer más de una vez o pueden faltar. Realice un nuevo escaneado para asegurarse de que cada elemento vinculado sólo aparece una vez";
@@ -423,6 +432,9 @@
 
 /* Alert informative text */
 "These filters do not exist anymore. Their old definition is used instead" = "Estos filtros ya no existen. Sus viejas definiciones se usarán en su lugar";
+
+/* FDA warning sheet */
+"This may limit the disk content it can see. To remedy this, you can grant the permissions via the System Preferences." = "Esto puede limitar el contenido del disco que puede ser visto. Para evitarlo, puede conceder los permisos a través de Preferencias del Sistema.";
 
 /* Part of tool tip for uniform types */
 "Top-level type" = "Tipos del nivel superior";
