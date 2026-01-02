@@ -91,6 +91,9 @@
 /* Status update message */
 "Display focus changed to %@" = "Görüntüleme odağı %@ olarak değişti";
 
+/* FDA warning sheet */
+"Do not show again" = "Bir Daha Gösterme";
+
 /* Alert message */
 "Do you want to delete the file \"%@\"?" = "“%@” dosyasını silmek istiyor musunuz?";
 
@@ -99,6 +102,9 @@
 
 /* Alert message */
 "Do you want to delete the package \"%@\"?" = "“%@” paketini silmek istiyor musunuz?";
+
+/* FDA warning sheet */
+"Edit System Preferences" = "Sistem Ayarları'nı Aç";
 
 /* Parse error */
 "Encountered filter after folder" = "Klasörden sonra süzgeç bulundu";
@@ -228,6 +234,9 @@
 
 /* File size unit for gigabytes. */
 "GB" = "GB";
+
+/* FDA warning sheet */
+"GrandPerspective seems to lack Full Disk Access permissions" = "GrandPerspective’in Tam Disk Erişimi izni yok gibi görünüyor";
 
 /* Menu item */
 "Hide Control Panel" = "Denetim Panelini Gizle";
@@ -423,6 +432,9 @@
 
 /* Alert informative text */
 "These filters do not exist anymore. Their old definition is used instead" = "Süzgeçler artık yok. Bunun yerine eski tanımlar kullanılacak";
+
+/* FDA warning sheet */
+"This may limit the disk content it can see. To remedy this, you can grant the permissions via the System Preferences." = "Bu, onun görebileceği disk alanını sınırlayabilir. Bu sorunu çözmek için Sistem Ayarları'ndan gerekli izinleri sağlayabilirsiniz";
 
 /* Part of tool tip for uniform types */
 "Top-level type" = "Üst düzey tür";
