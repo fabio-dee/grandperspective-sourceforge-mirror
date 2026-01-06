@@ -584,8 +584,8 @@ CFAbsoluteTime convertTimespec(struct timespec ts) {
     flags |= FileItemIsHardlinked;
   }
 
-  ScanTreeRoot  *scanTree = [ScanTreeRoot alloc];
-  [[scanTree initWithLabel: relativePath
+  ScanTreeRoot  *scanTree =
+  [[[ScanTreeRoot alloc] initWithLabel: relativePath
                     parent: treeContext.scanTreeParent
                      flags: flags
               creationTime: treeRootURL.creationTime

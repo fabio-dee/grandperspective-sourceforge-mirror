@@ -20,7 +20,7 @@
   
     _treeDrawer = [[TreeDrawer alloc] initWithScanTree: treeContext.scanTree
                                     treeDrawerSettings: settings];
-    _treeDrawerSettings = settings;
+    _treeDrawerSettings = [settings retain];
 
     settingsLock = [[NSLock alloc] init];
   }
@@ -30,6 +30,10 @@
 - (void) dealloc {
   [treeContext release];
 
+  [_treeDrawer release];
+
+  [_treeDrawerSettings release];
+
   [settingsLock release];
   
   [super dealloc];
@@ -38,7 +42,8 @@
 
 - (void) setTreeDrawerSettings:(TreeDrawerSettings *)settings {
   [settingsLock lock];
-  _treeDrawerSettings = settings;
+  [_treeDrawerSettings release];
+  _treeDrawerSettings = [settings retain];
   [settingsLock unlock];
 }
 

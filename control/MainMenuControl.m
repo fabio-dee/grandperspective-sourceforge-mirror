@@ -1052,8 +1052,8 @@ static dispatch_once_t  singletonOnceToken;
   TreeContext  *oldContext = oldControl.treeContext;
   ItemPathModel  *pathModel = oldControl.pathModelView.pathModel;
     
-  DerivedDirViewWindowCreator  *windowCreator = [DerivedDirViewWindowCreator alloc];
-  [[windowCreator initWithWindowManager: windowManager
+  DerivedDirViewWindowCreator  *windowCreator =
+  [[[DerivedDirViewWindowCreator alloc] initWithWindowManager: windowManager
                              targetPath: pathModel
                                settings: controlSettings] autorelease];
 
@@ -1126,8 +1126,8 @@ static dispatch_once_t  singletonOnceToken;
     pathModel = [[pathModel copy] autorelease];
   }
 
-  DirectoryViewControl  *newControl = [DirectoryViewControl alloc];
-  [[newControl initWithAnnotatedTreeContext: oldControl.annotatedTreeContext
+  DirectoryViewControl  *newControl =
+  [[[DirectoryViewControl alloc] initWithAnnotatedTreeContext: oldControl.annotatedTreeContext
                                   pathModel: pathModel
                                    settings: oldControl.directoryViewControlSettings] autorelease];
 

@@ -11,8 +11,8 @@ const NSUInteger TEXT_OUTPUT_BUFFER_SIZE = 4096 * 16;
   if (file) {
     fclose(file);
     file = NULL;
-    [_path release];
   }
+  [_path release];
 
   free(dataBuffer);
 

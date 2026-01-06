@@ -43,6 +43,9 @@
 - (void) dealloc {
   [NSNotificationCenter.defaultCenter removeObserver: self];
 
+  [_colorMapper release];
+  [_colorScheme release];
+
   [super dealloc];
 }
 

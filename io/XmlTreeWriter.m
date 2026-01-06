@@ -175,7 +175,7 @@ NSString *escapedXML(NSString *s, CharacterOptions escapeCharMask) {
   [super dealloc];
 }
 
-- (TextOutput *)createTextOutput:(NSURL *)path {
+- (TextOutput *)newTextOutput:(NSURL *)path {
   return [[CompressedTextOutput alloc] initWithPath: path];
 }
 
