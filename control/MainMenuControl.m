@@ -1052,10 +1052,10 @@ static dispatch_once_t  singletonOnceToken;
   TreeContext  *oldContext = oldControl.treeContext;
   ItemPathModel  *pathModel = oldControl.pathModelView.pathModel;
     
-  DerivedDirViewWindowCreator  *windowCreator = [DerivedDirViewWindowCreator alloc];
-  [[windowCreator initWithWindowManager: windowManager
-                             targetPath: pathModel
-                               settings: controlSettings] autorelease];
+  DerivedDirViewWindowCreator  *windowCreator =
+    [[[DerivedDirViewWindowCreator alloc] initWithWindowManager: windowManager
+                                                     targetPath: pathModel
+                                                       settings: controlSettings] autorelease];
 
   filterSet = [MainMenuControl updateFiltersIfNeeded: filterSet];
 
@@ -1126,10 +1126,11 @@ static dispatch_once_t  singletonOnceToken;
     pathModel = [[pathModel copy] autorelease];
   }
 
-  DirectoryViewControl  *newControl = [DirectoryViewControl alloc];
-  [[newControl initWithAnnotatedTreeContext: oldControl.annotatedTreeContext
-                                  pathModel: pathModel
-                                   settings: oldControl.directoryViewControlSettings] autorelease];
+  DirectoryViewControlSettings  *oldSettings = oldControl.directoryViewControlSettings;
+  DirectoryViewControl  *newControl =
+    [[[DirectoryViewControl alloc] initWithAnnotatedTreeContext: oldControl.annotatedTreeContext
+                                                      pathModel: pathModel
+                                                       settings: oldSettings] autorelease];
 
   // Force loading (and showing) of the window.
   [windowManager addWindow: newControl.window usingTitle: oldControl.window.title];

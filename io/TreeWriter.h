@@ -63,7 +63,7 @@ extern NSString  *DateTimeFormat;
 
 + (nullable NSString *)stringForTime:(CFAbsoluteTime)time;
 
-- (TextOutput *)createTextOutput:(NSURL *)path;
+- (TextOutput *)newTextOutput:(NSURL *)path;
 
 - (void) appendString:(NSString *)s;
 
