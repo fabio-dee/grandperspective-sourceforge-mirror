@@ -29,7 +29,11 @@ extern NSString  *DelayBeforeWelcomeWindowAfterStartupKey;
 extern NSString  *KeyboardNavigationDeltaKey;
 extern NSString  *PackageCheckBehaviorKey;
 extern NSString  *DefaultDisplayFocusKey;
-extern NSString  *SuppressFdaWarningSheetKey;
+
+// Permission checks
+extern NSString  *SuppressFdaWarningsKey;
+extern NSString  *SuppressFdaSuccessKey;
+extern NSString  *RootVolumeBookmarkKey;
 
 extern NSString  *UnlimitedDisplayFocusValue;
 

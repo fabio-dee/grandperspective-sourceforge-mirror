@@ -13,7 +13,7 @@ NSString*  TaglineFormat = @"tagline-%d";
 NSString*  fdaPreferencesUrl =
   @"x-apple.systempreferences:com.apple.preference.security?Privacy_AllFiles";
 
-NSString*  checkFdaPermissionsPath = @"~/Library/Containers/com.apple.stocks";
+NSString*  checkFdaPermissionsPath = @"~/Library/Safari";
 
 @interface StartWindowControl (PrivateMethods)
 
@@ -22,16 +22,28 @@ NSString*  checkFdaPermissionsPath = @"~/Library/Containers/com.apple.stocks";
 
 @property (nonatomic, readonly) NSString *appVersionString;
 
+- (BOOL) restoreAccessPermission;
+- (void) performStartupChecks;
+- (void) performFdaCheck;
+
+- (void) promptForRootDriveSelection;
+- (void) showDriveAccessAlert;
+
+- (void) showFdaAlert;
+- (void) showSuccessAlert;
 - (BOOL) hasFdaPermissions;
-- (BOOL) suppressFdaSheetEnabled;
-- (BOOL) shouldShowFdaWarningSheet;
-- (void) showFdaWarningSheet;
-- (void) handleSuppressFdaWarningButton:(id)sender;
+- (void) storeRootVolumeBookmark:(NSURL *)url;
+
+- (BOOL) suppressFdaWarningsEnabled;
+- (void) handleSuppressFdaWarningsButton:(id)sender;
+
 - (void) handleEditFdaPreferences;
 
 @end // @interface StartWindowControl (PrivateMethods)
 
-@implementation StartWindowControl
+@implementation StartWindowControl {
+    BOOL _driveAccessActive;
+}
 
 - (instancetype) initWithMainMenuControl:(MainMenuControl *)mainMenuControlVal {
   if (self = [super initWithWindow: nil]) {
@@ -62,7 +74,7 @@ NSString*  checkFdaPermissionsPath = @"~/Library/Containers/com.apple.stocks";
 
 - (void)windowDidLoad {
   [super windowDidLoad];
-  
+
   recentScansView.delegate = self;
   recentScansView.dataSource = self;
   recentScansView.doubleAction = @selector(scanActionAfterDoubleClick:);
@@ -71,6 +83,9 @@ NSString*  checkFdaPermissionsPath = @"~/Library/Containers/com.apple.stocks";
   [recentScansView sizeLastColumnToFit];
 
   [self setTagLineField];
+
+  // Initiate the two-step verification process
+  [self performStartupChecks];
 }
 
 
@@ -84,7 +99,7 @@ NSString*  checkFdaPermissionsPath = @"~/Library/Containers/com.apple.stocks";
 - (NSView *)tableView:(NSTableView *)tableView
    viewForTableColumn:(NSTableColumn *)tableColumn
                   row:(NSInteger)row {
-  
+
   RecentDocumentTableCellView *cellView = [tableView makeViewWithIdentifier: @"RecentScanView"
                                                                       owner: self];
 
@@ -178,10 +193,6 @@ NSString*  checkFdaPermissionsPath = @"~/Library/Containers/com.apple.stocks";
     NSDocumentController.sharedDocumentController.recentDocumentURLs.count > 0;
 
   [super showWindow: sender];
-
-  if ([self shouldShowFdaWarningSheet]) {
-    [self showFdaWarningSheet];
-  }
 }
 
 // Invoked because the controller is the delegate for the window.
@@ -230,6 +241,154 @@ NSString*  checkFdaPermissionsPath = @"~/Library/Containers/com.apple.stocks";
   return [NSBundle.mainBundle objectForInfoDictionaryKey: @"CFBundleShortVersionString"];
 }
 
+- (BOOL) restoreAccessPermission {
+  NSData *bookmarkData = [NSUserDefaults.standardUserDefaults objectForKey: RootVolumeBookmarkKey];
+  if (!bookmarkData) {
+    NSLog(@"No bookmark found for root volume");
+    return NO;
+  }
+
+  NSError *error = nil;
+  BOOL isStale = NO;
+  NSURL *allowedUrl = [NSURL URLByResolvingBookmarkData: bookmarkData
+                                                options: NSURLBookmarkResolutionWithSecurityScope
+                                          relativeToURL: nil
+                                    bookmarkDataIsStale: &isStale
+                                                  error: &error];
+
+  if (isStale) {
+    NSLog(@"Replacing stale root volume bookmark");
+    [self storeRootVolumeBookmark: allowedUrl];
+  }
+
+  if (!allowedUrl) {
+    NSLog(@"Failed to resolve URL from bookmark: %@", error);
+    return NO;
+  }
+  if (![allowedUrl startAccessingSecurityScopedResource]) {
+    NSLog(@"Failed to restore access to: %@", allowedUrl.path);
+    return NO;
+  }
+
+  NSLog(@"Restored access to: %@", allowedUrl.path);
+  NSLog(@"If this is not your root volume, you can should reset the bookmark using: defaults delete net.sourceforge.grandperspectiv rootVolumeBookmark");
+
+  return YES;
+}
+
+- (void) performStartupChecks {
+  // Try to obtain access to root volume
+  if ([self restoreAccessPermission]) {
+    NSLog(@"Obtained access to root volume");
+    [self performFdaCheck];
+  } else {
+    // Could not restore previous access, so prompt for permission
+    [self showDriveAccessAlert];
+  }
+}
+
+- (void) performFdaCheck {
+  NSUserDefaults  *userDefaults = NSUserDefaults.standardUserDefaults;
+
+  // Check if we have Full Disk Access (Privacy)
+  if ([self hasFdaPermissions]) {
+    NSLog(@"Verified FDA permissions");
+    if (![userDefaults boolForKey: SuppressFdaSuccessKey]) {
+      [self showSuccessAlert];
+      [userDefaults setBool: YES forKey: SuppressFdaSuccessKey];
+    }
+  } else {
+    NSLog(@"FDA permission check failed");
+
+    [userDefaults setBool: NO forKey: SuppressFdaSuccessKey];
+
+    if (![self suppressFdaWarningsEnabled]) {
+      [self showFdaAlert];
+    }
+  }
+}
+
+- (void) promptForRootDriveSelection {
+  NSOpenPanel *openPanel = [NSOpenPanel openPanel];
+  [openPanel setCanChooseFiles: NO];
+  [openPanel setCanChooseDirectories: YES];
+  [openPanel setAllowsMultipleSelection: NO];
+  [openPanel setPrompt: NSLocalizedString(@"Select Drive", @"Open panel prompt")];
+  [openPanel setMessage: NSLocalizedString(@"Select your main drive (e.g. Macintosh HD)",
+                                           @"Open panel message")];
+
+  // Set directory to /Volumes so the user sees the list of drives
+  [openPanel setDirectoryURL: [NSURL fileURLWithPath: @"/Volumes"]];
+
+  [openPanel beginSheetModalForWindow: self.window completionHandler: ^(NSInteger result) {
+    if (result == NSModalResponseOK) {
+      NSURL *selectedUrl = openPanel.URL;
+      [self storeRootVolumeBookmark: selectedUrl];
+
+      if ([selectedUrl startAccessingSecurityScopedResource]) {
+        [self performFdaCheck];
+      } else {
+        NSLog(@"Failed to access security scoped resource for: %@", selectedUrl.path);
+      }
+    }
+  }];
+}
+
+- (void) showDriveAccessAlert {
+  NSAlert *alert = [[[NSAlert alloc] init] autorelease];
+  [alert addButtonWithTitle: NSLocalizedString(@"Continue", @"FDA warning sheet")];
+  [alert addButtonWithTitle: CANCEL_BUTTON_TITLE];
+
+  alert.messageText = NSLocalizedString(@"Drive Access Required", @"FDA warning sheet");
+
+  alert.informativeText = NSLocalizedString
+    (@"GrandPerspective needs access to your drive to verify permissions and scan files. Please select your main drive (e.g. Macintosh HD) in the following prompt.",
+     @"FDA warning sheet");
+
+  [alert beginSheetModalForWindow: self.window completionHandler: ^(NSModalResponse returnCode) {
+    if (returnCode == NSAlertFirstButtonReturn) {
+      [self promptForRootDriveSelection];
+    }
+  }];
+}
+
+- (void) showFdaAlert {
+  NSAlert *alert = [[[NSAlert alloc] init] autorelease];
+
+  // Options: Fix it, or Continue anyway
+  [alert addButtonWithTitle: NSLocalizedString(@"Edit System Preferences", @"FDA warning sheet")];
+  [alert addButtonWithTitle: NSLocalizedString(@"Continue", @"FDA warning sheet")];
+
+  alert.messageText = NSLocalizedString
+    (@"GrandPerspective seems to lack Full Disk Access permissions",
+    @"FDA warning sheet");
+
+  alert.informativeText = NSLocalizedString
+    (@"This may limit the disk content it can see. To remedy this, you can grant the permissions via the System Preferences.",
+     @"FDA warning sheet");
+
+  alert.showsSuppressionButton = YES;
+  alert.suppressionButton.target = self;
+  alert.suppressionButton.action = @selector(handleSuppressFdaWarningsButton:);
+  alert.suppressionButton.title = NSLocalizedString(@"Do not show again", @"FDA warning sheet");
+  alert.suppressionButton.state = ([self suppressFdaWarningsEnabled]
+                                   ? NSControlStateValueOn : NSControlStateValueOff);
+
+  [alert beginSheetModalForWindow: self.window completionHandler: ^(NSModalResponse returnCode) {
+    if (returnCode == NSAlertFirstButtonReturn) {
+      [self handleEditFdaPreferences];
+    }
+  }];
+}
+
+- (void) showSuccessAlert {
+  NSAlert *alert = [[[NSAlert alloc] init] autorelease];
+  alert.messageText = NSLocalizedString(@"Permission setup complete", @"FDA success sheet");
+  alert.informativeText = NSLocalizedString(@"Full Disk Access is verified.", @"FDA success sheet");
+
+  [alert beginSheetModalForWindow: self.window completionHandler: nil];
+}
+
 - (BOOL) hasFdaPermissions {
   NSString *path = checkFdaPermissionsPath.stringByExpandingTildeInPath;
   NSString *tildeReplacement = [path substringToIndex:
@@ -256,62 +415,35 @@ NSString*  checkFdaPermissionsPath = @"~/Library/Containers/com.apple.stocks";
   return YES;
 }
 
-- (BOOL) suppressFdaSheetEnabled {
+- (void) storeRootVolumeBookmark:(NSURL *)url {
+  NSError *error = nil;
+  NSData *bookmarkData = [url bookmarkDataWithOptions: NSURLBookmarkCreationWithSecurityScope
+                       includingResourceValuesForKeys: nil
+                                        relativeToURL: nil
+                                                error: &error];
+  if (bookmarkData) {
+    NSLog(@"Stored bookmark for %@", url.path);
+
+    [NSUserDefaults.standardUserDefaults setObject: bookmarkData
+                                            forKey: RootVolumeBookmarkKey];
+  } else {
+    NSLog(@"Failed to create bookmark for %@: %@", url.path, error);
+  }
+}
+
+- (BOOL) suppressFdaWarningsEnabled {
   NSUserDefaults  *userDefaults = NSUserDefaults.standardUserDefaults;
-  NSString  *suppressVersion = [userDefaults stringForKey: SuppressFdaWarningSheetKey];
+  NSString  *suppressVersion = [userDefaults stringForKey: SuppressFdaWarningsKey];
 
   return [suppressVersion isEqualToString: self.appVersionString];
 }
 
-- (BOOL) shouldShowFdaWarningSheet {
-  // Always check, even when warning should be suppressed. This way, the log always contains the
-  // outcome of the FDA check, which can be helpful for trouble-shooting.
-  if ([self hasFdaPermissions]) {
-    return NO;
-  }
-
-  if ([self suppressFdaSheetEnabled]) {
-    return NO;
-  }
-
-  return YES;
-}
-
-- (void) showFdaWarningSheet {
-  NSAlert *alert = [[[NSAlert alloc] init] autorelease];
-
-  // First button is for the main/default action
-  [alert addButtonWithTitle: NSLocalizedString(@"Edit System Preferences", @"FDA warning sheet")];
-  [alert addButtonWithTitle: CANCEL_BUTTON_TITLE];
-  alert.messageText = NSLocalizedString
-    (@"GrandPerspective seems to lack Full Disk Access permissions",
-     @"FDA warning sheet");
-  [alert setInformativeText: NSLocalizedString
-    (@"This may limit the disk content it can see. To remedy this, you can grant the permissions via the System Preferences.",
-     @"FDA warning sheet")
-  ];
-
-  alert.showsSuppressionButton = YES;
-  alert.suppressionButton.target = self;
-  alert.suppressionButton.action = @selector(handleSuppressFdaWarningButton:);
-  alert.suppressionButton.title = NSLocalizedString(@"Do not show again", @"FDA warning sheet");
-
-  alert.suppressionButton.state = ([self suppressFdaSheetEnabled]
-                                   ? NSControlStateValueOn : NSControlStateValueOff);
-
-  [alert beginSheetModalForWindow: self.window completionHandler: ^(NSModalResponse returnCode) {
-    if (returnCode == NSAlertFirstButtonReturn) {
-      [self handleEditFdaPreferences];
-    }
-  }];
-}
-
-- (void) handleSuppressFdaWarningButton:(id)sender {
+- (void) handleSuppressFdaWarningsButton:(id)sender {
   NSUserDefaults  *userDefaults = NSUserDefaults.standardUserDefaults;
   if ([sender state] == NSControlStateValueOn) {
-    [userDefaults setObject: self.appVersionString forKey: SuppressFdaWarningSheetKey];
+    [userDefaults setObject: self.appVersionString forKey: SuppressFdaWarningsKey];
   } else {
-    [userDefaults removeObjectForKey: SuppressFdaWarningSheetKey];
+    [userDefaults removeObjectForKey: SuppressFdaWarningsKey];
   }
 }
 
