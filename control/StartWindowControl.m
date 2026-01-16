@@ -271,7 +271,8 @@ NSString*  checkFdaPermissionsPath = @"~/Library/Safari";
   }
 
   NSLog(@"Restored access to: %@", allowedUrl.path);
-  NSLog(@"If this is not your root volume, you can should reset the bookmark using: defaults delete net.sourceforge.grandperspectiv rootVolumeBookmark");
+  NSLog(@"If this is not your root volume, you should reset the bookmark using: defaults delete net.sourceforge.grandperspectiv %@",
+        RootVolumeBookmarkKey);
 
   return YES;
 }
@@ -313,7 +314,7 @@ NSString*  checkFdaPermissionsPath = @"~/Library/Safari";
   [openPanel setCanChooseFiles: NO];
   [openPanel setCanChooseDirectories: YES];
   [openPanel setAllowsMultipleSelection: NO];
-  [openPanel setPrompt: NSLocalizedString(@"Select Drive", @"Open panel prompt")];
+  [openPanel setPrompt: NSLocalizedString(@"Select Drive", @"Button of Open panel")];
   [openPanel setMessage: NSLocalizedString(@"Select your main drive (e.g. Macintosh HD)",
                                            @"Open panel message")];
 
@@ -336,13 +337,13 @@ NSString*  checkFdaPermissionsPath = @"~/Library/Safari";
 
 - (void) showDriveAccessAlert {
   NSAlert *alert = [[[NSAlert alloc] init] autorelease];
-  [alert addButtonWithTitle: NSLocalizedString(@"Continue", @"FDA warning sheet")];
+  [alert addButtonWithTitle: CONTINUE_BUTTON_TITLE];
   [alert addButtonWithTitle: CANCEL_BUTTON_TITLE];
 
-  alert.messageText = NSLocalizedString(@"Drive Access Required", @"FDA warning sheet");
+  alert.messageText = NSLocalizedString(@"Disk access required", @"FDA warning sheet");
 
   alert.informativeText = NSLocalizedString
-    (@"GrandPerspective needs access to your drive to verify permissions and scan files. Please select your main drive (e.g. Macintosh HD) in the following prompt.",
+    (@"GrandPerspective needs full access to your disk for optimal scan performance. Please select your main volume (e.g. Macintosh HD) in the following prompt.",
      @"FDA warning sheet");
 
   [alert beginSheetModalForWindow: self.window completionHandler: ^(NSModalResponse returnCode) {
@@ -356,21 +357,21 @@ NSString*  checkFdaPermissionsPath = @"~/Library/Safari";
   NSAlert *alert = [[[NSAlert alloc] init] autorelease];
 
   // Options: Fix it, or Continue anyway
-  [alert addButtonWithTitle: NSLocalizedString(@"Edit System Preferences", @"FDA warning sheet")];
-  [alert addButtonWithTitle: NSLocalizedString(@"Continue", @"FDA warning sheet")];
+  [alert addButtonWithTitle: NSLocalizedString(@"Edit System Preferences", @"FDA warning alert")];
+  [alert addButtonWithTitle: CONTINUE_BUTTON_TITLE];
 
   alert.messageText = NSLocalizedString
     (@"GrandPerspective seems to lack Full Disk Access permissions",
-    @"FDA warning sheet");
+    @"FDA warning alert");
 
   alert.informativeText = NSLocalizedString
     (@"This may limit the disk content it can see. To remedy this, you can grant the permissions via the System Preferences.",
-     @"FDA warning sheet");
+     @"FDA warning alert");
 
   alert.showsSuppressionButton = YES;
   alert.suppressionButton.target = self;
   alert.suppressionButton.action = @selector(handleSuppressFdaWarningsButton:);
-  alert.suppressionButton.title = NSLocalizedString(@"Do not show again", @"FDA warning sheet");
+  alert.suppressionButton.title = NSLocalizedString(@"Do not show again", @"FDA warning alert");
   alert.suppressionButton.state = ([self suppressFdaWarningsEnabled]
                                    ? NSControlStateValueOn : NSControlStateValueOff);
 
@@ -383,8 +384,8 @@ NSString*  checkFdaPermissionsPath = @"~/Library/Safari";
 
 - (void) showSuccessAlert {
   NSAlert *alert = [[[NSAlert alloc] init] autorelease];
-  alert.messageText = NSLocalizedString(@"Permission setup complete", @"FDA success sheet");
-  alert.informativeText = NSLocalizedString(@"Full Disk Access is verified.", @"FDA success sheet");
+  alert.messageText = NSLocalizedString(@"Permission setup complete", @"FDA success alert");
+  alert.informativeText = NSLocalizedString(@"Full Disk Access is verified.", @"FDA success alert");
 
   [alert beginSheetModalForWindow: self.window completionHandler: nil];
 }

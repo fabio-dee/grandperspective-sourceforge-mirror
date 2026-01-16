@@ -73,6 +73,9 @@
 /* Part of tool tip for uniform types */
 "Conforms to:" = "Conforms to:";
 
+/* Alert panel button */
+"Continue" = "Continue";
+
 /* Header in exported text file */
 "Created" = "Created";
 
