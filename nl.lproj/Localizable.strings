@@ -76,6 +76,9 @@
 /* Part of tool tip for uniform types */
 "Conforms to:" = "Voldoet aan:";
 
+/* Alert panel button */
+"Continue" = "Ga door";
+
 /* Header in exported text file */
 "Created" = "Aangemaakt";
 
@@ -88,10 +91,13 @@
 /* Menu item */
 "Delete Folder" = "Verwijder Map";
 
+/* FDA warning sheet */
+"Disk access required" = "Schijf toegang vereist";
+
 /* Status update message */
 "Display focus changed to %@" = "Weergave focus is gewijzigd naar %@";
 
-/* FDA warning sheet */
+/* FDA warning alert */
 "Do not show again" = "Toon niet nog een keer";
 
 /* Alert message */
@@ -103,7 +109,7 @@
 /* Alert message */
 "Do you want to delete the package \"%@\"?" = "Wilt u het pakket \"%@\" verwijderen?";
 
-/* FDA warning sheet */
+/* FDA warning alert */
 "Edit System Preferences" = "Wijzig Systeem Voorkeuren";
 
 /* Parse error */
@@ -232,10 +238,16 @@
 /* Alert message */
 "For %d files the reported (logical) size is larger than their actual (physical) size. Consider rescanning using the Physical file size measure" = "De geraporteerde (intrinsieke) grootte van %d bestanden is groter dan de werkelijke (fysische) grootte. Overweeg of u wilt herlezen met de Intrinsieke bestandsgrootte maat";
 
+/* FDA success alert */
+"Full Disk Access is verified." = "Volledige Schijf Toegang is bevestigd.";
+
 /* File size unit for gigabytes. */
 "GB" = "GB";
 
 /* FDA warning sheet */
+"GrandPerspective needs full access to your disk for optimal scan performance. Please select your main volume (e.g. Macintosh HD) in the following prompt." = "GrandPerspective heeft volledige toegang tot uw schijf nodig om disk gebruik optimaal te kunnen bepalen. Selecteer straks alstublieft uw hoofdschijf (e.g. Macintosh HD).";
+
+/* FDA warning alert */
 "GrandPerspective seems to lack Full Disk Access permissions" = "GrandPerspective lijkt geen Volledige Schijftoegang te hebben";
 
 /* Menu item */
@@ -307,6 +319,9 @@
 /* Header in exported text file */
 "Path" = "Pad";
 
+/* FDA success alert */
+"Permission setup complete" = "Toekenning van rechten is afgerond";
+
 /* Message in progress panel while loading data */
 "Reading %@" = "Laden van %@";
 
@@ -346,11 +361,17 @@
 /* Title of progress panel. */
 "Scanning in progress" = "Bezig met inlezen";
 
+/* Button of Open panel */
+"Select Drive" = "Selecteer Schijf";
+
 /* Solitairy entry in Start window */
 "Select Folder" = "Selecteer Map";
 
 /* Entry in Start window, alongside other options */
 "Select Other Folder" = "Selecteer Andere Map";
+
+/* Open panel message */
+"Select your main drive (e.g. Macintosh HD)" = "Selecteer uw hoofdschijf (b.v. Macintosh HD)";
 
 /* Label in Focus panel */
 "Selected area:" = "Geselecteerd gebied:";
@@ -433,7 +454,7 @@
 /* Alert informative text */
 "These filters do not exist anymore. Their old definition is used instead" = "Deze filters bestaan niet meer. Hun oorspronkelijke definitie zal daarom gebruikt worden";
 
-/* FDA warning sheet */
+/* FDA warning alert */
 "This may limit the disk content it can see. To remedy this, you can grant the permissions via the System Preferences." = "Dit beperkt mogelijk de schijfinhoud die het kan zien. Dit kan verholpen worden door de rechten toe te kennen in de Systeem Voorkeuren.";
 
 /* Part of tool tip for uniform types */
