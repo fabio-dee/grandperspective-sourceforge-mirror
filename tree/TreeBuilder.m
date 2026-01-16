@@ -584,14 +584,13 @@ CFAbsoluteTime convertTimespec(struct timespec ts) {
     flags |= FileItemIsHardlinked;
   }
 
-  ScanTreeRoot  *scanTree =
-  [[[ScanTreeRoot alloc] initWithLabel: relativePath
-                    parent: treeContext.scanTreeParent
-                     flags: flags
-              creationTime: treeRootURL.creationTime
-          modificationTime: treeRootURL.modificationTime
-                accessTime: treeRootURL.accessTime
-    ] autorelease];
+  ScanTreeRoot  *scanTree = [[[ScanTreeRoot alloc] initWithLabel: relativePath
+                                                          parent: treeContext.scanTreeParent
+                                                           flags: flags
+                                                    creationTime: treeRootURL.creationTime
+                                                modificationTime: treeRootURL.modificationTime
+                                                      accessTime: treeRootURL.accessTime
+                             ] autorelease];
 
   // Reset other state
   totalPhysicalSize = 0;
