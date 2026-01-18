@@ -20,10 +20,10 @@
 "Move to trash" = "In Papierkorb verschieben";
 
 /* Toolbar action */
-"Open" = "Öffne";
+"Open" = "Öffnen";
 
 /* Tooltip */
-"Open with Finder" = "Öffne im Finder";
+"Open with Finder" = "Im Finder öffnen";
 
 /* Tooltip */
 "Preview item in Quick Look panel" = "Öffne im Schnellvorschaumodus";
@@ -41,7 +41,7 @@
 "Rescan" = "Wiederhole Scan";
 
 /* Tooltip */
-"Rescan view data" = "Wiederhole Ansicht Datei";
+"Rescan view data" = "Ansichtsdaten neu scannen";
 
 /* Toolbar action */
 "Reset focus" = "Auswahl zurücksetzen";
@@ -50,10 +50,10 @@
 "Reset zoom" = "Zoom zurücksetzen";
 
 /* Toolbar action */
-"Reveal" = "Zeige";
+"Reveal" = "Im Finder anzeigen";
 
 /* Tooltip */
-"Reveal in Finder" = "Zeige im Finder";
+"Reveal in Finder" = "Im Finder anzeigen";
 
 /* Tooltip */
 "Search files by name" = "Dateien anhand von Dateinamen durchsuchen";

@@ -50,7 +50,7 @@
 "files: %@" = "Dateien: %@";
 
 /* Selective test with 1: sub test */
-"folders: %@" = "Verzeichnisse: %@";
+"folders: %@" = "Ordner: %@";
 
 /* File/folder flags sub test */
 "item is a package" = "Ist ein Paket";

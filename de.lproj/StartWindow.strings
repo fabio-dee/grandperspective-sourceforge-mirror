@@ -2,13 +2,13 @@
 "9nG-ap-dHC.title" = "Verlauf löschen";
 
 /* Class = "NSButtonCell"; title = "Scan"; ObjectID = "Cd8-ae-UVZ"; */
-"Cd8-ae-UVZ.title" = "Scanne anderes Verzeichnis";
+"Cd8-ae-UVZ.title" = "Anderen Ordner scannen";
 
 /* Class = "NSTextFieldCell"; placeholderString = "Foldername"; ObjectID = "duM-ug-7fu"; */
-"duM-ug-7fu.placeholderString" = "Verzeichnisname";
+"duM-ug-7fu.placeholderString" = "Ordnername";
 
 /* Class = "NSTextFieldCell"; title = "Folder"; ObjectID = "duM-ug-7fu"; */
-"duM-ug-7fu.title" = "Verzeichnis";
+"duM-ug-7fu.title" = "Ordner";
 
 /* Class = "NSButtonCell"; title = "Help"; ObjectID = "JEp-c0-ZgQ"; */
 "JEp-c0-ZgQ.title" = "Hilfe";

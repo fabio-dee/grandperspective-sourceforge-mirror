@@ -29,7 +29,7 @@
 "Daytona" = "Daytona Beach";
 
 /* File deletion preference option */
-"delete files and folders" = "Dateien und Verzeichnisse";
+"delete files and folders" = "Dateien und Ordner";
 
 /* File deletion preference option */
 "delete nothing" = "Nichts";
@@ -43,11 +43,17 @@
 /* Color palette */
 "FengShui" = "Feng Shui";
 
+/* Draw setting */
+"files" = "Dateien";
+
 /* Color palette */
 "FlyingGeese" = "Magenta magic";
 
 /* Color mapping scheme */
-"folder" = "Verzeichnis";
+"folder" = "Ordner";
+
+/* Draw setting */
+"folders" = "Pakete & Ordner";
 
 /* Name of "special" file in the viewer */
 "free" = "Freier Speicherplatz";
@@ -133,6 +139,9 @@
 /* Filter test */
 "Packages" = "Packages";
 
+/* Draw setting */
+"packages and files" = "Pakete & Dateien";
+
 /* File size type */
 "physical" = "Physisch";
 
@@ -146,10 +155,13 @@
 "rescan all" = "Voller Rescan";
 
 /* Rescan preference option */
-"rescan visible" = "Scan des aktuellen Verzeichnisses wiederholen";
+"rescan visible" = "Scan des aktuellen Ordners wiederholen";
 
 /* Preference option for what to do after last view is closed */
 "show welcome" = "Willkommens-Fenster anzeigen";
+
+/* Color mapping scheme */
+"size" = "Größe";
 
 /* Filter test */
 "Small files" = "Kleine Dateien";
@@ -161,7 +173,7 @@
 "Tiny files" = "Kleinste Dateien";
 
 /* Color mapping scheme */
-"top folder" = "Oberstes Verzeichnis";
+"top folder" = "Oberster Ordner";
 
 /* Color mapping scheme */
 "uniform type" = "Dateityp";

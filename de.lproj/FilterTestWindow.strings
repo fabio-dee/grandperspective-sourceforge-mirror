@@ -53,10 +53,10 @@
 "96.title" = "GB";
 
 /* Class = "NSMenuItem"; title = "files and folders"; ObjectID = "151"; */
-"151.title" = "Dateien und Verzeichnisse";
+"151.title" = "Dateien und Ordner";
 
 /* Class = "NSMenuItem"; title = "folders"; ObjectID = "152"; */
-"152.title" = "Verzeichnisse";
+"152.title" = "Ordner";
 
 /* Class = "NSMenuItem"; title = "files"; ObjectID = "153"; */
 "153.title" = "Dateien";
@@ -95,10 +95,10 @@
 "495.title" = "ist kleiner als";
 
 /* Class = "NSButtonCell"; title = "Ignore case"; ObjectID = "498"; */
-"498.title" = "Ignorieren";
+"498.title" = "Groß-/Kleinschreibung ignorieren";
 
 /* Class = "NSButtonCell"; title = "Ignore case"; ObjectID = "499"; */
-"499.title" = "Ignorieren";
+"499.title" = "Groß-/Kleinschreibung ignorieren";
 
 /* Class = "NSButtonCell"; title = "Remove"; ObjectID = "500"; */
 "500.title" = "Entfernen";

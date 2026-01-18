@@ -1,41 +1,44 @@
-/* Enumeration of two items */
-"%@ and %@" = " %1$@ und %2$@";
+/* Legend for Size-based mapping scheme. */
+"%@ - %@" = "%1$@ – %2$@";
 
 /* Enumeration of two items */
-"%@ or %@" = " %1$@ oder %2$@";
+"%@ and %@" = "%1$@ und %2$@";
+
+/* Enumeration of two items */
+"%@ or %@" = "%1$@ oder %2$@";
 
 /* Enumeration of three or more items with 1: an item, 2: two or more items */
-"%@, %@" = " %1$@, %2$@";
+"%@, %@" = "%1$@, %2$@";
 
 /* Enumeration of three or more items with 1: two or more items, 2: last item */
-"%@, and %@" = " %1$@, und %2$@";
+"%@, and %@" = "%1$@, und %2$@";
 
 /* Enumeration of three or more items with 1: two or more items, 2: last item */
-"%@, or %@" = " %1$@, oder %2$@";
+"%@, or %@" = "%1$@, oder %2$@";
 
 /* Legend for Time-based mapping schemes. */
-"%d - %d days ago" = " %1$d - %2$d Tage zurückliegend";
+"%d - %d days ago" = "%1$d – %2$d Tage alt";
 
 /* Legend for Time-based mapping schemes. */
-"%d days ago" = "%d Tage zurückliegend";
+"%d days ago" = "Vor %d Tagen";
 
 /* Legend for Time-based mapping schemes. */
-"%d days ago or more" = "%d oder mehr Tage vergangen";
+"%d days ago or more" = "%d Tage oder älter";
 
 /* Message in progress panel while filtering */
-"%d folders filtered" = "%d Verzeichnisse gefiltert";
+"%d folders filtered" = "%d Ordner gefiltert";
 
 /* Message in progress panel while executing refresh-based scan */
 "%d folders processed" = "%d Ordner verarbeitet";
 
 /* Message in progress panel while loading data */
-"%d folders read" = "%d Verzeichnisse gelesen";
+"%d folders read" = "%d Ordner gelesen";
 
 /* Message in progress panel while saving data */
-"%d folders saved" = "%d Verzeichnisse gespeichert";
+"%d folders saved" = "%d Ordner gespeichert";
 
 /* Message in progress panel while executing a full scan */
-"%d folders scanned" = "%d Verzeichnisse gescannt";
+"%d folders scanned" = "%d Ordner gescannt";
 
 /* Exact file size (in bytes) */
 "%qu bytes" = "%qu Bytes";
@@ -83,28 +86,34 @@
 "Delete File" = "Datei löschen";
 
 /* Menu item */
-"Delete Folder" = "Verzeichnis löschen";
+"Delete Folder" = "Ordner löschen";
 
 /* Status update message */
 "Display focus changed to %@" = "Auswahlanzeige geändert zu %@";
+
+/* FDA warning alert */
+"Do not show again" = "Nicht erneut anzeigen";
 
 /* Alert message */
 "Do you want to delete the file \"%@\"?" = "Wollen Sie die Datei \"%@\" löschen?";
 
 /* Alert message */
-"Do you want to delete the folder \"%@\"?" = "Wollen Sie das Verzeichnis \"%@\" löschen?";
+"Do you want to delete the folder \"%@\"?" = "Wollen Sie den Ordner \"%@\" löschen?";
 
 /* Alert message */
 "Do you want to delete the package \"%@\"?" = "Wollen Sie das Paket \"%@\" löschen?";
 
+/* FDA warning alert */
+"Edit System Preferences" = "Systemeinstellungen öffnen";
+
 /* Parse error */
-"Encountered filter after folder" = "Vorgefundene Verzeichnisse nach Filterung";
+"Encountered filter after folder" = "Filter nach Ordner vorgefunden";
 
 /* Parse error */
 "Encountered more than one root element" = "Mehr als ein Wurzel-Element vorgefunden. ";
 
 /* Parse error */
-"Encountered more than one root folder" = "Mehr als ein Wurzel-Verzeichnis vorgefunden";
+"Encountered more than one root folder" = "Mehr als ein Wurzel-Ordner vorgefunden";
 
 /* Parse error */
 "Encountered multiple %@ elements" = "Mehrere %@ Elemente vorgefunden";
@@ -116,7 +125,7 @@
 "Expected %@ element" = "%@ Element erwartet";
 
 /* Error message */
-"Expected a folder" = "Verzeichnis erwartet";
+"Expected a folder" = "Ordner erwartet";
 
 /* Parse error */
 "Expected boolean value" = "Wahrheitswert erwartet";
@@ -145,11 +154,20 @@
 /* Alert message */
 "Failed to bind one or more filter tests:\n%@" = "Fehlgeschlagen: Binden einer oder mehrerer Filterprüfungen:\n%@";
 
+/* Error message */
+"Failed to close file" = "Datei konnte nicht geschlossen werden";
+
+/* Error message */
+"Failed to create file" = "Datei konnte nicht erstellt werden";
+
 /* Alert message */
 "Failed to delete the file \"%@\"" = "Fehlgeschlagen: Löschen von Datei \"%@\"";
 
 /* Alert message */
-"Failed to delete the folder \"%@\"" = "Fehlgeschlagen: Löschen von Verzeichnis \"%@\"";
+"Failed to delete the folder \"%@\"" = "Fehlgeschlagen: Löschen von Ordner \"%@\"";
+
+/* Alert message */
+"Failed to determine volume root" = "Volume-Stammverzeichnis konnte nicht ermittelt werden";
 
 /* Error message */
 "Failed to get path from pasteboard" = "Fehlgeschlagen: Pfad aus Zwischenablage einfügen";
@@ -161,28 +179,34 @@
 "Failed to open the file \"%@\"" = "Fehlgeschlagen: Öffnen der Datei \"%@\"";
 
 /* Alert message */
-"Failed to open the folder \"%@\"" = "Fehlgeschlagen: Öffnen des Verzeichnisses \"%@\"";
+"Failed to open the folder \"%@\"" = "Fehlgeschlagen: Öffnen des Ordners \"%@\"";
 
 /* Alert message */
-"Failed to open the package \"%@\"" = "Fehlgeschlagen: Öffnen der Pakets \"%@\"";
+"Failed to open the package \"%@\"" = "Fehlgeschlagen: Öffnen des Pakets \"%@\"";
+
+/* Parse error */
+"Failed to read any tree data" = "Baumdaten konnten nicht gelesen werden";
 
 /* Alert message */
 "Failed to reveal the file \"%@\"" = "Fehlgeschlagen: Anzeigen der Datei \"%@\"";
 
 /* Alert message */
-"Failed to reveal the folder \"%@\"" = "Fehlgeschlagen: Anzeigen des Verzeichnisses \"%@\"";
+"Failed to reveal the folder \"%@\"" = "Fehlgeschlagen: Anzeigen des Ordners \"%@\"";
 
 /* Alert message */
 "Failed to reveal the package \"%@\"" = "Fehlgeschlagen: Anzeigen des Pakets \"%@\"";
 
 /* Alert message */
-"Failed to save the image" = "Fehlgeschlagen: Speichern der Bild Datei";
+"Failed to save the image" = "Fehlgeschlagen: Speichern der Bilddatei";
 
 /* Alert message (with filename arg) */
 "Failed to save the scan data to \"%@\"" = "Fehlgeschlagen: Speichern der Scandaten in \"%@\"";
 
 /* Alert message */
 "Failed to update one or more filters:\n%@" = "Fehlgeschlagen: Aktualisieren eines oder mehrerer Filter:\n%@";
+
+/* Error message */
+"Failed to write to file" = "Schreiben in Datei fehlgeschlagen";
 
 /* Label in Focus panel */
 "File in view:" = "Datei in Ansicht:";
@@ -203,13 +227,16 @@
 "Filtering in progress" = "Filterung in Arbeit";
 
 /* Label in Focus panel */
-"Folder in view:" = "Verzeichnis in Ansicht: ";
+"Folder in view:" = "Ordner in Ansicht: ";
 
 /* Alert message */
 "For %d files the reported (logical) size is larger than their actual (physical) size. Consider rescanning using the Physical file size measure" = "Bei %d Dateien übersteigt die ermittelte (logische) die tatsächliche (physikalische) Größe. Erwägen Sie, den Scan mit der physikalischen Dateigröße zu wiederholen";
 
 /* File size unit for gigabytes. */
 "GB" = "GB";
+
+/* FDA warning alert */
+"GrandPerspective seems to lack Full Disk Access permissions" = "GrandPerspective scheint keine Berechtigung für Festplattenvollzugriff zu haben";
 
 /* Menu item */
 "Hide Control Panel" = "Steuerung verbergen";
@@ -220,11 +247,14 @@
 /* File size unit for kilobytes. */
 "kB" = "kB";
 
+/* Legend for Size-based mapping scheme. */
+"Larger than %@" = "Größer als %@";
+
 /* Legend for Level mapping scheme. */
 "Level %d" = "Level %d";
 
 /* Title of load panel */
-"Load scan data" = "Lade Scandaten";
+"Load scan data" = "Scandaten laden";
 
 /* Title of progress panel. */
 "Loading in progress" = "Laden in Arbeit";
@@ -251,7 +281,7 @@
 "Note: The file is hard-linked. It will take up space until all links to it are deleted" = "Achtung: Diese Datei ist hardlinked. Dies wird Speicherplatz verbrauchen, es sei denn alle Links zu ihr werden gelöscht";
 
 /* Alert additional informative text */
-"Note: The folder is hard-linked. It will take up space until all links to it are deleted" = "Achtung: Dieses Verzeichnis ist hardlinked. Dies wird Speicherplatz verbrauchen, es sei denn alle Links zu ihm werden gelöscht";
+"Note: The folder is hard-linked. It will take up space until all links to it are deleted" = "Achtung: Dieser Ordner ist hardlinked. Dies wird Speicherplatz verbrauchen, es sei denn alle Links zu ihm werden gelöscht";
 
 /* Alert additional informative text */
 "Note: The package is hard-linked. It will take up space until all links to it are deleted" = "Achtung: Dieses Paket ist hardlinked. Dies wird Speicherplatz verbrauchen, es sei denn alle Links dazu werden gelöscht";
@@ -266,7 +296,7 @@
 "Outermost level" = "Äußerster Level";
 
 /* Label in Focus panel */
-"Package in view:" = "Pakete in aktueller Ansicht";
+"Package in view:" = "Paket in Ansicht:";
 
 /* Parse error */
 "Parse error (line %d): %@" = "Fehler beim Parsen (Zeile %1$d): %2$@";
@@ -293,7 +323,7 @@
 "Remove the test named \"%@\"?" = "Die Prüfung mit dem Namen \"%@\" entfernen?";
 
 /* Title of save panel */
-"Save scan data" = "Speichere Scandaten";
+"Save scan data" = "Scandaten speichern";
 
 /* Message in progress panel while saving data */
 "Saving %@" = "Speichere %@";
@@ -305,7 +335,7 @@
 "Scan" = "Scan";
 
 /* Title of open panel */
-"Scan folder" = "Scan Verzeichnis";
+"Scan folder" = "Ordner scannen";
 
 /* Message in progress panel while scanning */
 "Scanning %@" = "Scanne %@";
@@ -317,28 +347,34 @@
 "Scanning in progress" = "Scan in Arbeit";
 
 /* Solitairy entry in Start window */
-"Select Folder" = "Verzeichnis auswählen";
+"Select Folder" = "Ordner auswählen";
 
 /* Entry in Start window, alongside other options */
-"Select Other Folder" = "Anderes Verzeichnis auswählen";
+"Select Other Folder" = "Anderen Ordner auswählen";
 
 /* Label in Focus panel */
 "Selected area:" = "Ausgewählter Bereich:";
 
 /* Label in Focus panel */
-"Selected file:" = "Ausgewählte Dateien:";
+"Selected file:" = "Ausgewählte Datei:";
 
 /* Label in Focus panel */
-"Selected folder:" = "Ausgewählte Verzeichnisse:";
+"Selected folder:" = "Ausgewählter Ordner:";
 
 /* Label in Focus panel */
-"Selected package:" = "Ausgewählte Pakete:";
+"Selected package:" = "Ausgewähltes Paket:";
 
 /* Menu item */
 "Show Control Panel" = "Steuerung anzeigen";
 
 /* Header in exported text file */
 "Size" = "Größe";
+
+/* Legend for Size-based mapping scheme. */
+"Smaller than %@" = "Kleiner als %@";
+
+/* Legend for Size-based mapping scheme. */
+"Smallest" = "Kleinste";
 
 /* Alert message (with filename arg) */
 "Successfully saved the scan data to \"%@\"" = "Scandaten erfolgreich in \"%@\" gespeichert";
@@ -359,7 +395,7 @@
 "The filter will be replaced by the default filter with this name" = "Dieser Filter wird durch den Standard-Filter dieses Namens ersetzt";
 
 /* Alert message */
-"The path %@ does not exist or is not a folder" = "Der Pfad %@ existiert nicht oder ist kein Verzeichnis";
+"The path %@ does not exist or is not a folder" = "Der Pfad %@ existiert nicht oder ist kein Ordner";
 
 /* Alert message */
 "The refreshed content may not be fully accurate. Hard-linked items may occur more than once or could be missing. Perform a rescan to ensure that each hard-linked item occurs only once" = "Der aktualisierte Inhalt ist möglichweise nicht vollständig oder nicht eindeutig, hart-verlinkte Elemente können mehr als einmal erscheinen oder fehlen. Führen Sie einen neuen Suchlauf durch, um sicher zu sein, dass jedes hart-verlinkte Element nur einmal erscheint";
@@ -377,7 +413,7 @@
 "The selected file will be moved to Trash" = "Die ausgewählte Datei wird in den Papierkorb verschoben";
 
 /* Alert informative text */
-"The selected folder, with all its contents, will be moved to Trash. Beware, any files in the folder that are not shown in the view will also be deleted" = "Das ausgewählte Verzeichnis mit allen darin enthaltenden (auch in dieser Ansicht möglicherweise ausgeblendeten) Dateien wird gelöscht";
+"The selected folder, with all its contents, will be moved to Trash. Beware, any files in the folder that are not shown in the view will also be deleted" = "Der ausgewählte Ordner mit allen darin enthaltenen (auch in dieser Ansicht möglicherweise ausgeblendeten) Dateien wird gelöscht";
 
 /* Alert informative text */
 "The selected package will be moved to Trash" = "Das Paket wird in den Papierkorb verschoben";
@@ -396,6 +432,9 @@
 
 /* Alert informative text */
 "These filters do not exist anymore. Their old definition is used instead" = "Dieser Filter existiert nicht mehr. Stattdessen wird dessen alte Definition verwendet";
+
+/* FDA warning alert */
+"This may limit the disk content it can see. To remedy this, you can grant the permissions via the System Preferences." = "Dadurch können möglicherweise nicht alle Festplatteninhalte angezeigt werden. Sie können die Berechtigungen in den Systemeinstellungen erteilen, um dies zu beheben.";
 
 /* Part of tool tip for uniform types */
 "Top-level type" = "Top-Level Typ";

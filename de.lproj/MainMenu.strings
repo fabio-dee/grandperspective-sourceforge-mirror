@@ -38,13 +38,13 @@
 "29.title" = "Hauptmenü";
 
 /* Class = "NSMenuItem"; title = "Open"; ObjectID = "33Q-IV-RrZ"; */
-"33Q-IV-RrZ.title" = "Öffne";
+"33Q-IV-RrZ.title" = "Öffnen";
 
 /* Class = "NSMenuItem"; title = "About GrandPerspective"; ObjectID = "58"; */
 "58.title" = "Über GrandPerspective";
 
 /* Class = "NSMenuItem"; title = "Scan Folder..."; ObjectID = "72"; */
-"72.title" = "Scanne Verzeichnis...";
+"72.title" = "Scanne Ordner...";
 
 /* Class = "NSMenu"; title = "File"; ObjectID = "81"; */
 "81.title" = "Datei";
@@ -143,7 +143,7 @@
 "398.title" = "Alle Auswählen";
 
 /* Class = "NSMenuItem"; title = "Uniform type ranking..."; ObjectID = "421"; */
-"421.title" = "Einordnung Dateitypen";
+"421.title" = "Dateityp-Rangfolge...";
 
 /* Class = "NSMenuItem"; title = "Services"; ObjectID = "425"; */
 "425.title" = "Services";
@@ -218,7 +218,7 @@
 "wHh-Gg-e7R.title" = "Auswahlfokus";
 
 /* Class = "NSMenuItem"; title = "Reveal"; ObjectID = "wVF-ys-3UQ"; */
-"wVF-ys-3UQ.title" = "Zeige";
+"wVF-ys-3UQ.title" = "Im Finder anzeigen";
 
 /* Class = "NSMenuItem"; title = "Reset Zoom"; ObjectID = "y2y-vX-zhd"; */
 "y2y-vX-zhd.title" = "Zoom zurücksetzen";

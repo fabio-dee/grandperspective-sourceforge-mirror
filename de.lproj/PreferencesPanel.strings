@@ -5,13 +5,13 @@
 "29.title" = "Anzeige";
 
 /* Class = "NSBox"; title = "Scanning"; ObjectID = "57"; */
-"57.title" = "Untersuche";
+"57.title" = "Scannen";
 
 /* Class = "NSBox"; title = "Actions"; ObjectID = "72"; */
 "72.title" = "Aktionen";
 
 /* Class = "NSMenuItem"; title = "Files and folders"; ObjectID = "78"; */
-"78.title" = "Dateien und Verzeichnisse";
+"78.title" = "Dateien und Ordner";
 
 /* Class = "NSMenuItem"; title = "Close old window"; ObjectID = "153"; */
 "153.title" = "Schließe altes Fenster";
@@ -19,11 +19,8 @@
 /* Class = "NSTextFieldCell"; title = "Palette:"; ObjectID = "167"; */
 "167.title" = "Farbpalette:";
 
-/* Class = "NSButtonCell"; title = "Show package contents"; ObjectID = "171"; */
-"171.title" = "Zeige Inhalt von Paket";
-
 /* Class = "NSTextFieldCell"; title = "Color by:"; ObjectID = "172"; */
-"172.title" = "Farbanzeige in Bezug zu:";
+"172.title" = "Einfärben nach:";
 
 /* Class = "NSTextFieldCell"; title = "File size measure:"; ObjectID = "174"; */
 "174.title" = "Dateigrößeneinheit:";
@@ -41,13 +38,16 @@
 "181.title" = "Maskierung:";
 
 /* Class = "NSButtonCell"; title = "Show entire volume"; ObjectID = "199"; */
-"199.title" = "Zeige gesamtes Laufwerk";
+"199.title" = "Gesamtes Volume anzeigen";
 
 /* Class = "NSTextFieldCell"; title = "File size unit system:"; ObjectID = "214"; */
-"214.title" = "Datei Größeneinheit:";
+"214.title" = "Dateigrößen-Einheitensystem:";
 
 /* Class = "NSTextFieldCell"; title = "Default filter:"; ObjectID = "bAf-Lb-Hos"; */
-"bAf-Lb-Hos.title" = "Standard-Filter";
+"bAf-Lb-Hos.title" = "Standard-Filter:";
+
+/* Class = "NSTextFieldCell"; title = "Show:"; ObjectID = "fpR-JL-BuW"; */
+"fpR-JL-BuW.title" = "Anzeigen:";
 
 /* Class = "NSTextFieldCell"; title = "After closing last view:"; ObjectID = "KFu-2k-t7Z"; */
 "KFu-2k-t7Z.title" = "Nach dem Schließen der letzten Ansicht:";
