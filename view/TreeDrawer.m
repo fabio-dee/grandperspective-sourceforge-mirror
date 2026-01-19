@@ -58,7 +58,8 @@
                   name: MappingSchemeChangedEvent
                 object: _colorScheme];
 
-    _colorScheme = colorScheme;
+    [_colorScheme release];
+    _colorScheme = [colorScheme retain];
 
     [nc addObserver: self
            selector: @selector(colorSchemeChanged:)
