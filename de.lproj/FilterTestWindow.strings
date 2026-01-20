@@ -80,7 +80,7 @@
 "388.title" = "gleich";
 
 /* Class = "NSMenuItem"; title = "Add"; ObjectID = "396"; */
-"396.title" = "Ergänzen";
+"396.title" = "Hinzufügen";
 
 /* Class = "NSButtonCell"; title = "name"; ObjectID = "489"; */
 "489.title" = "Name";
@@ -104,7 +104,7 @@
 "500.title" = "Entfernen";
 
 /* Class = "NSButtonCell"; title = "Add"; ObjectID = "501"; */
-"501.title" = "Ergänze";
+"501.title" = "Hinzufügen";
 
 /* Class = "NSButtonCell"; title = "item"; ObjectID = "502"; */
 "502.title" = "Eintrag";
@@ -128,7 +128,7 @@
 "510.title" = "Entfernen";
 
 /* Class = "NSButtonCell"; title = "Add"; ObjectID = "511"; */
-"511.title" = "Ergänzen";
+"511.title" = "Hinzufügen";
 
 /* Class = "NSButtonCell"; title = "OK"; ObjectID = "514"; */
 "514.title" = "OK";

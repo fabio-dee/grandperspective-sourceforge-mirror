@@ -76,6 +76,9 @@
 /* Part of tool tip for uniform types */
 "Conforms to:" = "Gehört zu:";
 
+/* Alert panel button */
+"Continue" = "Fortfahren";
+
 /* Header in exported text file */
 "Created" = "Erstellt";
 
@@ -87,6 +90,9 @@
 
 /* Menu item */
 "Delete Folder" = "Ordner löschen";
+
+/* FDA warning sheet */
+"Disk access required" = "Festplattenzugriff erforderlich";
 
 /* Status update message */
 "Display focus changed to %@" = "Auswahlanzeige geändert zu %@";
@@ -224,7 +230,7 @@
 "Filtering %@" = "Filterung %@";
 
 /* Title of progress panel. */
-"Filtering in progress" = "Filterung in Arbeit";
+"Filtering in progress" = "Filterung läuft";
 
 /* Label in Focus panel */
 "Folder in view:" = "Ordner in Ansicht: ";
@@ -232,8 +238,14 @@
 /* Alert message */
 "For %d files the reported (logical) size is larger than their actual (physical) size. Consider rescanning using the Physical file size measure" = "Bei %d Dateien übersteigt die ermittelte (logische) die tatsächliche (physikalische) Größe. Erwägen Sie, den Scan mit der physikalischen Dateigröße zu wiederholen";
 
+/* FDA success alert */
+"Full Disk Access is verified." = "Festplattenvollzugriff wurde bestätigt.";
+
 /* File size unit for gigabytes. */
 "GB" = "GB";
+
+/* FDA warning sheet */
+"GrandPerspective needs full access to your disk for optimal scan performance. Please select your main volume (e.g. Macintosh HD) in the following prompt." = "GrandPerspective benötigt Vollzugriff auf Ihre Festplatte für optimale Scan-Leistung. Bitte wählen Sie im folgenden Dialog Ihr Hauptlaufwerk (z.B. Macintosh HD) aus.";
 
 /* FDA warning alert */
 "GrandPerspective seems to lack Full Disk Access permissions" = "GrandPerspective scheint keine Berechtigung für Festplattenvollzugriff zu haben";
@@ -257,7 +269,7 @@
 "Load scan data" = "Scandaten laden";
 
 /* Title of progress panel. */
-"Loading in progress" = "Laden in Arbeit";
+"Loading in progress" = "Laden läuft";
 
 /* Misc. description for Level mapping scheme. */
 "Lower levels" = "Unterlevel";
@@ -307,6 +319,9 @@
 /* Header in exported text file */
 "Path" = "Pfad";
 
+/* FDA success alert */
+"Permission setup complete" = "Berechtigungseinrichtung abgeschlossen";
+
 /* Message in progress panel while loading data */
 "Reading %@" = "Lese %@";
 
@@ -314,7 +329,7 @@
 "Refresh in progress" = "Aktualisierung läuft";
 
 /* Alert panel button */
-"Remove" = "Entferne";
+"Remove" = "Entfernen";
 
 /* Alert message */
 "Remove the filter named \"%@\"?" = "Den Filter mit dem Namen \"%@\" entfernen?";
@@ -329,7 +344,7 @@
 "Saving %@" = "Speichere %@";
 
 /* Title of progress panel. */
-"Saving in progress" = "Speichern in Arbeit";
+"Saving in progress" = "Speichern läuft";
 
 /* Prompt in open panel */
 "Scan" = "Scan";
@@ -344,13 +359,19 @@
 "Scanning failed" = "Scannen fehlgeschlagen";
 
 /* Title of progress panel. */
-"Scanning in progress" = "Scan in Arbeit";
+"Scanning in progress" = "Scan läuft";
+
+/* Button of Open panel */
+"Select Drive" = "Laufwerk auswählen";
 
 /* Solitairy entry in Start window */
 "Select Folder" = "Ordner auswählen";
 
 /* Entry in Start window, alongside other options */
 "Select Other Folder" = "Anderen Ordner auswählen";
+
+/* Open panel message */
+"Select your main drive (e.g. Macintosh HD)" = "Wählen Sie Ihr Hauptlaufwerk aus (z.B. Macintosh HD)";
 
 /* Label in Focus panel */
 "Selected area:" = "Ausgewählter Bereich:";
