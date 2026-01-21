@@ -76,6 +76,9 @@
 /* Part of tool tip for uniform types */
 "Conforms to:" = "İle uyumludur:";
 
+/* Alert panel button */
+"Continue" = "Sürdür";
+
 /* Header in exported text file */
 "Created" = "Oluşturulma";
 
@@ -88,10 +91,13 @@
 /* Menu item */
 "Delete Folder" = "Dosyayı Klasör";
 
+/* FDA warning sheet */
+"Disk access required" = "Disk erişimi gerekiyor";
+
 /* Status update message */
 "Display focus changed to %@" = "Görüntüleme odağı %@ olarak değişti";
 
-/* FDA warning sheet */
+/* FDA warning alert */
 "Do not show again" = "Bir Daha Gösterme";
 
 /* Alert message */
@@ -103,7 +109,7 @@
 /* Alert message */
 "Do you want to delete the package \"%@\"?" = "“%@” paketini silmek istiyor musunuz?";
 
-/* FDA warning sheet */
+/* FDA warning alert */
 "Edit System Preferences" = "Sistem Ayarları'nı Aç";
 
 /* Parse error */
@@ -232,10 +238,16 @@
 /* Alert message */
 "For %d files the reported (logical) size is larger than their actual (physical) size. Consider rescanning using the Physical file size measure" = "%d dosyaları için raporlanan (mantıksal) boyut onların gerçek (fiziksel) boyutlarından daha büyüktür. Fiziksel dosya boyutu seçeneğini kullanarak yeniden taramayı deneyin";
 
+/* FDA success alert */
+"Full Disk Access is verified." = "Tam Disk Erişimi doğrulandı.";
+
 /* File size unit for gigabytes. */
 "GB" = "GB";
 
 /* FDA warning sheet */
+"GrandPerspective needs full access to your disk for optimal scan performance. Please select your main volume (e.g. Macintosh HD) in the following prompt." = "En iyi tarama performansı için GrandPerspective’in diskinize tam erişimi gerekiyor. Lütfen, aşağıdaki istemden ana disk bölümünüzü (örn. Macintosh HD) seçin.";
+
+/* FDA warning alert */
 "GrandPerspective seems to lack Full Disk Access permissions" = "GrandPerspective’in Tam Disk Erişimi izni yok gibi görünüyor";
 
 /* Menu item */
@@ -307,6 +319,9 @@
 /* Header in exported text file */
 "Path" = "Yol";
 
+/* FDA success alert */
+"Permission setup complete" = "İzin ayarı tamamlandı.";
+
 /* Message in progress panel while loading data */
 "Reading %@" = "%@ okunuyor";
 
@@ -346,11 +361,17 @@
 /* Title of progress panel. */
 "Scanning in progress" = "Tarama sürüyor";
 
+/* Button of Open panel */
+"Select Drive" = "Sürücü Seç";
+
 /* Solitairy entry in Start window */
 "Select Folder" = "Klasör Seç";
 
 /* Entry in Start window, alongside other options */
 "Select Other Folder" = "Başka Klasör Seç";
+
+/* Open panel message */
+"Select your main drive (e.g. Macintosh HD)" = "Ana disk bölümünüzü (örn. Macintosh HD) seçin.";
 
 /* Label in Focus panel */
 "Selected area:" = "Seçilen alan:";
@@ -433,7 +454,7 @@
 /* Alert informative text */
 "These filters do not exist anymore. Their old definition is used instead" = "Süzgeçler artık yok. Bunun yerine eski tanımlar kullanılacak";
 
-/* FDA warning sheet */
+/* FDA warning alert */
 "This may limit the disk content it can see. To remedy this, you can grant the permissions via the System Preferences." = "Bu, onun görebileceği disk alanını sınırlayabilir. Bu sorunu çözmek için Sistem Ayarları'ndan gerekli izinleri sağlayabilirsiniz";
 
 /* Part of tool tip for uniform types */

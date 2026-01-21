@@ -76,6 +76,9 @@
 /* Part of tool tip for uniform types */
 "Conforms to:" = "Conforme à:";
 
+/* Alert panel button */
+"Continue" = "Continuer";
+
 /* Header in exported text file */
 "Created" = "Créé";
 
@@ -88,10 +91,13 @@
 /* Menu item */
 "Delete Folder" = "Supprimer le dossier";
 
+/* FDA warning sheet */
+"Disk access required" = "Accès disque requis";
+
 /* Status update message */
 "Display focus changed to %@" = "Mise au point de l’affichage changée à %@";
 
-/* FDA warning sheet */
+/* FDA warning alert */
 "Do not show again" = "Ne plus afficher";
 
 /* Alert message */
@@ -103,7 +109,7 @@
 /* Alert message */
 "Do you want to delete the package \"%@\"?" = "Voulez vous supprimer le paquet \"%@\"?";
 
-/* FDA warning sheet */
+/* FDA warning alert */
 "Edit System Preferences" = "Modifier les Préférences Système";
 
 /* Parse error */
@@ -232,10 +238,16 @@
 /* Alert message */
 "For %d files the reported (logical) size is larger than their actual (physical) size. Consider rescanning using the Physical file size measure" = "Pour %d fichiers, la taille (logique) est supérieure à leur taille (physique) réelle. Envisager une nouvelle analyse à l'aide de la mesure de la taille du fichier physique";
 
+/* FDA success alert */
+"Full Disk Access is verified." = "L’accès complet au disque est confirmé";
+
 /* File size unit for gigabytes. */
 "GB" = "GO";
 
 /* FDA warning sheet */
+"GrandPerspective needs full access to your disk for optimal scan performance. Please select your main volume (e.g. Macintosh HD) in the following prompt." = "GrandPerspective a besoin d’un accès complet au disque pour des performances de scan optimales. Merci de sélectionner le volume principal (par ex. Macintosh HD) à l’invite suivante";
+
+/* FDA warning alert */
 "GrandPerspective seems to lack Full Disk Access permissions" = "GrandPerspective semble ne pas avoir les permissions d’accès complet au disque";
 
 /* Menu item */
@@ -307,6 +319,9 @@
 /* Header in exported text file */
 "Path" = "Chemin";
 
+/* FDA success alert */
+"Permission setup complete" = "Configuration des autorisations terminée";
+
 /* Message in progress panel while loading data */
 "Reading %@" = "Lecture de %@";
 
@@ -346,11 +361,17 @@
 /* Title of progress panel. */
 "Scanning in progress" = "Analyse en cours";
 
+/* Button of Open panel */
+"Select Drive" = "Sélectionner le lecteur";
+
 /* Solitairy entry in Start window */
 "Select Folder" = "Dossier sélectionné";
 
 /* Entry in Start window, alongside other options */
 "Select Other Folder" = "Sélectionner un autre dossier";
+
+/* Open panel message */
+"Select your main drive (e.g. Macintosh HD)" = "Sélectionner le lecteur principal (par ex. Macintosh HD)";
 
 /* Label in Focus panel */
 "Selected area:" = "Zone sélectionnée:";
@@ -433,7 +454,7 @@
 /* Alert informative text */
 "These filters do not exist anymore. Their old definition is used instead" = "Ces filtres n'existent plus. Leur ancienne définition est utilisée à la place";
 
-/* FDA warning sheet */
+/* FDA warning alert */
 "This may limit the disk content it can see. To remedy this, you can grant the permissions via the System Preferences." = "Ceci peut limiter le contenu visible du disque. Pour y remédier, vous pouvez accorder les autorisations nécessaires via les Préférences Système.";
 
 /* Part of tool tip for uniform types */
