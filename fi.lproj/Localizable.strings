@@ -76,6 +76,9 @@
 /* Part of tool tip for uniform types */
 "Conforms to:" = "Noudattaa:";
 
+/* Alert panel button */
+"Continue" = "Jatka";
+
 /* Header in exported text file */
 "Created" = "Luotu";
 
@@ -88,10 +91,13 @@
 /* Menu item */
 "Delete Folder" = "Poista Hakemisto";
 
+/* FDA warning sheet */
+"Disk access required" = "Levyn käyttöoikeus vaaditaan";
+
 /* Status update message */
 "Display focus changed to %@" = "Kohdistus on nyt %@";
 
-/* FDA warning sheet */
+/* FDA warning alert */
 "Do not show again" = "Älä näytä uudelleen";
 
 /* Alert message */
@@ -103,7 +109,7 @@
 /* Alert message */
 "Do you want to delete the package \"%@\"?" = "Haluatko poistaa paketin \"%@\"?";
 
-/* FDA warning sheet */
+/* FDA warning alert */
 "Edit System Preferences" = "Muokkaa Järjestelmäasetuksia";
 
 /* Parse error */
@@ -232,10 +238,16 @@
 /* Alert message */
 "For %d files the reported (logical) size is larger than their actual (physical) size. Consider rescanning using the Physical file size measure" = "%d:n tiedoston looginen koko on isompi kuin niiden varsinainen fyysinen koko. Harkitse uudelleenskannausta käyttäen fyysistä mittaa tiedostokokona";
 
+/* FDA success alert */
+"Full Disk Access is verified." = "Täysi levyn käyttö -oikeus on varmistettu.";
+
 /* File size unit for gigabytes. */
 "GB" = "Gt";
 
 /* FDA warning sheet */
+"GrandPerspective needs full access to your disk for optimal scan performance. Please select your main volume (e.g. Macintosh HD) in the following prompt." = "GrandPerspective tarvitsee täyden pääsyn levyllesi optimaalisen skannaussuorituskyvyn saavuttamiseksi. Valitse seuraavassa kehotteessa päälevysi (esim. Macintosh HD).";
+
+/* FDA warning alert */
 "GrandPerspective seems to lack Full Disk Access permissions" = "Vaikuttaa siltä, että GrandPerspectivella ei ole Täysi levyn käyttö -oikeutta";
 
 /* Menu item */
@@ -307,6 +319,9 @@
 /* Header in exported text file */
 "Path" = "Polku";
 
+/* FDA success alert */
+"Permission setup complete" = "Käyttöoikeuksien määritys valmis";
+
 /* Message in progress panel while loading data */
 "Reading %@" = "Luetaan %@";
 
@@ -346,11 +361,17 @@
 /* Title of progress panel. */
 "Scanning in progress" = "Skannaus käynnissä";
 
+/* Button of Open panel */
+"Select Drive" = "Valitse levy";
+
 /* Solitairy entry in Start window */
 "Select Folder" = "Valitse hakemisto";
 
 /* Entry in Start window, alongside other options */
 "Select Other Folder" = "Valitse toinen hakemisto";
+
+/* Open panel message */
+"Select your main drive (e.g. Macintosh HD)" = "Valitse päälevysi (esim. Macintosh HD)";
 
 /* Label in Focus panel */
 "Selected area:" = "Valittu alue:";
@@ -433,7 +454,7 @@
 /* Alert informative text */
 "These filters do not exist anymore. Their old definition is used instead" = "Näitä suotimia ei ole enää olemassa. Sen sijaan käytössä on niiden vanha määritelmä";
 
-/* FDA warning sheet */
+/* FDA warning alert */
 "This may limit the disk content it can see. To remedy this, you can grant the permissions via the System Preferences." = "Tämä saattaa rajoittaa, mitä levyn sisältöä se voi nähdä. Ongelman voi korjata myöntämällä oikeuden Järjestelmäasetuksissa";
 
 /* Part of tool tip for uniform types */
