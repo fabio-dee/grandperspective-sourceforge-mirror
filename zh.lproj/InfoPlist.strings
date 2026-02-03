@@ -2,20 +2,20 @@
 "GrandPerspective scan results" = "GrandPerspective扫描结果";
 
 /* Privacy - Desktop Folder Usage Description */
-"NSDesktopFolderUsageDescription" = "程式检查您的桌面用多少磁盘空间";
+"NSDesktopFolderUsageDescription" = "由App用于显示您的桌面占用的磁盘空间大小";
 
 /* Privacy - Documents Folder Usage Description */
-"NSDocumentsFolderUsageDescription" = "程式检查您的文件用多少磁盘空间";
+"NSDocumentsFolderUsageDescription" = "由App用于显示您的文档占用的磁盘空间大小";
 
 /* Privacy - Downloads Folder Usage Description */
-"NSDownloadsFolderUsageDescription" = "程式检查您的下载用多少磁盘空间";
+"NSDownloadsFolderUsageDescription" = "由App用于显示您的已下载文件占用的磁盘空间大小";
 
 /* Copyright (human-readable) */
-"NSHumanReadableCopyright" = "版权© Eriban Software, 2005-2023";
+"NSHumanReadableCopyright" = "版权所有 © Eriban Software, 2005-2023";
 
 /* Privacy - Photo Library Usage Description */
-"NSPhotoLibraryUsageDescription" = "检查照片使用了多少磁盘空间的程序";
+"NSPhotoLibraryUsageDescription" = "由App用于显示您的照片占用的磁盘空间大小";
 
 /* Privacy - Reminders Usage Description */
-"NSRemindersUsageDescription" = "程式检查您的提醒用多少磁盘空间";
+"NSRemindersUsageDescription" = "由App用于显示您的备忘录占用的磁盘空间大小";
 

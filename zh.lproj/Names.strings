@@ -1,5 +1,5 @@
 /* Color mapping scheme */
-"access" = "最后访问";
+"access" = "访问时间";
 
 /* Filter test */
 "Audio" = "音频";
@@ -17,100 +17,106 @@
 "Bujumbura" = "布琼布拉";
 
 /* Rescan preference behaviour */
-"close old window" = "关闭旧视窗";
+"close old window" = "关闭旧窗口";
 
 /* Color palette */
 "CoffeeBeans" = "咖啡豆";
 
 /* Color mapping scheme */
-"creation" = "创建";
+"creation" = "创建时间";
 
 /* Color palette */
-"Daytona" = "代托纳海滩";
+"Daytona" = "代托纳";
 
 /* File deletion preference option */
-"delete files and folders" = "文件和文件夹";
+"delete files and folders" = "删除文件和文件夹";
 
 /* File deletion preference option */
-"delete nothing" = "没有";
+"delete nothing" = "不删除";
 
 /* Preference option for what to do after last view is closed */
-"do nothing" = "不做任何事";
+"do nothing" = "无操作";
 
 /* Color mapping scheme */
-"extension" = "扩充";
+"extension" = "扩展名";
 
 /* Color palette */
 "FengShui" = "风水";
 
+/* Draw setting */
+"files" = "文件";
+
 /* Color palette */
-"FlyingGeese" = "洋红魔法";
+"FlyingGeese" = "雁阵";
 
 /* Color mapping scheme */
 "folder" = "文件夹";
+
+/* Draw setting */
+"folders" = "包与文件夹";
 
 /* Name of "special" file in the viewer */
 "free" = "可用空间";
 
 /* Name of "special" file in the viewer */
-"freed" = "释放空间";
+"freed" = "已释放空间";
 
 /* Color palette */
-"GreenEggs" = "绿色的鸡蛋";
+"GreenEggs" = "绿鸡蛋";
 
 /* Filter test */
-"Hard-linked items" = "硬链接的项目";
+"Hard-linked items" = "硬链接项目";
 
 /* Color palette */
-"Heatmap-12" = "热图12";
+"Heatmap-12" = "热力图12";
 
 /* Color palette */
-"Heatmap-23" = "热图23";
+"Heatmap-23" = "热力图23";
 
 /* Filter test */
-"Huge files" = "巨大的文件";
+"Huge files" = "巨型文件";
 
 /* Filter test */
-"Images" = "图片";
+"Images" = "图像";
 
 /* Rescan preference behaviour */
 "keep old window" = "保留旧窗口";
 
 /* Color palette */
-"LagoonNebula" = "泻湖星云";
+"LagoonNebula" = "礁湖星云";
 
 /* Filter test */
-"Large files" = "大文件";
+"Large files" = "大型文件";
 
 /* Color mapping scheme */
-"level" = "阶段";
+"level" = "层级";
 
 /* File size type */
-"logical" = "逻辑";
+"logical" = "逻辑大小";
 
 /* Filter test */
-"Medium files" = "中档文件";
+"Medium files" = "中型文件";
 
 /* Name of "special" file in the viewer */
-"misc used" = "杂项使用空间";
+"misc used" = "其他已用空间";
 
 /* Color mapping scheme */
-"modification" = "最后更改";
+"modification" = "修改时间";
 
 /* Color palette */
 "Monaco" = "摩纳哥";
 
 /* Color palette */
-"MossAndLichen" = "苔藓与青苔";
+"MossAndLichen" = "苔色斑斓";
 
 /* Color mapping scheme */
-"name" = "名字";
+"name" = "名称";
 
 /* Filter name */
-"No cloud files" = "没有云端文件";
+"No cloud files" = "无云端文件";
 
 /* Filter name */
-"No hard-links" = "没有硬链接";
+"No hard-links" = "无硬链接";
 
 /* Filter name */
 "No version control" = "无版本控制";
@@ -119,55 +125,61 @@
 "None" = "无";
 
 /* Color mapping scheme */
-"nothing" = "没有";
+"nothing" = "无";
 
 /* Color palette */
-"OliveSunset" = "橄榄日落";
+"OliveSunset" = "橄榄色日落";
 
 /* File deletion preference option */
-"only delete files" = "文件";
+"only delete files" = "仅删除文件";
 
 /* Color palette */
-"OrigamiMice" = "折纸老鼠";
+"OrigamiMice" = "老鼠折纸";
 
 /* Filter test */
-"Packages" = "组件";
+"Packages" = "包";
+
+/* Draw setting */
+"packages and files" = "包与文件";
 
 /* File size type */
-"physical" = "物质";
+"physical" = "物理大小";
 
 /* Preference option for what to do after last view is closed */
-"quit" = "终止应用程式";
+"quit" = "退出应用程序";
 
 /* Color palette */
 "Rainbow" = "彩虹";
 
 /* Rescan preference option */
-"rescan all" = "全部重新扫描";
+"rescan all" = "重新扫描全部内容";
 
 /* Rescan preference option */
-"rescan visible" = "重新扫描视图里的文件夹";
+"rescan visible" = "重新扫描可见内容";
 
 /* Preference option for what to do after last view is closed */
-"show welcome" = "显示欢迎视窗";
+"show welcome" = "显示欢迎页面";
+
+/* Color mapping scheme */
+"size" = "大小";
 
 /* Filter test */
-"Small files" = "小文件";
+"Small files" = "小型文件";
 
 /* File size type */
-"tally" = "相符";
+"tally" = "数量大小";
 
 /* Filter test */
-"Tiny files" = "微小文件";
+"Tiny files" = "微型文件";
 
 /* Color mapping scheme */
-"top folder" = "顶部文件夹";
+"top folder" = "上级文件夹";
 
 /* Color mapping scheme */
-"uniform type" = "文件类型";
+"uniform type" = "统一类型";
 
 /* Preference option for display focus */
-"unlimited" = "无限";
+"unlimited" = "无限制";
 
 /* Filter test */
 "Version control" = "版本控制";

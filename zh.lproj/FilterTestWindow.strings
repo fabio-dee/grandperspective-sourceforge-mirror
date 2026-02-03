@@ -1,5 +1,5 @@
 /* Class = "NSWindow"; title = "Filter test"; ObjectID = "5"; */
-"5.title" = "过滤测试";
+"5.title" = "过滤条件测试";
 
 /* Class = "NSBox"; title = "Subtests"; ObjectID = "10"; */
 "10.title" = "子测试";
@@ -11,10 +11,10 @@
 "21.title" = "是";
 
 /* Class = "NSMenuItem"; title = "starts with"; ObjectID = "22"; */
-"22.title" = "以开始";
+"22.title" = "开头是";
 
 /* Class = "NSMenuItem"; title = "starts with"; ObjectID = "39"; */
-"39.title" = "以开始";
+"39.title" = "开头是";
 
 /* Class = "NSMenuItem"; title = "contains"; ObjectID = "40"; */
 "40.title" = "包含";
@@ -23,7 +23,7 @@
 "42.title" = "是";
 
 /* Class = "NSMenuItem"; title = "bytes"; ObjectID = "45"; */
-"45.title" = "bytes";
+"45.title" = "字节";
 
 /* Class = "NSMenuItem"; title = "MB"; ObjectID = "46"; */
 "46.title" = "MB";
@@ -35,16 +35,16 @@
 "51.title" = "MB";
 
 /* Class = "NSMenuItem"; title = "bytes"; ObjectID = "53"; */
-"53.title" = "bytes";
+"53.title" = "B";
 
 /* Class = "NSMenuItem"; title = "kB"; ObjectID = "56"; */
 "56.title" = "kB";
 
 /* Class = "NSMenuItem"; title = "ends with"; ObjectID = "93"; */
-"93.title" = "以之结束";
+"93.title" = "结尾是";
 
 /* Class = "NSMenuItem"; title = "ends with"; ObjectID = "94"; */
-"94.title" = "以之结束";
+"94.title" = "结尾是";
 
 /* Class = "NSMenuItem"; title = "GB"; ObjectID = "95"; */
 "95.title" = "GB";
@@ -80,19 +80,19 @@
 "388.title" = "等于";
 
 /* Class = "NSMenuItem"; title = "Add"; ObjectID = "396"; */
-"396.title" = "加";
+"396.title" = "添加";
 
 /* Class = "NSButtonCell"; title = "name"; ObjectID = "489"; */
-"489.title" = "名";
+"489.title" = "名称";
 
 /* Class = "NSButtonCell"; title = "path"; ObjectID = "490"; */
 "490.title" = "路径";
 
 /* Class = "NSButtonCell"; title = "size is larger than"; ObjectID = "492"; */
-"492.title" = "大于";
+"492.title" = "大小超过";
 
 /* Class = "NSButtonCell"; title = "size is smaller than"; ObjectID = "495"; */
-"495.title" = "小于";
+"495.title" = "大小小于";
 
 /* Class = "NSButtonCell"; title = "Ignore case"; ObjectID = "498"; */
 "498.title" = "忽略大小写";
@@ -101,44 +101,44 @@
 "499.title" = "忽略大小写";
 
 /* Class = "NSButtonCell"; title = "Remove"; ObjectID = "500"; */
-"500.title" = "去掉";
+"500.title" = "移除";
 
 /* Class = "NSButtonCell"; title = "Add"; ObjectID = "501"; */
-"501.title" = "加";
+"501.title" = "添加";
 
 /* Class = "NSButtonCell"; title = "item"; ObjectID = "502"; */
-"502.title" = "元件";
+"502.title" = "项目";
 
 /* Class = "NSTextFieldCell"; title = "hard-linked"; ObjectID = "504"; */
 "504.title" = "硬链接";
 
 /* Class = "NSButtonCell"; title = "item"; ObjectID = "505"; */
-"505.title" = "元件";
+"505.title" = "项目";
 
 /* Class = "NSTextFieldCell"; title = "a package"; ObjectID = "506"; */
-"506.title" = "一个组件";
+"506.title" = "包";
 
 /* Class = "NSButtonCell"; title = "type"; ObjectID = "508"; */
-"508.title" = "种类";
+"508.title" = "类型";
 
 /* Class = "NSButtonCell"; title = "Remove"; ObjectID = "509"; */
-"509.title" = "去掉";
+"509.title" = "移除";
 
 /* Class = "NSButtonCell"; title = "Remove"; ObjectID = "510"; */
-"510.title" = "去掉";
+"510.title" = "移除";
 
 /* Class = "NSButtonCell"; title = "Add"; ObjectID = "511"; */
-"511.title" = "加";
+"511.title" = "添加";
 
 /* Class = "NSButtonCell"; title = "OK"; ObjectID = "514"; */
-"514.title" = "OK";
+"514.title" = "好";
 
 /* Class = "NSButtonCell"; title = "Cancel"; ObjectID = "515"; */
 "515.title" = "取消";
 
 /* Class = "NSTextFieldCell"; title = "Apply to:"; ObjectID = "517"; */
-"517.title" = "适用于";
+"517.title" = "应用于：";
 
 /* Class = "NSTextFieldCell"; title = "Name:"; ObjectID = "M2Z-4Q-CYi"; */
-"M2Z-4Q-CYi.title" = "名:";
+"M2Z-4Q-CYi.title" = "名称：";
 
