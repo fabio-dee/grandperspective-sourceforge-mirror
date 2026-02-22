@@ -352,6 +352,12 @@
 /* Title of open panel */
 "Scan folder" = "扫描文件夹";
 
+/* Solitairy entry in Start window */
+"Scan Folder" = "选择文件夹";
+
+/* Entry in Start window, alongside other options */
+"Scan Other Folder" = "选择其它文件夹";
+
 /* Message in progress panel while scanning */
 "Scanning %@" = "正在扫描%@";
 
@@ -363,12 +369,6 @@
 
 /* Button of Open panel */
 "Select Drive" = "选择驱动器";
-
-/* Solitairy entry in Start window */
-"Select Folder" = "选择文件夹";
-
-/* Entry in Start window, alongside other options */
-"Select Other Folder" = "选择其它文件夹";
 
 /* Open panel message */
 "Select your main drive (e.g. Macintosh HD)" = "选择您的主驱动器（例如：Macintosh HD）";

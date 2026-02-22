@@ -352,6 +352,12 @@
 /* Title of open panel */
 "Scan folder" = "Map inlezen";
 
+/* Solitairy entry in Start window */
+"Scan Folder" = "Map Inlezen";
+
+/* Entry in Start window, alongside other options */
+"Scan Other Folder" = "Andere Map Inlezen";
+
 /* Message in progress panel while scanning */
 "Scanning %@" = "Inlezen van %@";
 
@@ -363,12 +369,6 @@
 
 /* Button of Open panel */
 "Select Drive" = "Selecteer Schijf";
-
-/* Solitairy entry in Start window */
-"Select Folder" = "Selecteer Map";
-
-/* Entry in Start window, alongside other options */
-"Select Other Folder" = "Selecteer Andere Map";
 
 /* Open panel message */
 "Select your main drive (e.g. Macintosh HD)" = "Selecteer uw hoofdschijf (b.v. Macintosh HD)";

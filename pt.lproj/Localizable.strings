@@ -307,6 +307,12 @@
 /* Title of open panel */
 "Scan folder" = "Examinar pasta";
 
+/* Solitairy entry in Start window */
+"Scan Folder" = "Selecionar pasta";
+
+/* Entry in Start window, alongside other options */
+"Scan Other Folder" = "Analisar outra pasta";
+
 /* Message in progress panel while scanning */
 "Scanning %@" = "Examinando %@";
 
@@ -315,12 +321,6 @@
 
 /* Title of progress panel. */
 "Scanning in progress" = "Escaneamento em progresso";
-
-/* Solitairy entry in Start window */
-"Select Folder" = "Selecionar pasta";
-
-/* Entry in Start window, alongside other options */
-"Select Other Folder" = "Analisar outra pasta";
 
 /* Label in Focus panel */
 "Selected area:" = "Área selecionada:";

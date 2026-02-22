@@ -352,6 +352,12 @@
 /* Title of open panel */
 "Scan folder" = "Scansione cartella";
 
+/* Solitairy entry in Start window */
+"Scan Folder" = "Seleziona Cartella";
+
+/* Entry in Start window, alongside other options */
+"Scan Other Folder" = "Seleziona Altra Cartella";
+
 /* Message in progress panel while scanning */
 "Scanning %@" = "Scansionando %@";
 
@@ -363,12 +369,6 @@
 
 /* Button of Open panel */
 "Select Drive" = "Seleziona Disco";
-
-/* Solitairy entry in Start window */
-"Select Folder" = "Seleziona Cartella";
-
-/* Entry in Start window, alongside other options */
-"Select Other Folder" = "Seleziona Altra Cartella";
 
 /* Open panel message */
 "Select your main drive (e.g. Macintosh HD)" = "Seleziona il disco principale (es. Macintosh HD)";

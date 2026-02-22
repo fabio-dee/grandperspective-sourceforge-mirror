@@ -319,6 +319,12 @@
 /* Title of open panel */
 "Scan folder" = "Σάρωση φακέλου";
 
+/* Solitairy entry in Start window */
+"Scan Folder" = "Επιλογή φακέλου";
+
+/* Entry in Start window, alongside other options */
+"Scan Other Folder" = "Επιλογή διαφορετικού φακέλου";
+
 /* Message in progress panel while scanning */
 "Scanning %@" = "Εν ενεργεία σάρωση %@";
 
@@ -327,12 +333,6 @@
 
 /* Title of progress panel. */
 "Scanning in progress" = "Σάρωση σε εξέλιξη";
-
-/* Solitairy entry in Start window */
-"Select Folder" = "Επιλογή φακέλου";
-
-/* Entry in Start window, alongside other options */
-"Select Other Folder" = "Επιλογή διαφορετικού φακέλου";
 
 /* Label in Focus panel */
 "Selected area:" = "Επιλεγμένη περιοχή:";

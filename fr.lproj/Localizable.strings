@@ -352,6 +352,12 @@
 /* Title of open panel */
 "Scan folder" = "Analyser un dossier";
 
+/* Solitairy entry in Start window */
+"Scan Folder" = "Dossier sélectionné";
+
+/* Entry in Start window, alongside other options */
+"Scan Other Folder" = "Sélectionner un autre dossier";
+
 /* Message in progress panel while scanning */
 "Scanning %@" = "Analyse de %@";
 
@@ -363,12 +369,6 @@
 
 /* Button of Open panel */
 "Select Drive" = "Sélectionner le lecteur";
-
-/* Solitairy entry in Start window */
-"Select Folder" = "Dossier sélectionné";
-
-/* Entry in Start window, alongside other options */
-"Select Other Folder" = "Sélectionner un autre dossier";
 
 /* Open panel message */
 "Select your main drive (e.g. Macintosh HD)" = "Sélectionner le lecteur principal (par ex. Macintosh HD)";

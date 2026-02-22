@@ -322,6 +322,12 @@
 /* Title of open panel */
 "Scan folder" = "Scan folder";
 
+/* Solitairy entry in Start window */
+"Scan Folder" = "Scan Folder";
+
+/* Entry in Start window, alongside other options */
+"Scan Other Folder" = "Scan Other Folder";
+
 /* Message in progress panel while scanning */
 "Scanning %@" = "Scanning %@";
 
@@ -330,12 +336,6 @@
 
 /* Title of progress panel. */
 "Scanning in progress" = "Scanning in progress";
-
-/* Solitairy entry in Start window */
-"Select Folder" = "Select Folder";
-
-/* Entry in Start window, alongside other options */
-"Select Other Folder" = "Select Other Folder";
 
 /* Label in Focus panel */
 "Selected area:" = "Selected area:";

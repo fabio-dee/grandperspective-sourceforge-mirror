@@ -352,6 +352,12 @@
 /* Title of open panel */
 "Scan folder" = "Klasörü tara";
 
+/* Solitairy entry in Start window */
+"Scan Folder" = "Klasör Seç";
+
+/* Entry in Start window, alongside other options */
+"Scan Other Folder" = "Başka Klasör Seç";
+
 /* Message in progress panel while scanning */
 "Scanning %@" = "%@ taranıyor";
 
@@ -363,12 +369,6 @@
 
 /* Button of Open panel */
 "Select Drive" = "Sürücü Seç";
-
-/* Solitairy entry in Start window */
-"Select Folder" = "Klasör Seç";
-
-/* Entry in Start window, alongside other options */
-"Select Other Folder" = "Başka Klasör Seç";
 
 /* Open panel message */
 "Select your main drive (e.g. Macintosh HD)" = "Ana disk bölümünüzü (örn. Macintosh HD) seçin.";

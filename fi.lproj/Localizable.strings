@@ -352,6 +352,12 @@
 /* Title of open panel */
 "Scan folder" = "Skannaa hakemisto";
 
+/* Solitairy entry in Start window */
+"Scan Folder" = "Valitse hakemisto";
+
+/* Entry in Start window, alongside other options */
+"Scan Other Folder" = "Valitse toinen hakemisto";
+
 /* Message in progress panel while scanning */
 "Scanning %@" = "Skannataan %@";
 
@@ -363,12 +369,6 @@
 
 /* Button of Open panel */
 "Select Drive" = "Valitse levy";
-
-/* Solitairy entry in Start window */
-"Select Folder" = "Valitse hakemisto";
-
-/* Entry in Start window, alongside other options */
-"Select Other Folder" = "Valitse toinen hakemisto";
 
 /* Open panel message */
 "Select your main drive (e.g. Macintosh HD)" = "Valitse päälevysi (esim. Macintosh HD)";
