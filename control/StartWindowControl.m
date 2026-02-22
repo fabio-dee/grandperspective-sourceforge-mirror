@@ -114,9 +114,9 @@ NSString*  checkFdaPermissionsPath = @"~/Library/Safari";
     cellView.secondTextField.stringValue = docUrl.path;
   } else {
     NSString  *msg = ((numRecent > 0) ?
-                      NSLocalizedString(@"Select Other Folder",
+                      NSLocalizedString(@"Scan Other Folder",
                                         @"Entry in Start window, alongside other options") :
-                      NSLocalizedString(@"Select Folder", @"Solitairy entry in Start window"));
+                      NSLocalizedString(@"Scan Folder", @"Solitairy entry in Start window"));
 
     cellView.textField.stringValue = msg;
     cellView.secondTextField.stringValue = LocalizationNotNeeded(@"...");
@@ -154,10 +154,6 @@ NSString*  checkFdaPermissionsPath = @"~/Library/Safari";
 }
 
 //----------------------------------------------------------------------------
-
-- (IBAction) scanAction:(id)sender {
-  [self startScan: recentScansView.selectedRow sender: sender];
-}
 
 - (IBAction) scanActionAfterDoubleClick:(id)sender {
   [self startScan: recentScansView.clickedRow sender: sender];
