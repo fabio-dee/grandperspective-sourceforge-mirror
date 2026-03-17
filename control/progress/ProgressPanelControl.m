@@ -39,6 +39,7 @@ extern NSString  *StableFolderPathKey;
 
 - (void) dealloc {
   [taskExecutor release];
+  [summaryToolTip release];
 
   NSAssert(cancelCallback==nil, @"cancelCallback not nil.");
   
@@ -55,6 +56,9 @@ extern NSString  *StableFolderPathKey;
     self->progressSummary.font = [NSFont monospacedDigitSystemFontOfSize: 0
                                                                   weight: NSFontWeightRegular];
   }
+
+  summaryToolTip = nil;
+  summaryToolTipTag = 0;
 
   [self updateProgressDetails: @""];
   [self updateProgressSummary: 0];
@@ -85,7 +89,7 @@ extern NSString  *StableFolderPathKey;
   [self updateProgressDetails: [self pathFromTaskInput: taskInput]];
   [self updateProgressSummary: 0];
   [self updateProgressEstimate: 0];
-  
+
   taskRunning = YES;
   [self updatePanel];
 }
@@ -129,12 +133,26 @@ extern NSString  *StableFolderPathKey;
   [self performSelector: @selector(updatePanel) withObject: 0 afterDelay: refreshRate];
 }
 
-
 - (void) updateProgressDetails:(NSString *)currentPath {
   progressDetails.stringValue =
     (currentPath != nil)
     ? [NSString stringWithFormat: self.progressDetailsFormat, currentPath]
     : @"";
+
+  // Update the tooltip only when the summary changed. This ensures that the tooltip shows up when
+  // the mouse hovers over the control while the path stays the same for long enough.
+  if (![summaryToolTip isEqualToString: progressDetails.stringValue]) {
+    NSView* view = progressDetails.superview;
+    if (summaryToolTip != nil) {
+      [summaryToolTip release];
+      [view removeToolTip: summaryToolTipTag];
+    }
+
+    summaryToolTip = [progressDetails.stringValue retain];
+    summaryToolTipTag = [view addToolTipRect: progressDetails.frame
+                                       owner: summaryToolTip
+                                    userData: nil];
+  }
 }
 
 - (void) updateProgressSummary:(int)numProcessed {

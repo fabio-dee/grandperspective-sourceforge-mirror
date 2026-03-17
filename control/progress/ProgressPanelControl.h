@@ -7,6 +7,9 @@
   IBOutlet NSTextField  *progressDetails;
   IBOutlet NSTextField  *progressSummary;
 
+  NSString  *summaryToolTip;
+  NSToolTipTag  summaryToolTipTag;
+
   NSTimeInterval  refreshRate;
 
   BOOL  taskRunning;
