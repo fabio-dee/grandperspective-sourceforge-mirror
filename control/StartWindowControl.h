@@ -23,6 +23,7 @@
 - (instancetype) initWithMainMenuControl:(MainMenuControl *)mainMenuControl NS_DESIGNATED_INITIALIZER;
 
 - (IBAction) helpAction:(id)sender;
+- (IBAction) scanAction:(id)sender;
 - (IBAction) scanActionAfterDoubleClick:(id)sender;
 - (IBAction) clearRecentScans:(id)sender;
 

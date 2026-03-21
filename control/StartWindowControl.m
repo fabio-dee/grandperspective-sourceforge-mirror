@@ -159,6 +159,10 @@ NSString*  checkFdaPermissionsPath = @"~/Library/Safari";
   [self startScan: recentScansView.clickedRow sender: sender];
 }
 
+- (IBAction) scanAction:(id)sender {
+  [self startScan: recentScansView.selectedRow sender: sender];
+}
+
 - (IBAction) clearRecentScans:(id)sender {
   [NSDocumentController.sharedDocumentController clearRecentDocuments: sender];
 
