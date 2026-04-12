@@ -588,14 +588,14 @@ static dispatch_once_t  singletonOnceToken;
     return;
   }
 
+  TreeContext  *oldContext = oldControl.treeContext;
+  [self refreshItem: oldContext.scanTree deriveFrom: oldControl];
+
   NSUserDefaults  *userDefaults = NSUserDefaults.standardUserDefaults;
   NSString  *rescanBehaviour = [userDefaults stringForKey: RescanBehaviourKey];
   if ([rescanBehaviour isEqualToString: RescanClosesOldWindow]) {
     [oldControl.window close];
   }
-
-  TreeContext  *oldContext = oldControl.treeContext;
-  [self refreshItem: oldContext.scanTree deriveFrom: oldControl];
 }
 
 - (IBAction) rescan:(id)sender {
@@ -618,11 +618,11 @@ static dispatch_once_t  singletonOnceToken;
     return;
   }
 
-  NSString  *rescanBehaviour = [NSUserDefaults.standardUserDefaults
-                                stringForKey: RescanBehaviourKey];
   TreeContext  *oldContext = oldControl.treeContext;
   [self rescanItem: oldContext.scanTree deriveFrom: oldControl];
 
+  NSString  *rescanBehaviour = [NSUserDefaults.standardUserDefaults
+                                stringForKey: RescanBehaviourKey];
   if ([rescanBehaviour isEqualToString: RescanClosesOldWindow]) {
     [oldControl.window close];
   }
@@ -654,12 +654,6 @@ static dispatch_once_t  singletonOnceToken;
     return;
   }
 
-  NSString  *rescanBehaviour = [NSUserDefaults.standardUserDefaults
-                                stringForKey: RescanBehaviourKey];
-  if ([rescanBehaviour isEqualToString: RescanClosesOldWindow]) {
-    [oldControl.window close];
-  }
-
   DirectoryViewControlSettings  *controlSettings = oldControl.directoryViewControlSettings;
   DirectoryViewDisplaySettings  *displaySettings = controlSettings.displaySettings;
 
@@ -683,6 +677,12 @@ static dispatch_once_t  singletonOnceToken;
         deriveFrom: oldControl
           settings: controlSettings
          filterSet: filterSet];
+
+  NSString  *rescanBehaviour = [NSUserDefaults.standardUserDefaults
+                                stringForKey: RescanBehaviourKey];
+  if ([rescanBehaviour isEqualToString: RescanClosesOldWindow]) {
+    [oldControl.window close];
+  }
 }
 
 
