@@ -49,7 +49,7 @@ static const int AUTORELEASE_PERIOD = 1024;
 
   // The node where to collect the children. For normal scans it is the same as "parent" but for
   // shallow scans it is different, as the sizes of the sub-directory children are not yet known,
-  // which is a pre-requisite before then can be added to their parent directory.
+  // which is a pre-requisite before they can be added to their parent directory.
   DirectoryItem  *collector;
 
   FTSENT  *entp;
@@ -63,6 +63,8 @@ static const int AUTORELEASE_PERIOD = 1024;
 - (void) initWithParent:(DirectoryItem *)parent
               collector:(DirectoryItem *)collector
                    entp:(FTSENT *)entp;
+
+- (void) resetFrame;
 
 @end // @interface ScanStackFrame
 
@@ -144,11 +146,20 @@ CFAbsoluteTime convertTimespec(struct timespec ts) {
   entp = entpVal;
 }
 
-- (void) dealloc {
+// Reset frame for re-use (and avoid unnecessary memory retention)
+- (void) resetFrame {
   entp = NULL;
+
   [parent release];
+  parent = nil;
+
   [collector release];
-  
+  collector = nil;
+}
+
+- (void) dealloc {
+  [self resetFrame];
+
   [super dealloc];
 }
 
@@ -307,14 +318,13 @@ CFAbsoluteTime convertTimespec(struct timespec ts) {
 
   NSAutoreleasePool  *autoreleasePool = nil;
   int  i = 0;
-  BOOL  popped;
   dirStackTopIndex = -1;
 
   [self addToStack: dirItem entp: [self startScan: path]];
 
   @try {
     FTSENT *entp;
-    while ((entp = fts_read(ftsp)) != NULL) {
+    while (!abort && (entp = fts_read(ftsp)) != NULL) {
 
       switch (entp->fts_info) {
         case FTS_DP:
@@ -331,7 +341,7 @@ CFAbsoluteTime convertTimespec(struct timespec ts) {
           continue;
       }
 
-      popped = [self unwindStackToParent: entp->fts_parent];
+      BOOL  popped = [self unwindStackToParent: entp->fts_parent];
       NSAssert1(popped, @"Failed to unwind to %s", entp->fts_parent->fts_path);
 
       ScanStackFrame  *parent = dirStack[dirStackTopIndex];
@@ -339,13 +349,11 @@ CFAbsoluteTime convertTimespec(struct timespec ts) {
       if (![self visitItem: entp parent: parent recurse: YES]) {
         fts_set(ftsp, entp, FTS_SKIP);
       }
+
       if (++i == AUTORELEASE_PERIOD) {
         [autoreleasePool release];
         autoreleasePool = [[NSAutoreleasePool alloc] init];
         i = 0;
-      }
-      if (abort) {
-        return NO;
       }
     }
 
@@ -360,7 +368,7 @@ CFAbsoluteTime convertTimespec(struct timespec ts) {
   // Wait for the tree balancing to end
   dispatch_sync(treeBalanceDispatchQueue, ^{});
 
-  return YES;
+  return !abort;
 }
 
 - (DirectoryItem *)getContentsForDirectory:(DirectoryItem *)dirItem
@@ -627,14 +635,18 @@ CFAbsoluteTime convertTimespec(struct timespec ts) {
   FileItem  *finalizedSubdir = nil;
   while (dirStackTopIndex >= 0) {
     ScanStackFrame  *topDir = dirStack[dirStackTopIndex];
+
     if (finalizedSubdir != nil) {
       [topDir->collector addSubdir: finalizedSubdir];
+      finalizedSubdir = nil;
     }
+
     if (topDir->entp == entp) {
       return YES;
     }
 
     finalizedSubdir = [self finalizeStackFrame: topDir];
+    [topDir resetFrame];
     dirStackTopIndex--;
   }
 
@@ -656,7 +668,8 @@ CFAbsoluteTime convertTimespec(struct timespec ts) {
 
   dispatch_async(treeBalanceDispatchQueue, ^{ [dirItem balanceTree: treeBalancer]; });
 
-  return dirItem;
+  // Let it survive after scan stack frame is reset
+  return [[dirItem retain] autorelease];
 }
 
 - (BOOL) visitItem:(FTSENT *)entp
