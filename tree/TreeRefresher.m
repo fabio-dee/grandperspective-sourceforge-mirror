@@ -164,6 +164,7 @@
   // Balance the items
   Item  *balancedFiles = [treeBalancer convertLinkedListToTree: collector.fileItems];
   Item  *balancedSubdirs = [treeBalancer convertLinkedListToTree: newSubdirs];
+  [newSubdirs release];
 
   [newDir setFileItems: balancedFiles directoryItems: balancedSubdirs];
 
