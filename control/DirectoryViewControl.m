@@ -914,12 +914,23 @@ NSString  *ViewWillCloseEvent = @"viewWillClose";
 }
 
 - (void) openFile:(FileItem *)fileItem withApplication:(NSURL *)appUrl {
+  // Added guard to investigate crashes reported in Organizer. From the stack traces there the
+  // invocation is not clear. It looks as if this method is, for yet unclear reasons, directly
+  // invoked from NSApplication's sendAction:to:from: which then would be without arguments. This
+  // indeed will not work.
+  //
+  // TODO: Follow this up with a proper fix once impact on reported crashes has been established.
+  if (fileItem == nil || appUrl == nil) {
+    NSLog(@"Ignoring openFile:withApplication: request with nil argument(s)");
+    return;
+  }
+
   NSWorkspace  *workspace = NSWorkspace.sharedWorkspace;
   NSString  *filePath = fileItem.systemPath;
 
   [workspace openURLs: @[[NSURL fileURLWithPath: filePath]]
  withApplicationAtURL: appUrl
-          configuration: [NSWorkspaceOpenConfiguration configuration]
+        configuration: [NSWorkspaceOpenConfiguration configuration]
     completionHandler: ^(NSRunningApplication *app, NSError *error) {
     if (error == nil) {
       NSLog(@"Opened %@ using %@", filePath, appUrl);
