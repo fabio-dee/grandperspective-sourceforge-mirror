@@ -172,6 +172,7 @@
 		AAF951B10EDEE2E100844FD5 /* DirectoryViewToolbarControl.m in Sources */ = {isa = PBXBuildFile; fileRef = AAF951B00EDEE2E100844FD5 /* DirectoryViewToolbarControl.m */; };
 		AAFB1194238ABF3B00D616C3 /* TreeWriter.m in Sources */ = {isa = PBXBuildFile; fileRef = AAFB1193238ABF3B00D616C3 /* TreeWriter.m */; };
 		AAFB1197238AD5E900D616C3 /* RawTreeWriter.m in Sources */ = {isa = PBXBuildFile; fileRef = AAFB1196238AD5E900D616C3 /* RawTreeWriter.m */; };
+		D009CBD92FA5E45B00AC19E9 /* GrandPerspectiveLogo.icon in Resources */ = {isa = PBXBuildFile; fileRef = D009CBD82FA5E45B00AC19E9 /* GrandPerspectiveLogo.icon */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -689,6 +690,7 @@
 		AAFB1193238ABF3B00D616C3 /* TreeWriter.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = TreeWriter.m; sourceTree = "<group>"; };
 		AAFB1195238AD5E900D616C3 /* RawTreeWriter.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = RawTreeWriter.h; sourceTree = "<group>"; };
 		AAFB1196238AD5E900D616C3 /* RawTreeWriter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RawTreeWriter.m; sourceTree = "<group>"; };
+		D009CBD82FA5E45B00AC19E9 /* GrandPerspectiveLogo.icon */ = {isa = PBXFileReference; lastKnownFileType = folder.iconcomposer.icon; path = GrandPerspectiveLogo.icon; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -729,6 +731,7 @@
 		29B97314FDCFA39411CA2CEA /* DirectoryView */ = {
 			isa = PBXGroup;
 			children = (
+				D009CBD82FA5E45B00AC19E9 /* GrandPerspectiveLogo.icon */,
 				AA3E28DF1CCD0BBC00225B71 /* GrandPerspective.entitlements */,
 				080E96DDFE201D6D7F000001 /* Classes */,
 				29B97315FDCFA39411CA2CEA /* Other Sources */,
@@ -1254,6 +1257,7 @@
 				AA52460F110201990018897B /* FilterTestWindow.xib in Resources */,
 				AA524613110201BA0018897B /* UniformTypeRankingWindow.xib in Resources */,
 				AA524617110202080018897B /* FilterSelectionPanel.xib in Resources */,
+				D009CBD92FA5E45B00AC19E9 /* GrandPerspectiveLogo.icon in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1900,7 +1904,7 @@
 		AA97889D0DCAFB880086E480 /* Development */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ASSETCATALOG_COMPILER_APPICON_NAME = GrandPerspective;
+				ASSETCATALOG_COMPILER_APPICON_NAME = GrandPerspectiveLogo;
 				CLANG_ENABLE_OBJC_WEAK = YES;
 				CODE_SIGN_ENTITLEMENTS = GrandPerspective.entitlements;
 				CODE_SIGN_IDENTITY = "Mac Developer";
@@ -1935,7 +1939,7 @@
 		AA97889E0DCAFB880086E480 /* Deployment */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ASSETCATALOG_COMPILER_APPICON_NAME = GrandPerspective;
+				ASSETCATALOG_COMPILER_APPICON_NAME = GrandPerspectiveLogo;
 				CLANG_ENABLE_OBJC_WEAK = YES;
 				CODE_SIGN_ENTITLEMENTS = GrandPerspective.entitlements;
 				CODE_SIGN_IDENTITY = "Mac Developer";
@@ -1967,7 +1971,7 @@
 		AA97889F0DCAFB880086E480 /* Default */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ASSETCATALOG_COMPILER_APPICON_NAME = GrandPerspective;
+				ASSETCATALOG_COMPILER_APPICON_NAME = GrandPerspectiveLogo;
 				CLANG_ENABLE_OBJC_WEAK = YES;
 				CODE_SIGN_ENTITLEMENTS = GrandPerspective.entitlements;
 				CODE_SIGN_IDENTITY = "Mac Developer";
