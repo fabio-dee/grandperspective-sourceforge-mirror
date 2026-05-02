@@ -922,6 +922,17 @@ NSString  *ViewWillCloseEvent = @"viewWillClose";
   // TODO: Follow this up with a proper fix once impact on reported crashes has been established.
   if (fileItem == nil || appUrl == nil) {
     NSLog(@"Ignoring openFile:withApplication: request with nil argument(s)");
+
+    dispatch_async(dispatch_get_main_queue(), ^() {
+      NSAlert *alert = [[[NSAlert alloc] init] autorelease];
+
+      [alert addButtonWithTitle: OK_BUTTON_TITLE];
+      alert.messageText = @"openFile:withApplication: Failed";
+      [alert setInformativeText: @"Please share details of what you did to trigger this in Bug Ticket #126 on Sourceforge.net: https://sourceforge.net/p/grandperspectiv/bugs/126/"];
+
+      [alert beginSheetModalForWindow: self.window completionHandler: nil];
+    });
+
     return;
   }
 
