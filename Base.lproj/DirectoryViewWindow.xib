@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="21507" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES">
+<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="24765" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES">
     <dependencies>
         <deployment identifier="macosx"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="21507"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="24765"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
@@ -20,7 +20,7 @@
             <windowStyleMask key="styleMask" titled="YES" closable="YES" miniaturizable="YES" resizable="YES"/>
             <windowPositionMask key="initialPositionMask" leftStrut="YES" rightStrut="YES" topStrut="YES" bottomStrut="YES"/>
             <rect key="contentRect" x="61" y="481" width="640" height="480"/>
-            <rect key="screenRect" x="0.0" y="0.0" width="1920" height="1055"/>
+            <rect key="screenRect" x="0.0" y="0.0" width="1920" height="1050"/>
             <value key="minSize" type="size" width="410" height="410"/>
             <view key="contentView" id="81">
                 <rect key="frame" x="0.0" y="0.0" width="640" height="480"/>
@@ -29,16 +29,16 @@
                     <customView translatesAutoresizingMaskIntoConstraints="NO" id="86" customClass="DirectoryView">
                         <rect key="frame" x="0.0" y="17" width="640" height="463"/>
                     </customView>
-                    <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" translatesAutoresizingMaskIntoConstraints="NO" id="88">
-                        <rect key="frame" x="4" y="1" width="562" height="16"/>
+                    <textField focusRingType="none" verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" translatesAutoresizingMaskIntoConstraints="NO" id="88">
+                        <rect key="frame" x="18" y="1" width="536" height="16"/>
                         <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" alignment="left" placeholderString="No item selected" usesSingleLineMode="YES" id="948">
                             <font key="font" metaFont="system"/>
                             <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
                             <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                         </textFieldCell>
                     </textField>
-                    <textField horizontalHuggingPriority="500" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="91">
-                        <rect key="frame" x="570" y="1" width="64" height="16"/>
+                    <textField focusRingType="none" horizontalHuggingPriority="500" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="91">
+                        <rect key="frame" x="558" y="1" width="64" height="16"/>
                         <constraints>
                             <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="48" id="7l5-Hb-YGU"/>
                         </constraints>
@@ -52,13 +52,13 @@
                 <constraints>
                     <constraint firstAttribute="bottom" secondItem="88" secondAttribute="bottom" constant="1" id="4Ko-gV-IXB"/>
                     <constraint firstItem="86" firstAttribute="top" secondItem="81" secondAttribute="top" id="5gF-Z3-NNR"/>
-                    <constraint firstItem="88" firstAttribute="leading" secondItem="81" secondAttribute="leading" constant="6" id="5nx-bV-NDm"/>
                     <constraint firstAttribute="trailing" secondItem="86" secondAttribute="trailing" id="7nI-eD-spe"/>
-                    <constraint firstAttribute="trailing" secondItem="91" secondAttribute="trailing" constant="8" id="M6P-d2-tAU"/>
+                    <constraint firstItem="88" firstAttribute="leading" secondItem="81" secondAttribute="leading" constant="20" symbolic="YES" id="V3n-x8-YiO"/>
                     <constraint firstItem="91" firstAttribute="leading" secondItem="88" secondAttribute="trailing" constant="8" symbolic="YES" id="V7H-G9-Hbc"/>
                     <constraint firstItem="86" firstAttribute="leading" secondItem="81" secondAttribute="leading" id="fLP-RC-r5y"/>
                     <constraint firstAttribute="bottom" secondItem="91" secondAttribute="bottom" constant="1" id="p0N-Lm-50z"/>
                     <constraint firstItem="88" firstAttribute="top" secondItem="86" secondAttribute="bottom" id="qTM-CM-67k"/>
+                    <constraint firstAttribute="trailing" secondItem="91" secondAttribute="trailing" constant="20" symbolic="YES" id="yue-4o-LDq"/>
                 </constraints>
             </view>
             <connections>
