@@ -1,10 +1,20 @@
 {
-  "fill" : "system-dark",
+  "fill-specializations" : [
+    {
+      "value" : {
+        "solid" : "srgb:0.63655,0.82035,0.90299,1.00000"
+      }
+    },
+    {
+      "appearance" : "dark",
+      "value" : "system-dark"
+    }
+  ],
   "groups" : [
     {
       "layers" : [
         {
-          "image-name" : "GrandPerspectiveLogo-v3-3.png",
+          "image-name" : "GrandPerspectiveLogo-v33.png",
           "name" : "GrandPerspectiveLogo-v3-3"
         }
       ],
@@ -21,7 +31,7 @@
     {
       "layers" : [
         {
-          "image-name" : "GrandPerspectiveLogo-v3-2.png",
+          "image-name" : "GrandPerspectiveLogo-v32.png",
           "name" : "GrandPerspectiveLogo-v32-2"
         }
       ],
@@ -38,7 +48,7 @@
       "hidden" : false,
       "layers" : [
         {
-          "image-name" : "GrandPerspectiveLogo-v3-1.png",
+          "image-name" : "GrandPerspectiveLogo-v31.png",
           "name" : "GrandPerspectiveLogo-v3-1"
         }
       ],
