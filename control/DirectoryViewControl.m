@@ -927,8 +927,8 @@ NSString  *ViewWillCloseEvent = @"viewWillClose";
       NSAlert *alert = [[[NSAlert alloc] init] autorelease];
 
       [alert addButtonWithTitle: OK_BUTTON_TITLE];
-      alert.messageText = @"openFile:withApplication: Failed";
-      [alert setInformativeText: @"Please share details of what you did to trigger this in Bug Ticket #126 on Sourceforge.net: https://sourceforge.net/p/grandperspectiv/bugs/126/"];
+      alert.messageText = @"openFile:withApplication: failed";
+      [alert setInformativeText: @"This is not supposed to happen. Please share details of what you did to trigger this in Bug #126 on Sourceforge.net: https://sourceforge.net/p/grandperspectiv/bugs/126/"];
 
       [alert beginSheetModalForWindow: self.window completionHandler: nil];
     });
