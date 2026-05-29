@@ -74,6 +74,7 @@ NSString  *ViewWillCloseEvent = @"viewWillClose";
 
 - (void) fileSizeUnitSystemChanged;
 
+- (NSURL *)appUrlForOpeningFileItem:(FileItem *)fileItem;
 - (void) openFile:(FileItem *)fileItem withApplication:(NSURL *)appUrl;
 @end
 
@@ -124,6 +125,14 @@ NSString  *ViewWillCloseEvent = @"viewWillClose";
     scanPathName = [treeContext.scanTree.path retain];
     invisiblePathName = nil;
     statusMessage = nil;
+
+    NSUserDefaults  *userDefaults = NSUserDefaults.standardUserDefaults;
+    NSString  *customOpenAppPath = [userDefaults stringForKey: CustomFileOpenApplication];
+    if (customOpenAppPath.length > 0) {
+      customOpenApp = [[NSURL fileURLWithPath: customOpenAppPath] retain];
+    } else {
+      customOpenApp = nil;
+    }
   }
 
   // The control is responsible for itself. It auto-releases when the window closes.
@@ -149,6 +158,8 @@ NSString  *ViewWillCloseEvent = @"viewWillClose";
   [statusMessage release];
 
   [_previewPanel release];
+
+  [customOpenApp release];
   
   [super dealloc];
 }
@@ -311,19 +322,7 @@ NSString  *ViewWillCloseEvent = @"viewWillClose";
 - (IBAction) openFile:(id)sender {
   FileItem  *fileItem = pathModelView.selectedFileItem;
 
-  NSUserDefaults  *userDefaults = NSUserDefaults.standardUserDefaults;
-  NSWorkspace  *workspace = NSWorkspace.sharedWorkspace;
-  NSString  *customApp = [userDefaults stringForKey: CustomFileOpenApplication];
-  NSURL  *appUrl;
-
-  if (customApp.length > 0) {
-    NSLog(@"Opening %@ using custom app %@", fileItem.systemPath, customApp);
-    appUrl = [NSURL fileURLWithPath: customApp];
-  } else {
-    appUrl = [workspace URLForApplicationToOpenURL: [NSURL fileURLWithPath: fileItem.systemPath]];
-  }
-
-  [self openFile: fileItem withApplication: appUrl];
+  [self openFile: fileItem withApplication: [self appUrlForOpeningFileItem: fileItem]];
 }
 
 - (IBAction) previewFile:(id)sender {
@@ -638,7 +637,10 @@ NSString  *ViewWillCloseEvent = @"viewWillClose";
           && selectedFile.isPhysical
       
           // Can only open plain files and packages
-          && ( !selectedFile.isDirectory || selectedFile.isPackage ));
+          && ( !selectedFile.isDirectory || selectedFile.isPackage )
+
+          // Can only open files for which there is an app to open it
+          && [self appUrlForOpeningFileItem: selectedFile] != nil);
 }
 
 - (BOOL) canPreviewSelectedFile {
@@ -913,26 +915,16 @@ NSString  *ViewWillCloseEvent = @"viewWillClose";
   [self updateSelectionInStatusbar: nil];
 }
 
+- (NSURL *) appUrlForOpeningFileItem:(FileItem *)fileItem {
+  return (customOpenApp
+          ? customOpenApp
+          : [NSWorkspace.sharedWorkspace URLForApplicationToOpenURL:
+             [NSURL fileURLWithPath: fileItem.systemPath]]);
+}
+
 - (void) openFile:(FileItem *)fileItem withApplication:(NSURL *)appUrl {
-  // Added guard to investigate crashes reported in Organizer. From the stack traces there the
-  // invocation is not clear. It looks as if this method is, for yet unclear reasons, directly
-  // invoked from NSApplication's sendAction:to:from: which then would be without arguments. This
-  // indeed will not work.
-  //
-  // TODO: Follow this up with a proper fix once impact on reported crashes has been established.
-  if (fileItem == nil || appUrl == nil) {
-    NSLog(@"Ignoring openFile:withApplication: request with nil argument(s)");
-
-    dispatch_async(dispatch_get_main_queue(), ^() {
-      NSAlert *alert = [[[NSAlert alloc] init] autorelease];
-
-      [alert addButtonWithTitle: OK_BUTTON_TITLE];
-      alert.messageText = @"openFile:withApplication: failed";
-      [alert setInformativeText: @"This is not supposed to happen. Please share details of what you did to trigger this in Bug #126 on Sourceforge.net: https://sourceforge.net/p/grandperspectiv/bugs/126/"];
-
-      [alert beginSheetModalForWindow: self.window completionHandler: nil];
-    });
-
+  if (appUrl == nil) {
+    NSLog(@"Ignoring openFile:withApplication: request with nil appUrl");
     return;
   }
 
@@ -970,7 +962,6 @@ NSString  *ViewWillCloseEvent = @"viewWillClose";
     });
   }];
 }
-
 
 @end // @implementation DirectoryViewControl (PrivateMethods)
 

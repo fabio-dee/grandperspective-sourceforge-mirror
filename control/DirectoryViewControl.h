@@ -47,6 +47,8 @@ extern NSString  *ViewWillCloseEvent;
   // Status message that is temporarily shown in the status bar
   NSString  *statusMessage;
 
+  NSURL  *customOpenApp;
+
   // The size of the view when it is not zoomed.
   NSSize  unzoomedViewSize;
 }
