@@ -48,6 +48,7 @@ extern NSString  *ViewWillCloseEvent;
   NSString  *statusMessage;
 
   NSURL  *customOpenApp;
+  NSURL  *customRevealApp;
 
   // The size of the view when it is not zoomed.
   NSSize  unzoomedViewSize;

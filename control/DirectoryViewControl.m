@@ -126,12 +126,16 @@ NSString  *ViewWillCloseEvent = @"viewWillClose";
     invisiblePathName = nil;
     statusMessage = nil;
 
+    customOpenApp = nil;
+    customRevealApp = nil;
     NSUserDefaults  *userDefaults = NSUserDefaults.standardUserDefaults;
-    NSString  *customOpenAppPath = [userDefaults stringForKey: CustomFileOpenApplication];
-    if (customOpenAppPath.length > 0) {
-      customOpenApp = [[NSURL fileURLWithPath: customOpenAppPath] retain];
-    } else {
-      customOpenApp = nil;
+    NSString  *path = [userDefaults stringForKey: CustomFileOpenApplication];
+    if (path.length > 0) {
+      customOpenApp = [[NSURL fileURLWithPath: path] retain];
+    }
+    path = [userDefaults stringForKey: CustomFileRevealApplication];
+    if (path.length > 0) {
+      customRevealApp = [[NSURL fileURLWithPath: path] retain];
     }
   }
 
@@ -160,6 +164,7 @@ NSString  *ViewWillCloseEvent = @"viewWillClose";
   [_previewPanel release];
 
   [customOpenApp release];
+  [customRevealApp release];
   
   [super dealloc];
 }
@@ -336,16 +341,11 @@ NSString  *ViewWillCloseEvent = @"viewWillClose";
 
 - (IBAction) revealFileInFinder:(id)sender {
   FileItem  *fileItem = pathModelView.selectedFileItem;
-  NSString  *filePath = fileItem.systemPath;
-  
-  NSUserDefaults  *userDefaults = NSUserDefaults.standardUserDefaults;
-  NSString  *customApp = [userDefaults stringForKey: CustomFileRevealApplication];
-  NSWorkspace  *workspace = NSWorkspace.sharedWorkspace;
 
-  if (customApp.length > 0) {
-    NSLog(@"Revealing %@ using custom app %@", fileItem.systemPath, customApp);
+  if (customRevealApp != nil) {
+    NSLog(@"Revealing %@ using custom app %@", fileItem.systemPath, customRevealApp);
 
-    [self openFile: fileItem withApplication: [NSURL fileURLWithPath: customApp]];
+    [self openFile: fileItem withApplication: customRevealApp];
     return;
   }
 
@@ -368,6 +368,9 @@ NSString  *ViewWillCloseEvent = @"viewWillClose";
   }
 
   NSString  *rootPath = (package != nil) ? package.systemPath : invisiblePathName;
+
+  NSString  *filePath = fileItem.systemPath;
+  NSWorkspace  *workspace = NSWorkspace.sharedWorkspace;
 
   if ([workspace selectFile: filePath inFileViewerRootedAtPath: rootPath]) {
     return; // All went okay
