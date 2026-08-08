@@ -22,6 +22,10 @@
   return NO;
 }
 
+- (BOOL)dependsOnTreeDrawerSettings {
+  return NO;
+}
+
 - (NSString *)legendForColorIndex:(NSUInteger)colorIndex numColors:(NSUInteger)numColors {
   // By default, no description
   return nil;

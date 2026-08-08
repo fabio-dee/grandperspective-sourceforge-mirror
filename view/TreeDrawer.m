@@ -11,6 +11,7 @@
 @interface TreeDrawer (PrivateMethod)
 
 - (void) colorSchemeChanged:(NSNotification *)notification;
+- (void) updateColorMapper:(BOOL)internalChange;
 
 @end // @interface TreeDrawer (PrivateMethod)
 
@@ -83,7 +84,13 @@
 - (void) updateSettings:(TreeDrawerSettings *)settings {
   [super updateSettings: settings];
 
-  self.colorScheme = settings.colorScheme;
+  if (self.colorScheme != settings.colorScheme) {
+    self.colorScheme = settings.colorScheme;
+  } else if (_colorMapper.dependsOnTreeDrawerSettings) {
+    // Instantiate a new mapper based on the new settings. The change does not need to be marked
+    // internal, as the settings change already triggers a redraw.
+    [self updateColorMapper: NO];
+  }
 
   [rectangleDrawer setColorPalette: settings.colorPalette];
   [rectangleDrawer setColorGradient: settings.colorGradient];
@@ -122,16 +129,21 @@
 @implementation TreeDrawer (PrivateMethod)
 
 - (void) colorSchemeChanged:(NSNotification *)notification {
-  self.colorMapper = [self.colorScheme fileItemMappingForTree: scanTree
-                                                     settings: self.treeDrawerSettings];
-
   // Indicate if the trigger was internal (the same scheme is still active, but something changed
   // internally that may impact the mapping) or external (a different scheme was configured)
   BOOL  isInternal = notification != nil;
+
+  [self updateColorMapper: isInternal];
+}
+
+- (void) updateColorMapper:(BOOL)internalChange {
+  self.colorMapper = [self.colorScheme fileItemMappingForTree: scanTree
+                                                     settings: self.treeDrawerSettings];
+
   NSNotificationCenter  *nc = NSNotificationCenter.defaultCenter;
   [nc postNotificationName: ColorMappingChangedEvent
                     object: self
-                  userInfo: @{@"isInternal": [NSNumber numberWithBool: isInternal]}];
+                  userInfo: @{@"isInternal": [NSNumber numberWithBool: internalChange]}];
 }
 
 @end // @implementation TreeDrawer (PrivateMethod)
