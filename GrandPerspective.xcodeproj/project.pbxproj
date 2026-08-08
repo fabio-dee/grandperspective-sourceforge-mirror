@@ -3,7 +3,7 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 54;
+	objectVersion = 53;
 	objects = {
 
 /* Begin PBXBuildFile section */
@@ -13,8 +13,7 @@
 		AA054A9523940BE4001A5826 /* ExportAsTextDialogControl.m in Sources */ = {isa = PBXBuildFile; fileRef = AA054A9323940BE4001A5826 /* ExportAsTextDialogControl.m */; };
 		AA054A9923942FE0001A5826 /* ExportAsTextDialog.xib in Resources */ = {isa = PBXBuildFile; fileRef = AA054A9723942FE0001A5826 /* ExportAsTextDialog.xib */; };
 		AA0CDE711544995C0018D583 /* TimeBasedMapping.m in Sources */ = {isa = PBXBuildFile; fileRef = AA0CDE701544995C0018D583 /* TimeBasedMapping.m */; };
-		AA0CDE7415487FF60018D583 /* CreationMappingScheme.m in Sources */ = {isa = PBXBuildFile; fileRef = AA0CDE7315487FF60018D583 /* CreationMappingScheme.m */; };
-		AA0CDE77154882BF0018D583 /* ModificationMappingScheme.m in Sources */ = {isa = PBXBuildFile; fileRef = AA0CDE76154882BE0018D583 /* ModificationMappingScheme.m */; };
+		AA0CDE7415487FF60018D583 /* TimeBasedMappingSchemes.m in Sources */ = {isa = PBXBuildFile; fileRef = AA0CDE7315487FF60018D583 /* TimeBasedMappingSchemes.m */; };
 		AA1115C40A84CA320023C5CD /* DirectoryViewControlSettings.m in Sources */ = {isa = PBXBuildFile; fileRef = AA1115C20A84CA320023C5CD /* DirectoryViewControlSettings.m */; };
 		AA12225A0EF2A822002A178F /* Toolbar.strings in Resources */ = {isa = PBXBuildFile; fileRef = AA1222580EF2A822002A178F /* Toolbar.strings */; };
 		AA13BAD30B8A5747000AEAA9 /* Palettes in Resources */ = {isa = PBXBuildFile; fileRef = AA13BA8D0B8A5746000AEAA9 /* Palettes */; };
@@ -33,6 +32,7 @@
 		AA3B38E40D17EEF60070E889 /* FileItem.m in Sources */ = {isa = PBXBuildFile; fileRef = AA3B38DC0D17EEF60070E889 /* FileItem.m */; };
 		AA3B38E60D17EEF60070E889 /* Item.m in Sources */ = {isa = PBXBuildFile; fileRef = AA3B38DE0D17EEF60070E889 /* Item.m */; };
 		AA3B40E10D1AF2B70070E889 /* UniqueTagsTransformer.m in Sources */ = {isa = PBXBuildFile; fileRef = AA3B40DF0D1AF2B70070E889 /* UniqueTagsTransformer.m */; };
+		AA3F75673027663800E52587 /* StatefullFileItemMapping.m in Sources */ = {isa = PBXBuildFile; fileRef = AA3F75663027663800E52587 /* StatefullFileItemMapping.m */; };
 		AA402FFC0A5B01A6004EAAF3 /* SaveImageDialogControl.m in Sources */ = {isa = PBXBuildFile; fileRef = AA402FEC0A5B01A6004EAAF3 /* SaveImageDialogControl.m */; };
 		AA4030010A5B01A6004EAAF3 /* DirectoryViewControl.m in Sources */ = {isa = PBXBuildFile; fileRef = AA402FF10A5B01A6004EAAF3 /* DirectoryViewControl.m */; };
 		AA4030050A5B01A6004EAAF3 /* MainMenuControl.m in Sources */ = {isa = PBXBuildFile; fileRef = AA402FF50A5B01A6004EAAF3 /* MainMenuControl.m */; };
@@ -51,7 +51,6 @@
 		AA59E3AB23C32ED6006A5184 /* ControlPanel.xib in Resources */ = {isa = PBXBuildFile; fileRef = AA59E3A923C32ED6006A5184 /* ControlPanel.xib */; };
 		AA59E3AE23C334EB006A5184 /* ControlPanelControl.m in Sources */ = {isa = PBXBuildFile; fileRef = AA59E3AD23C334EB006A5184 /* ControlPanelControl.m */; };
 		AA59E3B123C3443F006A5184 /* DirectoryViewDisplaySettings.m in Sources */ = {isa = PBXBuildFile; fileRef = AA59E3B023C3443F006A5184 /* DirectoryViewDisplaySettings.m */; };
-		AA5FE4D8154D56DC0050856C /* AccessMappingScheme.m in Sources */ = {isa = PBXBuildFile; fileRef = AA5FE4D7154D56DC0050856C /* AccessMappingScheme.m */; };
 		AA6012570A5AF55400DEBCB8 /* AsynchronousTaskManager.m in Sources */ = {isa = PBXBuildFile; fileRef = AA6012550A5AF55400DEBCB8 /* AsynchronousTaskManager.m */; };
 		AA6012690A5AF5A600DEBCB8 /* PeekingEnumerator.m in Sources */ = {isa = PBXBuildFile; fileRef = AA6012670A5AF5A600DEBCB8 /* PeekingEnumerator.m */; };
 		AA6012EC0A5AFB7F00DEBCB8 /* DirectoryView.m in Sources */ = {isa = PBXBuildFile; fileRef = AA6012EA0A5AFB7F00DEBCB8 /* DirectoryView.m */; };
@@ -198,10 +197,8 @@
 		AA054A9A2395CABC001A5826 /* nl */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = nl; path = nl.lproj/ExportAsTextDialog.strings; sourceTree = "<group>"; };
 		AA0CDE6F1544995C0018D583 /* TimeBasedMapping.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TimeBasedMapping.h; sourceTree = "<group>"; };
 		AA0CDE701544995C0018D583 /* TimeBasedMapping.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TimeBasedMapping.m; sourceTree = "<group>"; };
-		AA0CDE7215487FF60018D583 /* CreationMappingScheme.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CreationMappingScheme.h; sourceTree = "<group>"; };
-		AA0CDE7315487FF60018D583 /* CreationMappingScheme.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CreationMappingScheme.m; sourceTree = "<group>"; };
-		AA0CDE75154882BE0018D583 /* ModificationMappingScheme.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ModificationMappingScheme.h; sourceTree = "<group>"; };
-		AA0CDE76154882BE0018D583 /* ModificationMappingScheme.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ModificationMappingScheme.m; sourceTree = "<group>"; };
+		AA0CDE7215487FF60018D583 /* TimeBasedMappingSchemes.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TimeBasedMappingSchemes.h; sourceTree = "<group>"; };
+		AA0CDE7315487FF60018D583 /* TimeBasedMappingSchemes.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TimeBasedMappingSchemes.m; sourceTree = "<group>"; };
 		AA0DD93422F6F5BA00D9F9B9 /* en */ = {isa = PBXFileReference; lastKnownFileType = folder; name = en; path = en.lproj/GrandPerspectiveHelp; sourceTree = "<group>"; };
 		AA0DD93522F6F5BA00D9F9B9 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		AA0DD93622F6F5BA00D9F9B9 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
@@ -280,6 +277,8 @@
 		AA3B40DE0D1AF2B70070E889 /* UniqueTagsTransformer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = UniqueTagsTransformer.h; path = util/UniqueTagsTransformer.h; sourceTree = "<group>"; };
 		AA3B40DF0D1AF2B70070E889 /* UniqueTagsTransformer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = UniqueTagsTransformer.m; path = util/UniqueTagsTransformer.m; sourceTree = "<group>"; };
 		AA3E28DF1CCD0BBC00225B71 /* GrandPerspective.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.xml; path = GrandPerspective.entitlements; sourceTree = "<group>"; };
+		AA3F75663027663800E52587 /* StatefullFileItemMapping.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = StatefullFileItemMapping.m; sourceTree = "<group>"; };
+		AA3F75683027665600E52587 /* StatefullFileItemMapping.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = StatefullFileItemMapping.h; sourceTree = "<group>"; };
 		AA402FEA0A5B01A6004EAAF3 /* SaveImageDialogControl.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; name = SaveImageDialogControl.h; path = control/SaveImageDialogControl.h; sourceTree = "<group>"; };
 		AA402FEC0A5B01A6004EAAF3 /* SaveImageDialogControl.m */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.objc; name = SaveImageDialogControl.m; path = control/SaveImageDialogControl.m; sourceTree = "<group>"; };
 		AA402FED0A5B01A6004EAAF3 /* MainMenuControl.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; name = MainMenuControl.h; path = control/MainMenuControl.h; sourceTree = "<group>"; };
@@ -327,8 +326,6 @@
 		AA59E3B023C3443F006A5184 /* DirectoryViewDisplaySettings.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = DirectoryViewDisplaySettings.m; path = control/DirectoryViewDisplaySettings.m; sourceTree = "<group>"; };
 		AA5ECB3423AE1D0400C68862 /* pt */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = pt; path = pt.lproj/ExportAsTextDialog.strings; sourceTree = "<group>"; };
 		AA5ECB3523AE1E1100C68862 /* zh */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = zh; path = zh.lproj/ExportAsTextDialog.strings; sourceTree = "<group>"; };
-		AA5FE4D6154D56DC0050856C /* AccessMappingScheme.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AccessMappingScheme.h; sourceTree = "<group>"; };
-		AA5FE4D7154D56DC0050856C /* AccessMappingScheme.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AccessMappingScheme.m; sourceTree = "<group>"; };
 		AA6012540A5AF55400DEBCB8 /* AsynchronousTaskManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AsynchronousTaskManager.h; path = util/AsynchronousTaskManager.h; sourceTree = "<group>"; };
 		AA6012550A5AF55400DEBCB8 /* AsynchronousTaskManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = AsynchronousTaskManager.m; path = util/AsynchronousTaskManager.m; sourceTree = "<group>"; };
 		AA6012660A5AF5A600DEBCB8 /* PeekingEnumerator.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = PeekingEnumerator.h; path = util/PeekingEnumerator.h; sourceTree = "<group>"; };
@@ -964,18 +961,16 @@
 				AA8A37FF0D7B437300DB872C /* FileItemMappingScheme.m */,
 				AA8A38020D7B437300DB872C /* StatelessFileItemMapping.h */,
 				AA8A38030D7B437300DB872C /* StatelessFileItemMapping.m */,
+				AA3F75683027665600E52587 /* StatefullFileItemMapping.h */,
+				AA3F75663027663800E52587 /* StatefullFileItemMapping.m */,
 				AA8A37FC0D7B437300DB872C /* FileItemMappingCollection.h */,
 				AA8A37FD0D7B437300DB872C /* FileItemMappingCollection.m */,
 				AA8A38040D7B437300DB872C /* UniformTypeMappingScheme.h */,
 				AA8A38050D7B437300DB872C /* UniformTypeMappingScheme.m */,
 				AA0CDE6F1544995C0018D583 /* TimeBasedMapping.h */,
 				AA0CDE701544995C0018D583 /* TimeBasedMapping.m */,
-				AA0CDE7215487FF60018D583 /* CreationMappingScheme.h */,
-				AA0CDE7315487FF60018D583 /* CreationMappingScheme.m */,
-				AA0CDE75154882BE0018D583 /* ModificationMappingScheme.h */,
-				AA0CDE76154882BE0018D583 /* ModificationMappingScheme.m */,
-				AA5FE4D6154D56DC0050856C /* AccessMappingScheme.h */,
-				AA5FE4D7154D56DC0050856C /* AccessMappingScheme.m */,
+				AA0CDE7215487FF60018D583 /* TimeBasedMappingSchemes.h */,
+				AA0CDE7315487FF60018D583 /* TimeBasedMappingSchemes.m */,
 				AAE4AC2D2E59E116007C2482 /* MappingBySize.h */,
 				AAE4AC2E2E59E244007C2482 /* MappingBySize.m */,
 			);
@@ -1331,6 +1326,7 @@
 				AA9881970DF57B2F00A6EA33 /* ItemPathTest.m in Sources */,
 				AAB907FD24981BAC00681E2E /* OverlayDrawTaskInput.m in Sources */,
 				AA9881980DF57B2F00A6EA33 /* ItemSizeTest.m in Sources */,
+				AA3F75673027663800E52587 /* StatefullFileItemMapping.m in Sources */,
 				AA9881990DF57B2F00A6EA33 /* ItemStringTest.m in Sources */,
 				AA98819A0DF57B2F00A6EA33 /* ItemTypeTest.m in Sources */,
 				AA98819C0DF57B2F00A6EA33 /* NotItemTest.m in Sources */,
@@ -1402,11 +1398,9 @@
 				AA054A912393C439001A5826 /* RawTreeWriterOptions.m in Sources */,
 				AAA8724C111492E600ED5112 /* ScanTreeRoot.m in Sources */,
 				AA0CDE711544995C0018D583 /* TimeBasedMapping.m in Sources */,
-				AA0CDE7415487FF60018D583 /* CreationMappingScheme.m in Sources */,
+				AA0CDE7415487FF60018D583 /* TimeBasedMappingSchemes.m in Sources */,
 				AA59E3B123C3443F006A5184 /* DirectoryViewDisplaySettings.m in Sources */,
-				AA0CDE77154882BF0018D583 /* ModificationMappingScheme.m in Sources */,
 				AAAEEEA521AAE3C800B7C024 /* ScanTaskOutput.m in Sources */,
-				AA5FE4D8154D56DC0050856C /* AccessMappingScheme.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

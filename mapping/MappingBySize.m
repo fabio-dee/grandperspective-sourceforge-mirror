@@ -88,10 +88,6 @@ const item_size_t  minUpperBound = 1024;
   return YES;
 }
 
-- (BOOL)dependsOnTreeDrawerSettings {
-  return YES;
-}
-
 - (NSString *)legendForColorIndex:(NSUInteger)colorIndex numColors:(NSUInteger)numColors {
   NSUInteger maxIndex = numColors - 1;
   NSUInteger hash = maxIndex - colorIndex;
@@ -218,8 +214,9 @@ const item_size_t  minUpperBound = 1024;
 
 @implementation MappingBySize
 
-//----------------------------------------------------------------------------
-// Implementation of FileItemMappingScheme protocol
+- (BOOL)dependsOnTreeDrawerSettings {
+  return YES;
+}
 
 - (FileItemMapping *)fileItemMappingForTree:(DirectoryItem *)tree
                                    settings:(TreeDrawerBaseSettings *)settings {

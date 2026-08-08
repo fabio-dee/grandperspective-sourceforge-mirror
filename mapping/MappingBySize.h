@@ -1,6 +1,6 @@
 #import <Foundation/Foundation.h>
 
-#import "FileItemMappingScheme.h"
+#import "StatefullFileItemMapping.h"
 
-@interface MappingBySize : NSObject <FileItemMappingScheme>
+@interface MappingBySize : StatefullFileItemMapping
 @end

@@ -1,19 +1,21 @@
-#import "StatelessFileItemMapping.h"
+#import "StatefullFileItemMapping.h"
 
-@implementation StatelessFileItemMapping
+@implementation StatefullFileItemMapping
 
 - (BOOL)dependsOnTreeDrawerSettings {
   return NO;
 }
 
-// Default implementation
 - (FileItemMapping *)fileItemMappingForTree:(DirectoryItem *)tree {
-  return self;
+  NSAssert(NO, @"Abstract method invoked");
+  return nil;
 }
 
+// Default implementation
 - (FileItemMapping *)fileItemMappingForTree:(DirectoryItem *)tree
                                    settings:(TreeDrawerBaseSettings *)settings {
-  return [self fileItemMappingForTree: tree];
+  NSAssert(NO, @"Abstract method invoked");
+  return nil;
 }
 
 @end

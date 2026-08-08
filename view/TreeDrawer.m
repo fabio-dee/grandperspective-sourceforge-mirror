@@ -8,10 +8,11 @@
 #import "TreeDrawerSettings.h"
 
 
-@interface TreeDrawer (PrivateMethod)
+@interface TreeDrawer (PrivateMethods)
 
 - (void) colorSchemeChanged:(NSNotification *)notification;
 - (void) updateColorMapper:(BOOL)internalChange;
+- (void) updateColorMapperForSettings:(TreeDrawerSettings *)settings;
 
 @end // @interface TreeDrawer (PrivateMethod)
 
@@ -67,7 +68,9 @@
                name: MappingSchemeChangedEvent
              object: _colorScheme];
 
-    [self colorSchemeChanged: nil];
+    if (!colorScheme.dependsOnTreeDrawerSettings) {
+      [self updateColorMapper: NO];
+    }
   }
 }
 
@@ -86,10 +89,10 @@
 
   if (self.colorScheme != settings.colorScheme) {
     self.colorScheme = settings.colorScheme;
-  } else if (_colorMapper.dependsOnTreeDrawerSettings) {
-    // Instantiate a new mapper based on the new settings. The change does not need to be marked
-    // internal, as the settings change already triggers a redraw.
-    [self updateColorMapper: NO];
+  }
+
+  if (self.colorScheme.dependsOnTreeDrawerSettings) {
+    [self updateColorMapperForSettings: settings];
   }
 
   [rectangleDrawer setColorPalette: settings.colorPalette];
@@ -126,24 +129,28 @@
 
 @end // @implementation TreeDrawer
 
-@implementation TreeDrawer (PrivateMethod)
+@implementation TreeDrawer (PrivateMethods)
 
 - (void) colorSchemeChanged:(NSNotification *)notification {
-  // Indicate if the trigger was internal (the same scheme is still active, but something changed
-  // internally that may impact the mapping) or external (a different scheme was configured)
-  BOOL  isInternal = notification != nil;
-
-  [self updateColorMapper: isInternal];
+  [self updateColorMapper: YES];
 }
 
 - (void) updateColorMapper:(BOOL)internalChange {
-  self.colorMapper = [self.colorScheme fileItemMappingForTree: scanTree
-                                                     settings: self.treeDrawerSettings];
+  self.colorMapper = [self.colorScheme fileItemMappingForTree: scanTree];
 
   NSNotificationCenter  *nc = NSNotificationCenter.defaultCenter;
   [nc postNotificationName: ColorMappingChangedEvent
                     object: self
                   userInfo: @{@"isInternal": [NSNumber numberWithBool: internalChange]}];
+}
+
+- (void) updateColorMapperForSettings:(TreeDrawerSettings *)settings {
+  self.colorMapper = [self.colorScheme fileItemMappingForTree: scanTree settings: settings];
+
+  NSNotificationCenter  *nc = NSNotificationCenter.defaultCenter;
+  [nc postNotificationName: ColorMappingChangedEvent
+                    object: self
+                  userInfo: @{@"isInternal": [NSNumber numberWithBool: NO]}];
 }
 
 @end // @implementation TreeDrawer (PrivateMethod)

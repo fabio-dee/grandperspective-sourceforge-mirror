@@ -32,8 +32,6 @@
 
 - (BOOL)providesLegend;
 
-- (BOOL)dependsOnTreeDrawerSettings;
-
 /* Description for the given color index, if any. Returns nil if no suitable description can be
  * provided.
  */

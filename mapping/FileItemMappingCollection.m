@@ -5,9 +5,7 @@
 
 #import "StatelessFileItemMapping.h"
 #import "UniformTypeMappingScheme.h"
-#import "AccessMappingScheme.h"
-#import "CreationMappingScheme.h"
-#import "ModificationMappingScheme.h"
+#import "TimeBasedMappingSchemes.h"
 #import "MappingBySize.h"
 
 @interface MappingByLevel : StatelessFileItemMapping
