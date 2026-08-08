@@ -9,6 +9,7 @@ extern NSString  *MappingSchemeChangedEvent;
 
 @class FileItemMapping;
 @class DirectoryItem;
+@class TreeDrawerBaseSettings;
 
 /* A file item mapping scheme. It represents a particular algorithm for mapping file items to hash
  * values.
@@ -22,8 +23,10 @@ extern NSString  *MappingSchemeChangedEvent;
  * invocation.
  *
  * The tree on which the mapping should operate is provided for mappings that depend on the tree
- * (e.g. to optimize the mapping)
+ * (e.g. to optimize the mapping). The drawer settings are also provided. It allows the size-based
+ * mappings to establish the maximum item size (for the current settings).
  */
-- (FileItemMapping *)fileItemMappingForTree:(DirectoryItem *)tree;
+- (FileItemMapping *)fileItemMappingForTree:(DirectoryItem *)tree
+                                   settings:(TreeDrawerBaseSettings *)settings;
 
 @end

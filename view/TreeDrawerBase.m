@@ -21,6 +21,7 @@
     rectangleDrawer = [[GradientRectangleDrawer alloc] initWithColorPalette: colorPalette];
 
     treeGuide = [[FilteredTreeGuide alloc] init];
+    _treeDrawerSettings = nil;
 
     abort = NO;
   }
@@ -31,6 +32,7 @@
   [treeGuide release];
   [scanTree release];
   [rectangleDrawer release];
+  [_treeDrawerSettings release];
 
   [super dealloc];
 }
@@ -46,6 +48,14 @@
 
 
 - (void) updateSettings:(TreeDrawerBaseSettings *)settings {
+  if (settings == _treeDrawerSettings) {
+    return;
+  }
+
+  [_treeDrawerSettings release];
+  _treeDrawerSettings = [settings retain];
+
+  // For drawing efficiency, also store individual settings
   [self setShowPackageContents: settings.drawItems == DRAW_FILES];
   self.groupFiles = settings.drawItems == DRAW_FOLDERS;
   self.displayDepth = settings.displayDepth;

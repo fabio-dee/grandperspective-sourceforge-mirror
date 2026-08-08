@@ -4,6 +4,26 @@
 #import "DirectoryItem.h"
 #import "PlainFileItem.h"
 #import "FileItemMapping.h"
+#import "TreeDrawerBaseSettings.h"
+
+
+@interface MaxItemSizeFinder : NSObject {
+  BOOL  showPackageContents;
+  BOOL  groupFiles;
+
+  item_size_t  maxItemSize;
+}
+
+// Overrides designated initialiser
+- (instancetype) init NS_UNAVAILABLE;
+
+- (instancetype) initWithSettings:(TreeDrawerBaseSettings *)settings NS_DESIGNATED_INITIALIZER;
+
+- (item_size_t) findMaximumItemSize:(DirectoryItem *)treeRoot;
+
+- (void) visitItemToDetermineSizeBounds:(Item *)item;
+
+@end // @interface MaxItemSizeFinder
 
 
 /* Mapping scheme that maps each file item to a hash based on a time that is associated with the
@@ -15,15 +35,15 @@
 }
 
 - (instancetype) init NS_UNAVAILABLE;
-- (instancetype) initWithTree:(DirectoryItem *)tree NS_DESIGNATED_INITIALIZER;
+- (instancetype) initWithTree:(DirectoryItem *)tree
+                     settings:(TreeDrawerBaseSettings *)settings NS_DESIGNATED_INITIALIZER;
 
 @end // @interface SizeBasedMapping
 
 
 @interface SizeBasedMapping (PrivateMethods)
 
-- (void) initSizeBounds:(DirectoryItem *)treeRoot;
-- (void) visitItemToDetermineSizeBounds:(Item *)item;
+- (void) initSizeBounds:(DirectoryItem *)treeRoot settings:(TreeDrawerBaseSettings *)settings;
 
 @end // @interface SizeBasedMapping (PrivateMethods)
 
@@ -33,9 +53,10 @@
 // All items below this size map to the same hash
 const item_size_t  minUpperBound = 1024;
 
-- (instancetype) initWithTree:(DirectoryItem *)tree {
+- (instancetype) initWithTree:(DirectoryItem *)tree
+                     settings:(TreeDrawerBaseSettings *)settings {
   if (self = [super init]) {
-    [self initSizeBounds: tree];
+    [self initSizeBounds: tree settings: settings];
   }
   return self;
 }
@@ -113,45 +134,82 @@ const item_size_t  minUpperBound = 1024;
 
 @implementation SizeBasedMapping (PrivateMethods)
 
-- (void) initSizeBounds:(DirectoryItem *)treeRoot {
-  maxItemSizeLimit = 0;
+- (void) initSizeBounds:(DirectoryItem *)treeRoot settings:(TreeDrawerBaseSettings *)settings {
+  MaxItemSizeFinder  *finder = [[[MaxItemSizeFinder alloc] initWithSettings: settings] autorelease];
+  item_size_t maxItemSize = [finder findMaximumItemSize: treeRoot];
 
-  [self visitItemToDetermineSizeBounds: treeRoot];
-
-  NSLog(@"maxSize (before) = %lld", maxItemSizeLimit);
+  NSLog(@"maxItemSize = %lld", maxItemSize);
 
   // Round down towards clean boundary value
   item_size_t cleanLimit = minUpperBound;
-  while (cleanLimit < maxItemSizeLimit) {
+  while (cleanLimit < maxItemSize) {
     cleanLimit *= 2;
   }
 
   maxItemSizeLimit = cleanLimit / 2;
 
-  NSLog(@"maxSize (after) = %lld", maxItemSizeLimit);
-}
-
-
-- (void) visitItemToDetermineSizeBounds:(Item *)item {
-  if (item.isVirtual) {
-    [self visitItemToDetermineSizeBounds: ((CompoundItem *)item).first];
-    [self visitItemToDetermineSizeBounds: ((CompoundItem *)item).second];
-  }
-  else {
-    FileItem  *fileItem = (FileItem *)item;
-
-    if (fileItem.isDirectory) {
-      if (fileItem.itemSize > maxItemSizeLimit) {
-        [self visitItemToDetermineSizeBounds: ((DirectoryItem *)fileItem).fileItems];
-        [self visitItemToDetermineSizeBounds: ((DirectoryItem *)fileItem).directoryItems];
-      }
-    } else if (fileItem.isPhysical) {
-      maxItemSizeLimit = MAX(maxItemSizeLimit, fileItem.itemSize);
-    }
-  }
+  NSLog(@"maxItemSizeLimit = %lld", maxItemSizeLimit);
 }
 
 @end // @implementation SizeBasedMapping (PrivateMethods)
+
+
+@implementation MaxItemSizeFinder
+
+- (instancetype) initWithSettings:(TreeDrawerBaseSettings *)settings {
+  if (self = [super init]) {
+    groupFiles = settings.drawItems == DRAW_FOLDERS;
+    showPackageContents = settings.drawItems == DRAW_FILES;
+  }
+
+  return self;
+}
+
+- (item_size_t) findMaximumItemSize:(DirectoryItem *)treeRoot {
+  maxItemSize = 0;
+
+  [self visitItemToDetermineSizeBounds: treeRoot];
+
+  return maxItemSize;
+}
+
+- (void) visitItemToDetermineSizeBounds:(Item *)item {
+  if (item.itemSize <= maxItemSize) {
+    // Abort recursive descend, as we cannot increase limit
+    return;
+  }
+
+  if (item.isVirtual) {
+    [self visitItemToDetermineSizeBounds: ((CompoundItem *)item).first];
+    [self visitItemToDetermineSizeBounds: ((CompoundItem *)item).second];
+
+    return;
+  }
+
+  FileItem  *fileItem = (FileItem *)item;
+
+  if (fileItem.isDirectory) {
+    if (fileItem.isPackage && !showPackageContents) {
+      maxItemSize = MAX(maxItemSize, fileItem.itemSize);
+    } else {
+      [self visitItemToDetermineSizeBounds: ((DirectoryItem *)fileItem).directoryItems];
+
+      if (groupFiles) {
+        maxItemSize = MAX(maxItemSize, ((DirectoryItem *)fileItem).fileItems.itemSize);
+      } else {
+        [self visitItemToDetermineSizeBounds: ((DirectoryItem *)fileItem).fileItems];
+      }
+    }
+
+    return;
+  }
+
+  if (fileItem.isPhysical) {
+    maxItemSize = MAX(maxItemSize, fileItem.itemSize);
+  }
+}
+
+@end // @implementation MaxItemSizeFinder
 
 
 @implementation MappingBySize
@@ -159,8 +217,10 @@ const item_size_t  minUpperBound = 1024;
 //----------------------------------------------------------------------------
 // Implementation of FileItemMappingScheme protocol
 
-- (FileItemMapping *)fileItemMappingForTree:(DirectoryItem *)tree {
-  return [[[SizeBasedMapping alloc] initWithTree: tree] autorelease];
+- (FileItemMapping *)fileItemMappingForTree:(DirectoryItem *)tree
+                                   settings:(TreeDrawerBaseSettings *)settings {
+  return [[[SizeBasedMapping alloc] initWithTree: tree
+                                        settings:(TreeDrawerBaseSettings *)settings] autorelease];
 }
 
 @end // @implementation MappingBySize

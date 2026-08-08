@@ -37,6 +37,8 @@ NS_ASSUME_NONNULL_BEGIN
 - (instancetype) initWithScanTree:(DirectoryItem *)scanTree
                      colorPalette:(nullable NSColorList *)colorPalette NS_DESIGNATED_INITIALIZER;
 
+@property (nonatomic, readonly, strong) TreeDrawerBaseSettings *treeDrawerSettings;
+
 @property (nonatomic) unsigned displayDepth;
 @property (nonatomic) BOOL showPackageContents;
 

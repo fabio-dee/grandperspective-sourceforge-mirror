@@ -122,7 +122,8 @@
 @implementation TreeDrawer (PrivateMethod)
 
 - (void) colorSchemeChanged:(NSNotification *)notification {
-  self.colorMapper = [self.colorScheme fileItemMappingForTree: scanTree];
+  self.colorMapper = [self.colorScheme fileItemMappingForTree: scanTree
+                                                     settings: self.treeDrawerSettings];
 
   // Indicate if the trigger was internal (the same scheme is still active, but something changed
   // internally that may impact the mapping) or external (a different scheme was configured)

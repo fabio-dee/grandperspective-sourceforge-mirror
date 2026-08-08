@@ -2,7 +2,8 @@
 
 @implementation StatelessFileItemMapping
 
-- (FileItemMapping *)fileItemMappingForTree:(DirectoryItem *)tree {
+- (FileItemMapping *)fileItemMappingForTree:(DirectoryItem *)tree
+                                   settings:(TreeDrawerBaseSettings *)settings {
   return self;
 }
 

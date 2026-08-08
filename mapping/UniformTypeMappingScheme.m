@@ -63,7 +63,8 @@
 //----------------------------------------------------------------------------
 // Implementation of FileItemMappingScheme protocol
 
-- (FileItemMapping *)fileItemMappingForTree:(DirectoryItem *)tree {
+- (FileItemMapping *)fileItemMappingForTree:(DirectoryItem *)tree
+                                   settings:(TreeDrawerBaseSettings *)settings {
   return [[[MappingByUniformType alloc] initWithUniformTypeRanking: _uniformTypeRanking]
           autorelease];
 }
