@@ -11,7 +11,7 @@
 @interface TreeDrawer (PrivateMethods)
 
 - (void) colorSchemeChanged:(NSNotification *)notification;
-- (void) updateColorMapper:(BOOL)internalChange;
+- (void) updateColorMapper:(BOOL)forceRedraw;
 - (void) updateColorMapperForSettings:(TreeDrawerSettings *)settings;
 
 @end // @interface TreeDrawer (PrivateMethod)
@@ -132,16 +132,18 @@
 @implementation TreeDrawer (PrivateMethods)
 
 - (void) colorSchemeChanged:(NSNotification *)notification {
+  // Force a redraw as the mapping change was due to an internal change impacting the scheme,
+  // instead of a settings change that the view is aware of.
   [self updateColorMapper: YES];
 }
 
-- (void) updateColorMapper:(BOOL)internalChange {
+- (void) updateColorMapper:(BOOL)forceRedraw {
   self.colorMapper = [self.colorScheme fileItemMappingForTree: scanTree];
 
   NSNotificationCenter  *nc = NSNotificationCenter.defaultCenter;
   [nc postNotificationName: ColorMappingChangedEvent
                     object: self
-                  userInfo: @{@"isInternal": [NSNumber numberWithBool: internalChange]}];
+                  userInfo: @{@"forceRedraw": [NSNumber numberWithBool: forceRedraw]}];
 }
 
 - (void) updateColorMapperForSettings:(TreeDrawerSettings *)settings {
@@ -150,7 +152,7 @@
   NSNotificationCenter  *nc = NSNotificationCenter.defaultCenter;
   [nc postNotificationName: ColorMappingChangedEvent
                     object: self
-                  userInfo: @{@"isInternal": [NSNumber numberWithBool: NO]}];
+                  userInfo: @{@"forceRedraw": [NSNumber numberWithBool: NO]}];
 }
 
 @end // @implementation TreeDrawer (PrivateMethod)

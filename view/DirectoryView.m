@@ -1141,11 +1141,7 @@ CGFloat ramp(CGFloat x, CGFloat minX, CGFloat maxX) {
   dispatch_async(dispatch_get_main_queue(), ^{
     [self postColorMappingChanged];
 
-    if (((NSNumber *)notification.userInfo[@"isInternal"]).boolValue) {
-      NSLog(@"DirectorView - internal color mapping change");
-
-      // The mapping change was due to a change not known/triggered by this directory view, so
-      // no redraw was triggered yet. We should therefore do so now.
+    if (((NSNumber *)notification.userInfo[@"forceRedraw"]).boolValue) {
       [self forceRedraw];
     }
   });
