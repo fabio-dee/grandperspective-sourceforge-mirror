@@ -427,7 +427,7 @@
 		<dict>
 			<key>UTTypeConformsTo</key>
 			<array>
-				<string>public.xml</string>
+				<string>org.gnu.gnu-zip-archive</string>
 			</array>
 			<key>UTTypeDescription</key>
 			<string>GrandPerspective scan results</string>
