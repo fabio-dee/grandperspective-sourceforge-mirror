@@ -1,5 +1,7 @@
 #import "SaveImageDialogControl.h"
 
+@import UniformTypeIdentifiers;
+
 #import "ControlConstants.h"
 
 #import "DirectoryView.h"
@@ -90,8 +92,8 @@ static const int MINIMUM_SIZE = 16;
                                     MAX(MINIMUM_SIZE, [heightField intValue]));
 
   // Get a filename for the image.
-  NSSavePanel  *savePanel = [NSSavePanel savePanel]; 
-  savePanel.allowedFileTypes = @[@"tiff"];
+  NSSavePanel  *savePanel = [NSSavePanel savePanel];
+  savePanel.allowedContentTypes = @[UTTypeTIFF];
   [savePanel setTitle: NSLocalizedString( @"Export image", @"Title of save panel") ];
   
   if ([savePanel runModal] == NSModalResponseOK) {

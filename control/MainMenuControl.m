@@ -1,5 +1,7 @@
 #import "MainMenuControl.h"
 
+@import UniformTypeIdentifiers;
+
 #import "DirectoryItem.h"
 
 #import "AlertMessage.h"
@@ -748,7 +750,7 @@ static dispatch_once_t  singletonOnceToken;
 
 - (IBAction) saveScanData:(id)sender {
   NSSavePanel  *savePanel = [NSSavePanel savePanel];
-  savePanel.allowedFileTypes = @[@"gpscan"];
+  savePanel.allowedContentTypes = @[[UTType typeWithIdentifier: @"net.sourceforge.grandperspectiv.scandump"]];
   [savePanel setTitle: NSLocalizedString(@"Save scan data", @"Title of save panel") ];
 
   [self saveScanDataToFile: savePanel usingTaskManager: xmlWriteTaskManager options: nil];
@@ -757,7 +759,7 @@ static dispatch_once_t  singletonOnceToken;
 
 - (IBAction) loadScanData:(id)sender {
   NSOpenPanel  *openPanel = [NSOpenPanel openPanel];
-  openPanel.allowedFileTypes = @[@"xml", @"gpscan"];
+  openPanel.allowedContentTypes = @[[UTType typeWithIdentifier: @"net.sourceforge.grandperspectiv.scandump"], UTTypeXML];
 
   [openPanel setTitle: NSLocalizedString(@"Load scan data", @"Title of load panel") ];
   
@@ -786,7 +788,7 @@ static dispatch_once_t  singletonOnceToken;
   }
 
   NSSavePanel  *savePanel = [NSSavePanel savePanel];
-  savePanel.allowedFileTypes = @[@"txt", @"text", @"tsv"];
+  savePanel.allowedContentTypes = @[UTTypePlainText, UTTypeTabSeparatedText];
   [savePanel setTitle: NSLocalizedString(@"Export scan data as text", @"Title of save panel") ];
 
   [self saveScanDataToFile: savePanel

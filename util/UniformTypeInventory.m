@@ -1,5 +1,7 @@
 #import "UniformTypeInventory.h"
 
+@import UniformTypeIdentifiers;
+
 #import "FileItem.h"
 #import "UniformType.h"
 
@@ -98,11 +100,10 @@ NSString  *UnknownTypeUTI = @"unknown";
     return unknownType;
   }
 
-  NSString  *uti = (NSString *)UTTypeCreatePreferredIdentifierForTag
-                                 (kUTTagClassFilenameExtension, (CFStringRef)ext, NULL);
+  UTType  *uttype = [UTType typeWithFilenameExtension: ext];
 
-  if (! [uti hasPrefix: @"dyn."]) {
-    type = [self uniformTypeForIdentifier: uti];
+  if (uttype.isPublicType || uttype.isDeclared) {
+    type = [self uniformTypeForIdentifier: uttype.identifier];
 
     if (type != nil) {
       // Successfully obtained a UniformType for the UTI.
@@ -112,15 +113,11 @@ NSString  *UnknownTypeUTI = @"unknown";
       // the check is needed.
       
       typeForExtension[ext] = type;
+
+      return type;
     }
   }
 
-  CFRelease(uti);
-  
-  if (type != nil) {
-    return type;
-  }
-  
   // No proper type could be constructed for the given UTI.
   [untypedExtensions addObject: ext];
 
@@ -213,44 +210,23 @@ NSString  *UnknownTypeUTI = @"unknown";
 }
 
 - (UniformType *)createUniformTypeForIdentifier:(NSString *)uti {
-
-  NSDictionary  *dict = (NSDictionary *)UTTypeCopyDeclaration( (CFStringRef)uti );
-  [dict autorelease];
+  UTType  *uttype = [UTType typeWithIdentifier: uti];
     
-  if (dict == nil) {
-    // The UTI is not recognized. 
+  if (uttype == nil) {
+    // The UTI is not recognized.
     return nil;
   }
 
-  NSString  *descr = dict[(NSString *)kUTTypeDescriptionKey];
-    
-  NSObject  *conforms = dict[(NSString *)kUTTypeConformsToKey];
-  NSArray  *parents;
-  if ([conforms isKindOfClass: [NSArray class]]) {
-    NSArray  *utiArray = (NSArray *)conforms;
-
-    // Create the corresponding array of type objects.
-    NSMutableArray *temp = [NSMutableArray arrayWithCapacity: utiArray.count];
-
-    for (NSString *parentUti in [utiArray objectEnumerator]) {
-      UniformType  *parentType = [self uniformTypeForIdentifier: (NSString *)parentUti];
-         
-      if (parentType != nil) {
-        [temp addObject: parentType];
-      }
+  NSMutableArray  *parents = [NSMutableArray arrayWithCapacity: uttype.supertypes.count];
+  for (UTType* parent in uttype.supertypes) {
+    UniformType  *parentType = [self uniformTypeForIdentifier: parent.identifier];
+    if (parentType != nil) {
+      [parents addObject: parentType];
     }
-    parents = temp;
-  }
-  else if ([conforms isKindOfClass: [NSString class]]) {
-    UniformType  *parentType = [self uniformTypeForIdentifier: (NSString *)conforms];
-    parents = (parentType != nil) ? @[parentType] : @[];
-  }
-  else {
-    parents = @[];
   }
 
   return [[[UniformType alloc] initWithUniformTypeIdentifier: uti
-                                                 description: descr
+                                                 description: uttype.localizedDescription
                                                      parents: parents] autorelease];
 }
 
