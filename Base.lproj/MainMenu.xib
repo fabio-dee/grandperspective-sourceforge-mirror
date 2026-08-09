@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="21507" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES">
+<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="25094" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES">
     <dependencies>
         <deployment identifier="macosx"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="21507"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="25094"/>
     </dependencies>
     <objects>
         <customObject id="-2" userLabel="File's Owner" customClass="NSApplication">
@@ -333,8 +333,7 @@
                             <menuItem isSeparatorItem="YES" id="271">
                                 <modifierMask key="keyEquivalentModifierMask" command="YES"/>
                             </menuItem>
-                            <menuItem title="Show/Hide Control Panel" id="9Ho-ON-BCj">
-                                <modifierMask key="keyEquivalentModifierMask"/>
+                            <menuItem title="Show/Hide Control Panel" keyEquivalent="i" id="9Ho-ON-BCj">
                                 <connections>
                                     <action selector="toggleControlPanelShown:" target="-1" id="UOt-FM-Yoj"/>
                                 </connections>
