@@ -15,6 +15,7 @@
 #import "TreeBalancer.h"
 #import "NSURL.h"
 #import "ControlConstants.h"
+#import "LogManager.h"
 
 #import "ScanProgressTracker.h"
 #import "UniformType.h"
@@ -73,7 +74,7 @@ static const int AUTORELEASE_PERIOD = 1024;
 
 + (item_size_t) getLogicalFileSize:(FTSENT *)entp withType:(UniformType *)fileType;
 
-+ (NSURL *)getVolumeRoot:(NSURL *)url;
+- (NSURL *)getVolumeRoot:(NSURL *)url;
 
 // Create alert with details of failure
 - (void) scanFailed:(NSString *)details;
@@ -207,14 +208,14 @@ CFAbsoluteTime convertTimespec(struct timespec ts) {
     
     [self setFileSizeMeasure: LogicalFileSizeName];
     
-    NSUserDefaults *args = NSUserDefaults.standardUserDefaults;
-    debugLogEnabled = [args boolForKey: @"logAll"] || [args boolForKey: @"logScanning"];
+    logger = [LogManager defaultLogManager].getAppLog;
 
+    NSUserDefaults *args = NSUserDefaults.standardUserDefaults;
     NSString  *behavior = [args stringForKey: PackageCheckBehaviorKey];
     fastPackageCheckEnabled = ([behavior isEqualToString: FastBehavior]
                                || ([behavior isEqualToString: AdaptiveBehavior]
                                    && !filterSet.packagesAsFiles));
-    NSLog(@"fastPackageCheckEnabled = %d", fastPackageCheckEnabled);
+    os_log_info(logger, "fastPackageCheckEnabled = %d", fastPackageCheckEnabled);
 
     _alertMessage = nil;
   }
@@ -314,7 +315,7 @@ CFAbsoluteTime convertTimespec(struct timespec ts) {
 }
 
 - (BOOL) scanTreeForDirectory:(DirectoryItem *)dirItem atPath:(NSString *)path {
-//  NSLog(@"scanTreeForDirectory %@", path);
+  os_log_info(logger, "scanTreeForDirectory %@", path);
 
   NSAutoreleasePool  *autoreleasePool = nil;
   int  i = 0;
@@ -335,9 +336,7 @@ CFAbsoluteTime convertTimespec(struct timespec ts) {
         case FTS_DNR:
         case FTS_ERR:
         case FTS_NS:
-          if (debugLogEnabled) {
-            NSLog(@"Error reading directory %s: %s", entp->fts_path, strerror(entp->fts_errno));
-          }
+          os_log_info(logger, "Error reading directory %s: %s", entp->fts_path, strerror(entp->fts_errno));
           continue;
       }
 
@@ -443,22 +442,22 @@ CFAbsoluteTime convertTimespec(struct timespec ts) {
   }
 }
 
-+ (NSURL *)getVolumeRoot:(NSURL *)url {
+- (NSURL *)getVolumeRoot:(NSURL *)url {
   NSError  *error = nil;
   NSURL  *volumeRoot = nil;
 
   [url getResourceValue: &volumeRoot forKey: NSURLVolumeURLKey error: &error];
   if (error != nil) {
-    NSLog(@"Failed to determine volume root of %@: %@", url, error.description);
+    os_log(logger, "Failed to determine volume root of %@: %@", url, error.description);
     return nil;
   }
-  NSLog(@"VolumeURLKey: url = %@, volumeRoot = %@", url, volumeRoot);
+  os_log_info(logger, "VolumeURLKey: url = %@, volumeRoot = %@", url, volumeRoot);
 
   if ([url.path hasPrefix: volumeRoot.path]) {
     return volumeRoot;
   }
 
-  NSLog(@"Volume root prefix mismatch");
+  os_log(logger, "Volume root prefix mismatch");
 
   // Try to determine the volume root the hard way. Traverse up the folder hierarchy until a
   // folder is found that is a volume root.
@@ -468,19 +467,19 @@ CFAbsoluteTime convertTimespec(struct timespec ts) {
     [volumeRoot getResourceValue: &isVolume forKey: NSURLIsVolumeKey error: &error];
 
     if (error != nil) {
-      NSLog(@"Failed to get IsVolumeKey for %@", volumeRoot);
+      os_log(logger, "Failed to get IsVolumeKey for %@", volumeRoot);
       return nil;
     }
 
     if (isVolume.boolValue) {
-      NSLog(@"Found volume root %@", volumeRoot);
+      os_log_info(logger, "Found volume root %@", volumeRoot);
       return volumeRoot;
     }
 
     NSUInteger lenBefore = volumeRoot.path.length;
     volumeRoot = volumeRoot.URLByDeletingLastPathComponent;
     if (volumeRoot.path.length >= lenBefore) {
-      NSLog(@"Terminating traversal at %@ without finding volume root", volumeRoot);
+      os_log(logger, "Terminating traversal at %@ without finding volume root", volumeRoot);
       return nil;
     }
   }
@@ -501,7 +500,7 @@ CFAbsoluteTime convertTimespec(struct timespec ts) {
 
   if (!url.isDirectory) {
     // This may happen when the directory has been deleted (which can happen when rescanning)
-    NSLog(@"Path to scan %@ is not a directory.", path);
+    os_log(logger, "Path to scan %@ is not a directory.", path);
 
     NSString *fmt = NSLocalizedString
       (@"The path %@ does not exist or is not a folder", @"Alert message");
@@ -511,7 +510,7 @@ CFAbsoluteTime convertTimespec(struct timespec ts) {
   }
 
   NSError  *error = nil;
-  NSURL  *volumeRoot = [TreeBuilder getVolumeRoot: url];
+  NSURL  *volumeRoot = [self getVolumeRoot: url];
   if (volumeRoot == nil) {
     // TODO: Check if there is fallback logic that could be used instead
 
@@ -524,26 +523,26 @@ CFAbsoluteTime convertTimespec(struct timespec ts) {
   NSNumber  *freeSpace;
   [volumeRoot getResourceValue: &freeSpace forKey: NSURLVolumeAvailableCapacityKey error: &error];
   if (error != nil) {
-    NSLog(@"Failed to determine free space for %@: %@", volumeRoot, error.description);
+    os_log(logger, "Failed to determine free space for %@: %@", volumeRoot, error.description);
   }
 
   NSNumber  *volumeSize;
   [volumeRoot getResourceValue: &volumeSize forKey: NSURLVolumeTotalCapacityKey error: &error];
   if (error != nil) {
-    NSLog(@"Failed to determine capacity of %@: %@", volumeRoot, error.description);
+    os_log(logger, "Failed to determine capacity of %@: %@", volumeRoot, error.description);
   }
 
   NSString  *volumeFormat;
   [volumeRoot getResourceValue: &volumeFormat forKey: NSURLVolumeLocalizedFormatDescriptionKey
                          error: &error];
   if (error == nil) {
-    NSLog(@"Volume format = %@", volumeFormat);
+    os_log_info(logger, "Volume format = %@", volumeFormat);
   }
 
   ignoreHardLinksForDirectories = NO; // Default
   struct statfs volinfo;
   if (statfs(volumeRoot.path.fileSystemRepresentation, &volinfo) == 0) {
-    NSLog(@"fstypename = %s", volinfo.f_fstypename);
+    os_log_info(logger, "fstypename = %s", volinfo.f_fstypename);
     if (strcmp("apfs", volinfo.f_fstypename) == 0) {
       // APFS does not support hardlinking directories. However, directories will have a non-zero
       // hardlink count, as each file it contains increases the count. So ignore this count when
@@ -551,7 +550,7 @@ CFAbsoluteTime convertTimespec(struct timespec ts) {
       ignoreHardLinksForDirectories = YES;
     }
   }
-  NSLog(@"ignoreHardLinksForDirectories = %d", ignoreHardLinksForDirectories);
+  os_log_info(logger, "ignoreHardLinksForDirectories = %d", ignoreHardLinksForDirectories);
 
   return [[[TreeContext alloc] initWithVolumePath: volumeRoot.path
                                   fileSizeMeasure: fileSizeMeasureName
@@ -574,12 +573,12 @@ CFAbsoluteTime convertTimespec(struct timespec ts) {
 
   NSFileManager  *manager = NSFileManager.defaultManager;
   if (relativePath.length > 0) {
-    NSLog(@"Scanning volume %@ [%@], starting at %@", volumePath,
-          [manager displayNameAtPath: volumePath], relativePath);
+    os_log_info(logger, "Scanning volume %@ [%@], starting at %@",
+                volumePath, [manager displayNameAtPath: volumePath], relativePath);
   }
   else {
-    NSLog(@"Scanning entire volume %@ [%@].", volumePath,
-          [manager displayNameAtPath: volumePath]);
+    os_log_info(logger, "Scanning entire volume %@ [%@].",
+                volumePath, [manager displayNameAtPath: volumePath]);
   }
 
   // Get the properties
@@ -623,9 +622,9 @@ CFAbsoluteTime convertTimespec(struct timespec ts) {
   
   [treeGuide descendIntoDirectory: dirItem];
   [progressTracker processingFolder: dirItem];
-  if (debugLogEnabled) {
-    NSLog(@"Scanning %s", entp->fts_path);
-  }
+  
+  os_log_debug(logger, "Scanning %s", entp->fts_path);
+
   if (dirStackTopIndex < NUM_SCAN_PROGRESS_ESTIMATE_LEVELS) {
     [progressTracker setNumSubFolders: [self determineNumSubFolders]];
   }
@@ -723,26 +722,27 @@ CFAbsoluteTime convertTimespec(struct timespec ts) {
                                  modificationTime: convertTimespec(statBlock->st_mtimespec)
                                        accessTime: convertTimespec(statBlock->st_atimespec)];
 
-    NSString* skipReason = nil;
+    bool skip = true;
     if (statBlock->st_flags & SF_DATALESS) {
       // Do not scan contents of folders that are not already available offline. Doing so would
       // trigger download of their contents. This is unwanted, as the state of the volume should
       // not change as a result of the scan. Additionally, it would slow down scanning
       // unnecessarily (and block scanning if there is no network access).
-      skipReason = @"Skipping scan of dataless folder %s";
+      os_log_info(logger, "Skipping scan of dataless folder %s", entp->fts_path);
     } else if ([lastPathComponent isEqualToString: @"Data"] &&
                [dirChildItem.path isEqualToString: @"/System/Volumes/Data"]) {
       // Do not scan the contents of the System Data volume to prevent its contents from being
       // scanned twice (as the contents also appear inside the root via firmlinks). Ideally, we use
       // a more generic mechanism for this, similar to how hardlinks are handled, but there does
       // not yet seem to be an API to support this.
-      skipReason = @"Skipping scan of data volume %s";
+      os_log_info(logger, "Skipping scan of data volume %s", entp->fts_path);
     } else if (![treeGuide shouldDescendIntoDirectory: dirChildItem]) {
-      skipReason = @"Skipping scan of %s (filtered out)";
+      os_log_info(logger, "Skipping scan of %s (filtered out)", entp->fts_path);
+    } else {
+      skip = false;
     }
 
-    if (skipReason) {
-      NSLog(skipReason, entp->fts_path);
+    if (skip) {
       [progressTracker skippedFolder: dirChildItem];
       visitDescendants = NO;
     } else {
@@ -770,10 +770,8 @@ CFAbsoluteTime convertTimespec(struct timespec ts) {
         totalPhysicalSize += physicalFileSize;
 
         if (fileSize > physicalFileSize) {
-          if (debugLogEnabled) {
-            NSLog(@"Warning: logical file size larger than physical file size for %s (%llu > %llu)",
-                  entp->fts_path, fileSize, physicalFileSize);
-          }
+          os_log_info(logger, "Warning: logical file size larger than physical file size for %s (%llu > %llu)",
+                      entp->fts_path, fileSize, physicalFileSize);
           numOverestimatedFiles++;
         }
         break;
@@ -824,7 +822,7 @@ CFAbsoluteTime convertTimespec(struct timespec ts) {
   ftsp = fts_open(paths, FTS_PHYSICAL | FTS_XDEV, NULL);
 
   if (ftsp == NULL) {
-    NSLog(@"Error: fts_open failed for %@", path);
+    os_log_error(logger, "Error: fts_open failed for %@", path);
     return NULL;
   }
 

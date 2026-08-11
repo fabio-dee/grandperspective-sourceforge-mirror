@@ -1,6 +1,7 @@
 #import <Cocoa/Cocoa.h>
 
 #include <fts.h>
+@import os.log;
 
 #import "FileItem.h"
 
@@ -59,9 +60,10 @@ typedef NS_ENUM(NSInteger, FileSizeEnum) {
   // as items on the stack are never popped but kept for re-use.
   int  dirStackTopIndex;
   
-  BOOL  debugLogEnabled;
   BOOL  ignoreHardLinksForDirectories;
   BOOL  fastPackageCheckEnabled;
+
+  os_log_t  logger;
 }
 
 + (NSArray *)fileSizeMeasureNames;

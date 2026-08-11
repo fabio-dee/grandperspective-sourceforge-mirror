@@ -172,6 +172,7 @@
 		AAFB1194238ABF3B00D616C3 /* TreeWriter.m in Sources */ = {isa = PBXBuildFile; fileRef = AAFB1193238ABF3B00D616C3 /* TreeWriter.m */; };
 		AAFB1197238AD5E900D616C3 /* RawTreeWriter.m in Sources */ = {isa = PBXBuildFile; fileRef = AAFB1196238AD5E900D616C3 /* RawTreeWriter.m */; };
 		D009CBD92FA5E45B00AC19E9 /* GrandPerspectiveLogo.icon in Resources */ = {isa = PBXBuildFile; fileRef = D009CBD82FA5E45B00AC19E9 /* GrandPerspectiveLogo.icon */; };
+		D0F268E6302BB0B3008B6689 /* LogManager.m in Sources */ = {isa = PBXBuildFile; fileRef = D0F268E5302BB0B3008B6689 /* LogManager.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -688,6 +689,8 @@
 		AAFB1195238AD5E900D616C3 /* RawTreeWriter.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = RawTreeWriter.h; sourceTree = "<group>"; };
 		AAFB1196238AD5E900D616C3 /* RawTreeWriter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RawTreeWriter.m; sourceTree = "<group>"; };
 		D009CBD82FA5E45B00AC19E9 /* GrandPerspectiveLogo.icon */ = {isa = PBXFileReference; lastKnownFileType = folder.iconcomposer.icon; path = GrandPerspectiveLogo.icon; sourceTree = "<group>"; };
+		D0F268E4302BB0B3008B6689 /* LogManager.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = LogManager.h; path = util/LogManager.h; sourceTree = "<group>"; };
+		D0F268E5302BB0B3008B6689 /* LogManager.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = LogManager.m; path = util/LogManager.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -893,6 +896,8 @@
 		AA6178720A38B8E600B8AB16 /* util */ = {
 			isa = PBXGroup;
 			children = (
+				D0F268E4302BB0B3008B6689 /* LogManager.h */,
+				D0F268E5302BB0B3008B6689 /* LogManager.m */,
 				AAA4FF1523C8FA7200A51C97 /* WindowManager.h */,
 				AAA4FF1623C8FA7200A51C97 /* WindowManager.m */,
 				AAA4FF0F23C8F7C300A51C97 /* ColorListCollection.h */,
@@ -1342,6 +1347,7 @@
 				AA837DBF0E29ECE5005384E0 /* XmlTreeWriter.m in Sources */,
 				AAE4AC312E5BA2A8007C2482 /* FileItemMapping.m in Sources */,
 				AA837E740E2D171D005384E0 /* TreeReader.m in Sources */,
+				D0F268E6302BB0B3008B6689 /* LogManager.m in Sources */,
 				AA7A7E0D0E4EE29D00EB366E /* WriteTaskInput.m in Sources */,
 				AA7A7E110E4EE3DA00EB366E /* WriteTaskExecutor.m in Sources */,
 				AA7A7E1C0E4EF00D00EB366E /* ApplicationError.m in Sources */,
