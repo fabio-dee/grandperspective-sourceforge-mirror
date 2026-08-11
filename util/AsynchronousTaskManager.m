@@ -1,7 +1,7 @@
 #import "AsynchronousTaskManager.h"
 
-
 #import "TaskExecutor.h"
+#import "LogManager.h"
 
 // Fired when a new task is scheduled.
 NSString  *TaskScheduledEvent = @"taskScheduled";
@@ -207,7 +207,7 @@ enum {
     [pool release];
   } while (workLock.condition != BACKGROUND_THREAD_SHUTDOWN);
 
-  NSLog(@"Thread terminated.");
+  os_log_info(LogManager.defaultLogManager.appLog, "Thread terminated.");
 }
 
 @end // @implementation AsynchronousTaskManager (PrivateMethods)

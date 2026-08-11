@@ -2,6 +2,7 @@
 
 #import "DirectoryItem.h"
 #import "PreferencesPanelControl.h"
+#import "LogManager.h"
 
 NSString  *NumFoldersProcessedKey = @"numFoldersProcessed";
 NSString  *NumFoldersSkippedKey = @"numFoldersSkipped";
@@ -20,7 +21,8 @@ NSString  *EstimatedProgressKey = @"estimatedProgress";
     NSUserDefaults  *userDefaults = NSUserDefaults.standardUserDefaults;
     stableTimeInterval = [userDefaults floatForKey: ProgressPanelStableTimeKey];
     if (stableTimeInterval <= 0) {
-      NSLog(@"Invalid value for stableTimeInterval");
+      os_log(LogManager.defaultLogManager.appLog,
+             "Invalid value for stableTimeInterval");
       stableTimeInterval = 1;
     }
   }

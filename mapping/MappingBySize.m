@@ -5,6 +5,7 @@
 #import "PlainFileItem.h"
 #import "FileItemMapping.h"
 #import "TreeDrawerBaseSettings.h"
+#import "LogManager.h"
 
 
 @interface MaxItemSizeFinder : NSObject {
@@ -138,7 +139,8 @@ const item_size_t  minUpperBound = 1024;
   MaxItemSizeFinder  *finder = [[[MaxItemSizeFinder alloc] initWithSettings: settings] autorelease];
   item_size_t maxItemSize = [finder findMaximumItemSize: treeRoot];
 
-  NSLog(@"maxItemSize = %lld", maxItemSize);
+  os_log_info(LogManager.defaultLogManager.appLog,
+              "maxItemSize = %lld", maxItemSize);
 
   // Round down towards clean boundary value
   item_size_t cleanLimit = minUpperBound;
@@ -148,7 +150,8 @@ const item_size_t  minUpperBound = 1024;
 
   maxItemSizeLimit = cleanLimit / 2;
 
-  NSLog(@"maxItemSizeLimit = %lld", maxItemSizeLimit);
+  os_log_info(LogManager.defaultLogManager.appLog,
+              "maxItemSizeLimit = %lld", maxItemSizeLimit);
 }
 
 @end // @implementation SizeBasedMapping (PrivateMethods)

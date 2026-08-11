@@ -6,9 +6,9 @@
   os_log_t appLog;
 }
 
-@property (nonatomic, readonly) os_log_t getAppLog;
+@property (nonatomic, readonly) os_log_t appLog;
 
-+ (LogManager *)defaultLogManager;
+@property (class, nonatomic, readonly) LogManager *defaultLogManager;
 
 - (id)init;
 

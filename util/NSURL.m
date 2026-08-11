@@ -1,5 +1,6 @@
 #import "NSURL.h"
 
+#import "LogManager.h"
 
 @implementation NSURL (HelperMethods)
 
@@ -9,7 +10,8 @@
   
   [self getResourceValue: &isDirectory forKey: NSURLIsDirectoryKey error: &error];
   if (error != nil) {
-    NSLog(@"Failed to obtain directory status for %@: %@", self, error.description);
+    os_log(LogManager.defaultLogManager.appLog,
+           "Failed to obtain directory status for %@: %@", self, error.description);
     return NO;
   }
   
@@ -22,7 +24,8 @@
   
   [self getResourceValue: &isPackage forKey: NSURLIsPackageKey error: &error];
   if (error != nil) {
-    NSLog(@"Failed to obtain package status for %@: %@", self, error.description);
+    os_log(LogManager.defaultLogManager.appLog,
+           "Failed to obtain package status for %@: %@", self, error.description);
     return NO;
   }
   
@@ -35,7 +38,8 @@
   
   [self getResourceValue: &linkCount forKey: NSURLLinkCountKey error: &error];
   if (error != nil) {
-    NSLog(@"Failed to obtain link count for %@: %@", self, error.description);
+    os_log(LogManager.defaultLogManager.appLog,
+           "Failed to obtain link count for %@: %@", self, error.description);
     return NO;
   }
   
@@ -48,7 +52,8 @@
   
   [self getResourceValue: &creationTime forKey: NSURLCreationDateKey error: &error];
   if (error != nil) {
-    NSLog(@"Failed to obtain creation time for %@: %@", self, error.description);
+    os_log(LogManager.defaultLogManager.appLog,
+           "Failed to obtain creation time for %@: %@", self, error.description);
     return NO;
   }
   
@@ -61,7 +66,8 @@
   
   [self getResourceValue: &modificationTime forKey: NSURLContentModificationDateKey error: &error];
   if (error != nil) {
-    NSLog(@"Failed to obtain modification time for %@: %@", self, error.description);
+    os_log(LogManager.defaultLogManager.appLog,
+           "Failed to obtain modification time for %@: %@", self, error.description);
     return NO;
   }
   
@@ -74,7 +80,8 @@
   
   [self getResourceValue: &accessTime forKey: NSURLContentAccessDateKey error: &error];
   if (error != nil) {
-    NSLog(@"Failed to obtain access time for %@: %@", self, error.description);
+    os_log(LogManager.defaultLogManager.appLog,
+           "Failed to obtain access time for %@: %@", self, error.description);
     return NO;
   }
   
@@ -92,14 +99,18 @@
 //
 //  [self getResourceValue: parentURL forKey: NSURLParentDirectoryURLKey error: &error];
 //  if (error != nil) {
-//    NSLog(@"Failed to obtain parent URL for %@: %@", self, error.description);
+//    os_log(LogManager.defaultLogManager.appLog,
+//           "Failed to obtain parent URL for %@: %@",
+//           self, error.description);
 //  }
 //  if (*parentURL == nil) {
-//    NSLog(@"Warning: parent URL is nil for %@", self);
+//    os_log(LogManager.defaultLogManager.appLog,
+//           "Warning: parent URL is nil for %@", self);
 //
 //    // Try to construct parent URL by stripping last path component from own path
 //    NSURL  *parent = [self URLByDeletingLastPathComponent];
-//    NSLog(@"Setting parent to %@", parent);
+//    os_log_info(LogManager.defaultLogManager.appLog,
+//                "Setting parent to %@", parent);
 //    *parentURL = parent;
 //  }
 }

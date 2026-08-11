@@ -1,6 +1,7 @@
 #import <zlib.h>
 
 #import "CompressedTextOutput.h"
+#import "LogManager.h"
 
 @implementation CompressedTextOutput
 
@@ -43,7 +44,8 @@
 
     result = deflate(&outStream, flush);
     if (result == Z_STREAM_ERROR || result == Z_BUF_ERROR) {
-      NSLog(@"Error invoking deflate: %d", result);
+      os_log(LogManager.defaultLogManager.appLog,
+             "Error invoking deflate: %d", result);
       return NO;
     }
 
@@ -52,8 +54,9 @@
     if (numProduced > 0) {
       NSUInteger  numWritten = fwrite(compressedDataBuffer, 1, numProduced, file);
       if (numWritten != numProduced) {
-        NSLog(@"Failed to write compressed text data: %lu bytes written out of %lu.",
-              (unsigned long)numWritten, (unsigned long)numProduced);
+        os_log(LogManager.defaultLogManager.appLog,
+               "Failed to write compressed text data: %lu bytes written out of %lu.",
+               (unsigned long)numWritten, (unsigned long)numProduced);
         return NO;
       }
     }

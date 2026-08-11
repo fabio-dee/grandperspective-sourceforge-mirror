@@ -11,6 +11,7 @@
 #import "CompoundOrItemTest.h"
 #import "NotItemTest.h"
 
+#import "LogManager.h"
 
 @implementation FileItemTest
 
@@ -45,7 +46,10 @@
     return [SelectiveItemTest fileItemTestFromDictionary: dict];
   }
   
-  NSLog(@"Unrecognized file item test class \"%@\".", classString);
+  os_log(LogManager.defaultLogManager.appLog,
+         "Unrecognized file item test class \"%@\".",
+         classString);
+
   return nil;
 }
 

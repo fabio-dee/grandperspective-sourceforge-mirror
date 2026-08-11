@@ -1,5 +1,7 @@
 #import <Cocoa/Cocoa.h>
 
+@import os.log;
+
 #import "MainMenuControl.h"
 
 @interface StartWindowControl : NSWindowController <NSTableViewDataSource, NSTableViewDelegate> {
@@ -14,6 +16,8 @@
   int  tagLineIndex;
 
   BOOL  forceReloadOnShow;
+
+  os_log_t  logger;
 }
 
 // Override designated initialisers

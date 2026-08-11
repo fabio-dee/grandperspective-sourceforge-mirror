@@ -3,6 +3,7 @@
 #import "ControlConstants.h"
 #import "NameValidator.h"
 #import "NotifyingDictionary.h"
+#import "LogManager.h"
 
 #import "FileItemTest.h"
 
@@ -469,7 +470,8 @@ NSString  *MatchColumn = @"match";
       [filterTests addObject: newFilterTest];
     }
     else {
-      NSLog(@"Test \"%@\" does not exist anymore in repository.", name);
+      os_log(LogManager.defaultLogManager.appLog,
+             "Test \"%@\" does not exist anymore in repository.", name);
 
       // Simply omit it.
     }

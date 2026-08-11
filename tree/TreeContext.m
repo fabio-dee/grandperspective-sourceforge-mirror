@@ -8,6 +8,7 @@
 
 #import "FilterSet.h"
 #import "TreeMonitor.h"
+#import "LogManager.h"
 
 extern NSString  *TallyFileSizeName;
 
@@ -174,7 +175,8 @@ typedef NS_ENUM(NSInteger, LockConditionEnum) {
       miscUsedSize -= self.freeSpace;
     }
     else {
-      NSLog(@"Scanned tree size plus free space is larger than volume size.");
+      os_log(LogManager.defaultLogManager.appLog,
+             "Scanned tree size plus free space is larger than volume size.");
       miscUsedSizeAnomaly = TRUE;
 
       // Adapt actual free space, so that size of volumeTree still adds up to volume size.
@@ -183,7 +185,8 @@ typedef NS_ENUM(NSInteger, LockConditionEnum) {
     }
   } 
   else {
-    NSLog(@"Scanned tree size is larger than volume size.");
+    os_log(LogManager.defaultLogManager.appLog,
+           "Scanned tree size is larger than volume size.");
     miscUsedSizeAnomaly = TRUE;
 
     // Set actual free space and misc used size both to zero to minimize difference between claimed
@@ -193,10 +196,11 @@ typedef NS_ENUM(NSInteger, LockConditionEnum) {
   }
 
   if (miscUsedSizeAnomaly) {
-    NSLog(@"Volume size=%qu (%@), Free space=%qu (%@), Scanned size=%qu (%@)",
-          self.volumeSize, [FileItem stringForFileItemSize: self.volumeSize],
-          self.freeSpace, [FileItem stringForFileItemSize: self.freeSpace],
-          scanTree.itemSize, [FileItem stringForFileItemSize: scanTree.itemSize]);
+    os_log(LogManager.defaultLogManager.appLog,
+           "Volume size=%qu (%@), Free space=%qu (%@), Scanned size=%qu (%@)",
+           self.volumeSize, [FileItem stringForFileItemSize: self.volumeSize],
+           self.freeSpace, [FileItem stringForFileItemSize: self.freeSpace],
+           scanTree.itemSize, [FileItem stringForFileItemSize: scanTree.itemSize]);
   }
 
   FileItem  *freeSpaceItem = [[[FileItem alloc] initWithLabel: FreeSpace

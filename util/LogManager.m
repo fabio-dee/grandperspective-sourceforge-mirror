@@ -21,7 +21,7 @@
   return self;
 }
 
-- (os_log_t)getAppLog {
+- (os_log_t)appLog {
   return appLog;
 }
 

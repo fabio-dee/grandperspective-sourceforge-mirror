@@ -29,6 +29,7 @@
 #import "FileItemMappingScheme.h"
 
 #import "LocalizableStrings.h"
+#import "LogManager.h"
 
 static const float SCROLL_WHEEL_SENSITIVITY = 6.0;
 
@@ -1091,7 +1092,7 @@ CGFloat ramp(CGFloat x, CGFloat minX, CGFloat maxX) {
 }
 
 - (void) visibleTreeChanged:(NSNotification *)notification {
-  NSLog(@"visibleTreeChanged");
+  os_log_debug(LogManager.defaultLogManager.appLog, "visibleTreeChanged");
   [self updatePathEndRect: NO];
 
   [self forceRedraw];

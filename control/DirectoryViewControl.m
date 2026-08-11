@@ -23,6 +23,8 @@
 #import "StringContainmentTest.h"
 #import "SelectiveItemTest.h"
 
+#import "LogManager.h"
+
 
 NSString  *DeleteNothing = @"delete nothing";
 NSString  *OnlyDeleteFiles = @"only delete files";
@@ -343,7 +345,9 @@ NSString  *ViewWillCloseEvent = @"viewWillClose";
   FileItem  *fileItem = pathModelView.selectedFileItem;
 
   if (customRevealApp != nil) {
-    NSLog(@"Revealing %@ using custom app %@", fileItem.systemPath, customRevealApp);
+    os_log(LogManager.defaultLogManager.appLog,
+           "Revealing %@ using custom app %@",
+           fileItem.systemPath, customRevealApp);
 
     [self openFile: fileItem withApplication: customRevealApp];
     return;
@@ -927,7 +931,8 @@ NSString  *ViewWillCloseEvent = @"viewWillClose";
 
 - (void) openFile:(FileItem *)fileItem withApplication:(NSURL *)appUrl {
   if (appUrl == nil) {
-    NSLog(@"Ignoring openFile:withApplication: request with nil appUrl");
+    os_log(LogManager.defaultLogManager.appLog,
+           "Ignoring openFile:withApplication: request with nil appUrl");
     return;
   }
 
@@ -939,11 +944,14 @@ NSString  *ViewWillCloseEvent = @"viewWillClose";
         configuration: [NSWorkspaceOpenConfiguration configuration]
     completionHandler: ^(NSRunningApplication *app, NSError *error) {
     if (error == nil) {
-      NSLog(@"Opened %@ using %@", filePath, appUrl);
+      os_log_info(LogManager.defaultLogManager.appLog,
+                  "Opened %@ using %@", filePath, appUrl);
       return;
     }
 
-    NSLog(@"Failed to open %@ using %@: %@", filePath, appUrl, error.description);
+    os_log(LogManager.defaultLogManager.appLog,
+           "Failed to open %@ using %@: %@",
+           filePath, appUrl, error.description);
     dispatch_async(dispatch_get_main_queue(), ^() {
       NSAlert *alert = [[[NSAlert alloc] init] autorelease];
 

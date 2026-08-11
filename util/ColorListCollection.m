@@ -1,6 +1,7 @@
 #import "ColorListCollection.h"
 
 #import "PreferencesPanelControl.h"
+#import "LogManager.h"
 
 NSString* fallbackColorListKey = @"Fallback";
 NSString* fallbackColorListName = @"Fallback";
@@ -84,7 +85,8 @@ NSColorList* createGrandPerspectivePalette(void) {
 
     if (instance.isEmpty) {
       // Should not happen, but on old versions of OS X reading can fail (see Bug #81)
-      NSLog(@"Failed to load any palette. Adding fallback palette");
+      os_log(LogManager.defaultLogManager.appLog,
+             "Failed to load any palette. Adding fallback palette");
       [instance addColorList: createFallbackPalette() key: fallbackColorListKey];
     }
 

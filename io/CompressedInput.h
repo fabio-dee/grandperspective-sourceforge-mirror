@@ -1,5 +1,7 @@
 #import <Foundation/Foundation.h>
 
+@import os.log;
+
 #import <zlib.h>
 
 extern const NSUInteger DECOMPRESSED_BUFFER_SIZE;
@@ -25,6 +27,8 @@ extern const NSUInteger DECOMPRESSED_BUFFER_SIZE;
 
   NSInputStream  *inputStream;
   NSOutputStream  *outputStream;
+
+  os_log_t  logger;
 }
 
 @property (atomic) unsigned long long totalBytesRead;

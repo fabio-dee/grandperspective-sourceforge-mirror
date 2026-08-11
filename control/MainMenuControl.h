@@ -1,5 +1,7 @@
 #import <Cocoa/Cocoa.h>
 
+@import os.log;
+
 @class WindowManager;
 @class VisibleAsynchronousTaskManager;
 @class FiltersWindowControl;
@@ -30,6 +32,8 @@
   int  viewCount;
   // The number of running view-producing tasks
   int  viewTaskCount;
+
+  os_log_t  logger;
 }
 
 @property (class, nonatomic, readonly) MainMenuControl *singletonInstance;

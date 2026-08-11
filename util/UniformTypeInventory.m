@@ -4,6 +4,7 @@
 
 #import "FileItem.h"
 #import "UniformType.h"
+#import "LogManager.h"
 
 
 NSString  *UniformTypeAddedEvent = @"uniformTypeAdded";
@@ -182,21 +183,23 @@ NSString  *UnknownTypeUTI = @"unknown";
 
 
 - (void) dumpTypesToLog {
+  os_log_t logger = LogManager.defaultLogManager.appLog;
+
   for (UniformType *type in [self uniformTypeEnumerator]) {
-    NSLog(@"Type: %@", [type uniformTypeIdentifier]);
-    NSLog(@"  Description: %@", [type description]);
+    os_log_debug(logger, "Type: %@", [type uniformTypeIdentifier]);
+    os_log_debug(logger, "  Description: %@", [type description]);
 
     NSMutableString  *s = [NSMutableString stringWithCapacity: 64];
     for (UniformType *type2 in [type.parentTypes objectEnumerator]) {
       [s appendFormat: @" %@", [type2 uniformTypeIdentifier]];
     }
-    NSLog(@"  Parents:%@", s);
-    
+    os_log_debug(logger, "  Parents:%@", s);
+
     [s deleteCharactersInRange: NSMakeRange(0, s.length)];
     for (UniformType *type2 in [[self childrenOfUniformType: type] objectEnumerator]) {
       [s appendFormat: @" %@", [type2 uniformTypeIdentifier]];
     }
-    NSLog(@"  Children:%@", s);
+    os_log_debug(logger, "  Children:%@", s);
   }
 }
 

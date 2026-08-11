@@ -208,7 +208,7 @@ CFAbsoluteTime convertTimespec(struct timespec ts) {
     
     [self setFileSizeMeasure: LogicalFileSizeName];
     
-    logger = [LogManager defaultLogManager].getAppLog;
+    logger = LogManager.defaultLogManager.appLog;
 
     NSUserDefaults *args = NSUserDefaults.standardUserDefaults;
     NSString  *behavior = [args stringForKey: PackageCheckBehaviorKey];
@@ -315,7 +315,7 @@ CFAbsoluteTime convertTimespec(struct timespec ts) {
 }
 
 - (BOOL) scanTreeForDirectory:(DirectoryItem *)dirItem atPath:(NSString *)path {
-  os_log_info(logger, "scanTreeForDirectory %@", path);
+  os_log_debug(logger, "scanTreeForDirectory %@", path);
 
   NSAutoreleasePool  *autoreleasePool = nil;
   int  i = 0;
@@ -610,7 +610,7 @@ CFAbsoluteTime convertTimespec(struct timespec ts) {
 }
 
 - (void) addToStack:(DirectoryItem *)dirItem entp:(FTSENT *)entp {
-//  NSLog(@"Push: %s", entp->fts_path);
+//  os_log_debug(logger, "Push: %s", entp->fts_path);
 
   // Expand stack if required
   if (dirStackTopIndex + 1 == (int)dirStack.count) {
@@ -653,7 +653,7 @@ CFAbsoluteTime convertTimespec(struct timespec ts) {
 }
 
 - (FileItem *)finalizeStackFrame:(ScanStackFrame *)topDir {
-//  NSLog(@"Pop: %s", topDir->entp->fts_path);
+//  os_log_debug(logger, "Pop: %s", topDir->entp->fts_path);
 
   DirectoryItem  *dirItem = topDir->parent;
   [dirItem setSize]; // Fix the size

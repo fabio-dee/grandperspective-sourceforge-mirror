@@ -1,6 +1,7 @@
 #import "ModalityTerminator.h"
 
 #import "ControlConstants.h"
+#import "LogManager.h"
 
 @implementation ModalityTerminator
 
@@ -31,8 +32,9 @@
 }
 
 - (void) dealloc {
-  NSLog(@"ModalityTerminator -dealloc");
-  
+  os_log_info(LogManager.defaultLogManager.appLog,
+              "ModalityTerminator -dealloc");
+
   [super dealloc];
 }
 

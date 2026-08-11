@@ -1,6 +1,7 @@
 #import <Foundation/Foundation.h>
 
 #import "TextOutput.h"
+#import "LogManager.h"
 
 const NSUInteger TEXT_OUTPUT_BUFFER_SIZE = 4096 * 16;
 
@@ -72,8 +73,9 @@ const NSUInteger TEXT_OUTPUT_BUFFER_SIZE = 4096 * 16;
     NSUInteger  numWritten = fwrite(dataBuffer, 1, dataBufferPos, file);
 
     if (numWritten != dataBufferPos) {
-      NSLog(@"Failed to write text data: %lu bytes written out of %lu.",
-            (unsigned long)numWritten, (unsigned long)dataBufferPos);
+      os_log(LogManager.defaultLogManager.appLog,
+             "Failed to write text data: %lu bytes written out of %lu.",
+             (unsigned long)numWritten, (unsigned long)dataBufferPos);
       return NO;
     }
 

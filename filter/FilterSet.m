@@ -7,6 +7,8 @@
 #import "FilterRepository.h"
 #import "FilterTestRepository.h"
 
+#import "LogManager.h"
+
 @interface FilterSet (PrivateMethods)
 
 - (instancetype) initWithNamedFilters:(NSArray *)filters
@@ -195,7 +197,9 @@
       [filterTests addObject: filterTest];
     } else {
       // Apparently the filter or its item test(s) do not exist anymore.
-      NSLog(@"Could not instantiate test for filter %@", namedFilter.name);
+      os_log(LogManager.defaultLogManager.appLog,
+             "Could not instantiate test for filter %@",
+             namedFilter.name);
     }
   }
 

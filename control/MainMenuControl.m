@@ -30,6 +30,7 @@
 #import "TreeRefresher.h"
 
 #import "WindowManager.h"
+#import "LogManager.h"
 
 #import "AsynchronousTaskManager.h"
 #import "VisibleAsynchronousTaskManager.h"
@@ -352,6 +353,8 @@ static dispatch_once_t  singletonOnceToken;
 
     showWelcomeWindow = YES; // Default
 
+    logger = LogManager.defaultLogManager.appLog;
+
     singletonInstance = self;
   });
 
@@ -448,19 +451,19 @@ static dispatch_once_t  singletonOnceToken;
 
 // Service method (which handles requests from Finder's Services menu, amongst others)
 - (void)scanFolder:(NSPasteboard *)pboard userData:(NSString *)userData error:(NSString **)error {
-  NSLog(@"scanFolder:userData:error:");
+  os_log_info(logger, "scanFolder:userData:error:");
   showWelcomeWindow = NO; // Do not automatically show welcome window
 
   NSURL  *fileUrl = [NSURL getFileURLFromPasteboard: pboard];
   if (fileUrl == nil) {
     *error = NSLocalizedString(@"Failed to get path from pasteboard", @"Error message");
-    NSLog(@"%@", *error); // Also logging. Setting *error does not seem to work?
+    os_log(logger, "Error: %@", *error);
     return;
   }
   
   if (!fileUrl.isDirectory) {
     *error = NSLocalizedString(@"Expected a folder", @"Error message");
-    NSLog(@"%@", *error); // Also logging. Setting *error does not seem to work?
+    os_log(logger, "Error: %@", *error);
     return;
   }
 
@@ -470,19 +473,19 @@ static dispatch_once_t  singletonOnceToken;
 
 // Service method (which handles requests from Finder's Services menu, amongst others)
 - (void)loadScanData:(NSPasteboard *)pboard userData:(NSString *)userData error:(NSString **)error {
-  NSLog(@"loadScanData:userData:error:");
+  os_log_info(logger, "loadScanData:userData:error:");
   showWelcomeWindow = NO; // Do not automatically show welcome window
 
   NSURL  *fileUrl = [NSURL getFileURLFromPasteboard: pboard];
   if (fileUrl == nil) {
     *error = NSLocalizedString(@"Failed to get path from pasteboard", @"Error message" );
-    NSLog(@"%@", *error); // Also logging. Setting *error does not seem to work?
+    os_log(logger, "Error: %@", *error);
     return;
   }
   
   if (! [fileUrl.pathExtension.lowercaseString isEqualToString: @"gpscan"]) {
     *error = NSLocalizedString(@"Expected scandata file", @"Error message" );
-    NSLog(@"%@", *error); // Also logging. Setting *error does not seem to work?
+    os_log(logger, "Error: %@", *error);
     return;
   }
   
@@ -610,7 +613,7 @@ static dispatch_once_t  singletonOnceToken;
     [self rescanVisible: sender];
   }
   else {
-    NSLog(@"Unrecognized rescan action: %@", rescanAction);
+    os_log(logger, "Unrecognized rescan action: %@", rescanAction);
   }
 }
 
@@ -768,7 +771,7 @@ static dispatch_once_t  singletonOnceToken;
     if (sourceURL.fileURL) {
       [self loadScanDataFromFile: sourceURL];
     } else {
-      NSLog(@"Source '%@' is not a file?", sourceURL); 
+      os_log(logger, "Source '%@' is not a file?", sourceURL);
     }
   }
 }
@@ -943,7 +946,7 @@ static dispatch_once_t  singletonOnceToken;
 
   NSURL  *targetURL = openPanel.URL;
   if (!targetURL.fileURL) {
-    NSLog(@"URL '%@' is not a file?", targetURL);
+    os_log(logger, "URL '%@' is not a file?", targetURL);
     return;
   }
 
@@ -1111,7 +1114,7 @@ static dispatch_once_t  singletonOnceToken;
                                          callback: callback
                                          selector: @selector(writeTaskCompleted:)];
     } else {
-      NSLog(@"Destination '%@' is not a file?", destURL);
+      os_log(logger, "Destination '%@' is not a file?", destURL);
     }
   }
 }
@@ -1243,23 +1246,23 @@ static dispatch_once_t  singletonOnceToken;
 
 - (void) viewWillOpen:(NSNotification *)notification {
   viewCount++;
-  NSLog(@"viewCount = %d, viewTaskCount = %d", viewCount, viewTaskCount);
+  os_log_debug(logger, "viewCount = %d, viewTaskCount = %d", viewCount, viewTaskCount);
 }
 
 - (void) viewWillClose:(NSNotification *)notification {
   viewCount--;
-  NSLog(@"viewCount = %d, viewTaskCount = %d", viewCount, viewTaskCount);
+  os_log_debug(logger, "viewCount = %d, viewTaskCount = %d", viewCount, viewTaskCount);
   [self checkShowWelcomeWindow: YES];
 }
 
 - (void) viewProducingTaskScheduled:(NSNotification *)notification {
   viewTaskCount++;
-  NSLog(@"viewCount = %d, viewTaskCount = %d", viewCount, viewTaskCount);
+  os_log_debug(logger, "viewCount = %d, viewTaskCount = %d", viewCount, viewTaskCount);
 }
 
 - (void) viewProducingTaskCompleted:(NSNotification *)notification {
   viewTaskCount--;
-  NSLog(@"viewCount = %d, viewTaskCount = %d", viewCount, viewTaskCount);
+  os_log_debug(logger, "viewCount = %d, viewTaskCount = %d", viewCount, viewTaskCount);
   [self checkShowWelcomeWindow: NO];
 }
 
@@ -1282,7 +1285,7 @@ static dispatch_once_t  singletonOnceToken;
   NSString  *action = [NSUserDefaults.standardUserDefaults stringForKey: NoViewsBehaviourKey];
   if ([action isEqualToString: AfterClosingLastViewQuit]) {
     if (allowAutoQuit) {
-      NSLog(@"Auto-quitting application after last view has closed");
+      os_log(logger, "Auto-quitting application after last view has closed");
       [NSApplication.sharedApplication performSelectorOnMainThread: @selector(terminate:)
                                                         withObject: nil
                                                      waitUntilDone: NO];
@@ -1297,7 +1300,7 @@ static dispatch_once_t  singletonOnceToken;
     // void
   }
   else {
-    NSLog(@"Unrecognized action: %@", action);
+    os_log	(logger, "Unrecognized action: %@", action);
   }
 }
 

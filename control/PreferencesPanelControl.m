@@ -11,6 +11,7 @@
 #import "FilterPopUpControl.h"
 
 #import "UniqueTagsTransformer.h"
+#import "LogManager.h"
 
 NSString  *FileDeletionTargetsKey = @"fileDeletionTargets";
 NSString  *ConfirmFileDeletionKey = @"confirmFileDeletion";
@@ -146,15 +147,18 @@ static BOOL appHasDeletePermission;
   }
 
   // Convert old deprecated settings
+  os_log_t  logger = LogManager.defaultLogManager.appLog;
   NSString  *oldStringSetting = [userDefaults stringForKey: DefaultFilterKey_Deprecated];
   if (oldStringSetting != nil) {
-    NSLog(@"Read default mask from %@", DefaultFilterKey_Deprecated);
+    os_log_info(logger, "Read default mask from %@",
+                DefaultFilterKey_Deprecated);
     [userDefaults setObject: oldStringSetting forKey: MaskFilterKey];
     [userDefaults removeObjectForKey: DefaultFilterKey_Deprecated];
   }
   NSObject  *oldSetting = [userDefaults objectForKey: ShowPackageContentsByDefaultKey_Deprecated];
   if (oldSetting != nil) {
-    NSLog(@"Read old view setting from %@", ShowPackageContentsByDefaultKey_Deprecated);
+    os_log_info(logger, "Read old view setting from %@",
+                ShowPackageContentsByDefaultKey_Deprecated);
     BOOL  showPackageContents = ((NSNumber *)oldSetting).boolValue;
     DrawItemsEnum  newSetting = showPackageContents ? DRAW_FILES : DRAW_PACKAGES;
 
@@ -312,7 +316,8 @@ static BOOL appHasDeletePermission;
   SecCodeRef  me;
   CFDictionaryRef  dynamicInfo;
 
-  NSLog(@"Trying to establish application entitlements");
+  os_log_t  logger = LogManager.defaultLogManager.appLog;
+  os_log_info(logger, "Trying to establish application entitlements");
 
   // On Mojave this invocation results in the following log messages:
   //  [logging-persist] cannot open file at line 42249 of [95fbac39ba]
@@ -321,18 +326,18 @@ static BOOL appHasDeletePermission;
   err = SecCodeCopySelf(kSecCSDefaultFlags, &me);
 
   if (err != errSecSuccess) {
-    NSLog(@"Failed to successfully invoke SecCodeCopySelf -> %d", err);
+    os_log(logger, "Failed to successfully invoke SecCodeCopySelf -> %d", err);
     return canDelete;
   }
 
   // On Catalina the invocation below results in a crash.
   err = SecCodeCopySigningInformation(me, (SecCSFlags) kSecCSDynamicInformation, &dynamicInfo);
   if (err != errSecSuccess) {
-    NSLog(@"Failed to successfully invoke SecCodeCopySigningInformation -> %d", err);
+    os_log(logger, "Failed to successfully invoke SecCodeCopySigningInformation -> %d", err);
   }
   else {
     NSDictionary  *entitlements = CFDictionaryGetValue(dynamicInfo, kSecCodeInfoEntitlementsDict);
-    NSLog(@"entitlements = %@", entitlements);
+    os_log_info(logger, "entitlements = %@", entitlements);
 
     canDelete = (
       !entitlements[@"com.apple.security.app-sandbox"] ||
@@ -341,7 +346,7 @@ static BOOL appHasDeletePermission;
   }
 
   CFRelease(dynamicInfo);
-  NSLog(@"doesAppHaveFileDeletePermission = %d", canDelete);
+  os_log_info(logger, "doesAppHaveFileDeletePermission = %d", canDelete);
   return canDelete;
 }
 

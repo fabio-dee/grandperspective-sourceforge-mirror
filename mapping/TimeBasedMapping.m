@@ -6,6 +6,7 @@
 
 #import "PreferencesPanelControl.h"
 #import "TreeWriter.h"
+#import "LogManager.h"
 
 @interface TimeBasedMapping (PrivateMethods)
 
@@ -94,16 +95,18 @@ const int  minTimeDelta = 60;
 @implementation TimeBasedMapping (PrivateMethods)
 
 - (void) initTimeBounds:(DirectoryItem *)treeRoot {
+  os_log_t  logger = LogManager.defaultLogManager.appLog;
+
   minTime = 0;
   maxTime = 0;
   [self visitItemToDetermineTimeBounds: treeRoot];
   
   nowTime = CFAbsoluteTimeGetCurrent();
   if (maxTime > nowTime) {
-    NSLog(@"Maximum time is in the future.");
+    os_log(logger, "Maximum time is in the future.");
   }
   if (minTime > nowTime) {
-    NSLog(@"Minimum time is in the future.");
+    os_log(logger, "Minimum time is in the future.");
   }
   
   // Check if the preferences override the minimum.
@@ -125,20 +128,19 @@ const int  minTimeDelta = 60;
                                                         NULL,
                                                         &minTimeBound);
   if (! ok) {
-    NSLog(@"Failed to parse preference value for %@: %@", 
-          MinimumTimeBoundForColorMappingKey,
-          minTimeBoundString);
+    os_log(logger, "Failed to parse preference value for %@: %@",
+           MinimumTimeBoundForColorMappingKey, minTimeBoundString);
   } else if (minTimeBound > nowTime) {
-    NSLog(@"Ignoring preference value for %@. It occurs in the future.",
-          MinimumTimeBoundForColorMappingKey);
+    os_log(logger, "Ignoring preference value for %@. It occurs in the future.",
+           MinimumTimeBoundForColorMappingKey);
   } else if (minTime < minTimeBound) {
     minTime = minTimeBound;
-    NSLog(@"Basing minTime on value specified in preferences.");
+    os_log_info(logger, "Basing minTime on value specified in preferences.");
   }
 
-  NSLog(@"minTime=%@, maxTime=%@", 
-        [FileItem stringForTime: minTime],
-        [FileItem stringForTime: maxTime]);
+  os_log_info(logger, "minTime=%@, maxTime=%@",
+              [FileItem stringForTime: minTime],
+              [FileItem stringForTime: maxTime]);
 }
 
 

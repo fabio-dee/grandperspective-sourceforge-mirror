@@ -1,7 +1,7 @@
 #import "ProgressPanelControl.h"
 
 #import "PreferencesPanelControl.h"
-
+#import "LogManager.h"
 
 extern NSString  *NumFoldersProcessedKey;
 extern NSString  *CurrentFolderPathKey;
@@ -28,7 +28,8 @@ extern NSString  *StableFolderPathKey;
 
     refreshRate = [NSUserDefaults.standardUserDefaults floatForKey: ProgressPanelRefreshRateKey];
     if (refreshRate <= 0) {
-      NSLog(@"Invalid value for progressPanelRefreshRate.");
+      os_log(LogManager.defaultLogManager.appLog,
+             "Invalid value for progressPanelRefreshRate.");
       refreshRate = 1;
     }
   }

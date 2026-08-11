@@ -1,5 +1,7 @@
 #import <Cocoa/Cocoa.h>
 
+@import os.log;
+
 @class TreeContext;
 
 @interface TreeMonitor : NSObject {
@@ -11,7 +13,7 @@
 
   NSArray<NSString *> *rootPathComponents;
 
-  BOOL debugLogEnabled;
+  os_log_t logger;
 }
 
 @property (nonatomic, readonly, weak) TreeContext *treeContext;

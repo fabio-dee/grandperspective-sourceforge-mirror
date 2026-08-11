@@ -1,5 +1,6 @@
 #import "GradientRectangleDrawer.h"
 
+#import "LogManager.h"
 
 @interface GradientRectangleDrawer (PrivateMethods)
 
@@ -154,8 +155,9 @@
   int  bitmapHeight = (int)drawBitmap.pixelsHigh;
  
   if (height <= 0 || width <= 0) {
-    NSLog(@"Height and width should both be positive: x=%f, y=%f, w=%f, h=%f",
-          rect.origin.x, rect.origin.y, rect.size.width, rect.size.height);
+    os_log(LogManager.defaultLogManager.appLog,
+           "Height and width should both be positive: x=%f, y=%f, w=%f, h=%f",
+           rect.origin.x, rect.origin.y, rect.size.width, rect.size.height);
     return;
   }
  
