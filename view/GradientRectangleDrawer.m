@@ -155,7 +155,7 @@
   int  bitmapHeight = (int)drawBitmap.pixelsHigh;
  
   if (height <= 0 || width <= 0) {
-    os_log(LogManager.defaultLogManager.appLog,
+    os_log(LogManager.defaultLogManager.mainLog,
            "Height and width should both be positive: x=%f, y=%f, w=%f, h=%f",
            rect.origin.x, rect.origin.y, rect.size.width, rect.size.height);
     return;

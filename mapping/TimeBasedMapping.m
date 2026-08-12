@@ -95,7 +95,7 @@ const int  minTimeDelta = 60;
 @implementation TimeBasedMapping (PrivateMethods)
 
 - (void) initTimeBounds:(DirectoryItem *)treeRoot {
-  os_log_t  logger = LogManager.defaultLogManager.appLog;
+  os_log_t  logger = LogManager.defaultLogManager.mainLog;
 
   minTime = 0;
   maxTime = 0;

@@ -1092,7 +1092,7 @@ CGFloat ramp(CGFloat x, CGFloat minX, CGFloat maxX) {
 }
 
 - (void) visibleTreeChanged:(NSNotification *)notification {
-  os_log_debug(LogManager.defaultLogManager.appLog, "visibleTreeChanged");
+  os_log_debug(LogManager.defaultLogManager.mainLog, "visibleTreeChanged");
   [self updatePathEndRect: NO];
 
   [self forceRedraw];

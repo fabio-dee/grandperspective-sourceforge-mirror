@@ -85,7 +85,7 @@ NSColorList* createGrandPerspectivePalette(void) {
 
     if (instance.isEmpty) {
       // Should not happen, but on old versions of OS X reading can fail (see Bug #81)
-      os_log(LogManager.defaultLogManager.appLog,
+      os_log(LogManager.defaultLogManager.mainLog,
              "Failed to load any palette. Adding fallback palette");
       [instance addColorList: createFallbackPalette() key: fallbackColorListKey];
     }

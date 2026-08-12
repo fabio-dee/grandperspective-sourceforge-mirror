@@ -32,7 +32,7 @@
 }
 
 - (void) dealloc {
-  os_log_info(LogManager.defaultLogManager.appLog,
+  os_log_info(LogManager.defaultLogManager.mainLog,
               "ModalityTerminator -dealloc");
 
   [super dealloc];

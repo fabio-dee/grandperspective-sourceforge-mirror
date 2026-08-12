@@ -243,7 +243,7 @@ NSMutableDictionary  *createToolbarItemLookup = nil;
   SelectorObject  *selObj = createToolbarItemLookup[itemIdentifier];
   if (selObj == nil) {
     // May happen when user preferences refers to old/outdated toolbar items
-    os_log(LogManager.defaultLogManager.appLog,
+    os_log(LogManager.defaultLogManager.mainLog,
            "Unrecognized toolbar item: %@", itemIdentifier);
     return nil;
   }

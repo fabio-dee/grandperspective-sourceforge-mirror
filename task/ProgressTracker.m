@@ -21,7 +21,7 @@ NSString  *EstimatedProgressKey = @"estimatedProgress";
     NSUserDefaults  *userDefaults = NSUserDefaults.standardUserDefaults;
     stableTimeInterval = [userDefaults floatForKey: ProgressPanelStableTimeKey];
     if (stableTimeInterval <= 0) {
-      os_log(LogManager.defaultLogManager.appLog,
+      os_log(LogManager.defaultLogManager.mainLog,
              "Invalid value for stableTimeInterval");
       stableTimeInterval = 1;
     }

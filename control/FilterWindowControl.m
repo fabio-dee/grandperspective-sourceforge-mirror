@@ -470,7 +470,7 @@ NSString  *MatchColumn = @"match";
       [filterTests addObject: newFilterTest];
     }
     else {
-      os_log(LogManager.defaultLogManager.appLog,
+      os_log(LogManager.defaultLogManager.mainLog,
              "Test \"%@\" does not exist anymore in repository.", name);
 
       // Simply omit it.

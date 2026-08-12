@@ -59,7 +59,7 @@ NSString*  checkFdaPermissionsPath = @"~/Library/Safari";
 
     forceReloadOnShow = NO;
 
-    logger = LogManager.defaultLogManager.appLog;
+    logger = LogManager.defaultLogManager.mainLog;
   }
   return self;
 }

@@ -46,7 +46,7 @@
     return [SelectiveItemTest fileItemTestFromDictionary: dict];
   }
   
-  os_log(LogManager.defaultLogManager.appLog,
+  os_log(LogManager.defaultLogManager.mainLog,
          "Unrecognized file item test class \"%@\".",
          classString);
 

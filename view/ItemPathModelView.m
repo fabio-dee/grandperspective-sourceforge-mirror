@@ -74,7 +74,7 @@ static const unsigned STICK_TO_ENDPOINT = 0xFFFF;
     keyboardNavigationDelta = [NSUserDefaults.standardUserDefaults
                                floatForKey: KeyboardNavigationDeltaKey];
     if (keyboardNavigationDelta <= 0) {
-      os_log(LogManager.defaultLogManager.appLog,
+      os_log(LogManager.defaultLogManager.mainLog,
              "Invalid value for keyboardNavigationDelta.");
       keyboardNavigationDelta = 5;
     }
@@ -220,7 +220,7 @@ static const unsigned STICK_TO_ENDPOINT = 0xFFFF;
 
       keyboardNavigationPos = pos;
     } else {
-      os_log(LogManager.defaultLogManager.appLog,
+      os_log(LogManager.defaultLogManager.mainLog,
              "Selected item did not change when navigating via keyboard");
     }
   }

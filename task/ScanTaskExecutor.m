@@ -52,7 +52,7 @@
   TreeContext*  scanTree = [treeBuilder buildTreeForPath: myInput.path];
   ScanTaskOutput  *scanResult = nil;
 
-  os_log_t  logger = LogManager.defaultLogManager.appLog;
+  os_log_t  logger = LogManager.defaultLogManager.mainLog;
   if (scanTree != nil) {
     os_log(logger, "Done scanning: %d folders scanned (%d skipped) in %.2fs.",
             [self.progressInfo[NumFoldersProcessedKey] intValue],

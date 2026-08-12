@@ -353,7 +353,7 @@ static dispatch_once_t  singletonOnceToken;
 
     showWelcomeWindow = YES; // Default
 
-    logger = LogManager.defaultLogManager.appLog;
+    logger = LogManager.defaultLogManager.mainLog;
 
     singletonInstance = self;
   });

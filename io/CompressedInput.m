@@ -35,7 +35,7 @@ const NSUInteger DECOMPRESSED_BUFFER_SIZE = 4096 * 32;
     compressedDataBuffer = malloc(COMPRESSED_BUFFER_SIZE);
     decompressedDataBuffer = malloc(DECOMPRESSED_BUFFER_SIZE);
 
-    logger = LogManager.defaultLogManager.appLog;
+    logger = LogManager.defaultLogManager.mainLog;
   }
 
   return self;

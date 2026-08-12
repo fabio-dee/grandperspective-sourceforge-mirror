@@ -73,7 +73,7 @@ const NSUInteger TEXT_OUTPUT_BUFFER_SIZE = 4096 * 16;
     NSUInteger  numWritten = fwrite(dataBuffer, 1, dataBufferPos, file);
 
     if (numWritten != dataBufferPos) {
-      os_log(LogManager.defaultLogManager.appLog,
+      os_log(LogManager.defaultLogManager.mainLog,
              "Failed to write text data: %lu bytes written out of %lu.",
              (unsigned long)numWritten, (unsigned long)dataBufferPos);
       return NO;

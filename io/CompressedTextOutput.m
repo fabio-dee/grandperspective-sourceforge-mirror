@@ -44,7 +44,7 @@
 
     result = deflate(&outStream, flush);
     if (result == Z_STREAM_ERROR || result == Z_BUF_ERROR) {
-      os_log(LogManager.defaultLogManager.appLog,
+      os_log(LogManager.defaultLogManager.mainLog,
              "Error invoking deflate: %d", result);
       return NO;
     }
@@ -54,7 +54,7 @@
     if (numProduced > 0) {
       NSUInteger  numWritten = fwrite(compressedDataBuffer, 1, numProduced, file);
       if (numWritten != numProduced) {
-        os_log(LogManager.defaultLogManager.appLog,
+        os_log(LogManager.defaultLogManager.mainLog,
                "Failed to write compressed text data: %lu bytes written out of %lu.",
                (unsigned long)numWritten, (unsigned long)numProduced);
         return NO;

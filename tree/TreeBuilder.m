@@ -208,7 +208,8 @@ CFAbsoluteTime convertTimespec(struct timespec ts) {
     
     [self setFileSizeMeasure: LogicalFileSizeName];
     
-    logger = LogManager.defaultLogManager.appLog;
+    logger = LogManager.defaultLogManager.mainLog;
+    trustedLogger = LogManager.defaultLogManager.trustedLog;
 
     NSUserDefaults *args = NSUserDefaults.standardUserDefaults;
     NSString  *behavior = [args stringForKey: PackageCheckBehaviorKey];
@@ -622,8 +623,10 @@ CFAbsoluteTime convertTimespec(struct timespec ts) {
   
   [treeGuide descendIntoDirectory: dirItem];
   [progressTracker processingFolder: dirItem];
-  
-  os_log_debug(logger, "Scanning %s", entp->fts_path);
+
+  // Log to trusted logger as this message is not useful when anonymized.
+  // This logger needs to be explicitly enabled. It is disabled by default.
+  os_log_debug(trustedLogger, "Scanning %{public}s", entp->fts_path);
 
   if (dirStackTopIndex < NUM_SCAN_PROGRESS_ESTIMATE_LEVELS) {
     [progressTracker setNumSubFolders: [self determineNumSubFolders]];

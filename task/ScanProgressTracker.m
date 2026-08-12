@@ -99,7 +99,7 @@
     } else {
       // This can happen if a new folder is created while the scan is in progress. Ignore it to
       // avoid overestimation of progress.
-      os_log(LogManager.defaultLogManager.appLog,
+      os_log(LogManager.defaultLogManager.mainLog,
              "More sub-folders processed than expected at %@",
              dirItem.parentDirectory.path);
     }

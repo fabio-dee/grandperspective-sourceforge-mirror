@@ -147,7 +147,7 @@ static BOOL appHasDeletePermission;
   }
 
   // Convert old deprecated settings
-  os_log_t  logger = LogManager.defaultLogManager.appLog;
+  os_log_t  logger = LogManager.defaultLogManager.mainLog;
   NSString  *oldStringSetting = [userDefaults stringForKey: DefaultFilterKey_Deprecated];
   if (oldStringSetting != nil) {
     os_log_info(logger, "Read default mask from %@",
@@ -316,7 +316,7 @@ static BOOL appHasDeletePermission;
   SecCodeRef  me;
   CFDictionaryRef  dynamicInfo;
 
-  os_log_t  logger = LogManager.defaultLogManager.appLog;
+  os_log_t  logger = LogManager.defaultLogManager.mainLog;
   os_log_info(logger, "Trying to establish application entitlements");
 
   // On Mojave this invocation results in the following log messages:

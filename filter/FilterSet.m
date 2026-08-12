@@ -197,7 +197,7 @@
       [filterTests addObject: filterTest];
     } else {
       // Apparently the filter or its item test(s) do not exist anymore.
-      os_log(LogManager.defaultLogManager.appLog,
+      os_log(LogManager.defaultLogManager.mainLog,
              "Could not instantiate test for filter %@",
              namedFilter.name);
     }

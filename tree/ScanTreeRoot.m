@@ -5,7 +5,7 @@
 @implementation ScanTreeRoot
 
 - (void) dealloc {
-  os_log_info(LogManager.defaultLogManager.appLog, "ScanTreeRoot-dealloc");
+  os_log_info(LogManager.defaultLogManager.mainLog, "ScanTreeRoot-dealloc");
 
   [super dealloc];
 }

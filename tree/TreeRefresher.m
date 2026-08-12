@@ -82,7 +82,7 @@
 - (void) refreshItemTree:(DirectoryItem *)oldDir
                     into:(DirectoryItem *)newDir {
   NSAssert([oldDir.label isEqualToString: newDir.label] , @"Label mismatch");
-  os_log_debug(LogManager.defaultLogManager.appLog,
+  os_log_debug(LogManager.defaultLogManager.mainLog,
                "refreshItemTree %@", newDir.path);
 
   if (abort) return;
@@ -102,12 +102,12 @@
                                  into:(DirectoryItem *)newDir {
   NSString  *path = newDir.systemPath;
 
-  os_log_info(LogManager.defaultLogManager.appLog,
+  os_log_info(LogManager.defaultLogManager.mainLog,
               "Full rescan of %@", path);
   [self scanTreeForDirectory: newDir atPath: path];
 
   if (!hardLinkMismatch && ![self deepHardlinkCompare: oldDir to: newDir]) {
-    os_log(LogManager.defaultLogManager.appLog,
+    os_log(LogManager.defaultLogManager.mainLog,
            "Deep hardlink mismatch at %@", path);
     hardLinkMismatch = true;
   }
@@ -118,7 +118,7 @@
                                     into:(DirectoryItem *)newDir {
   NSString  *path = newDir.systemPath;
 
-  os_log_info(LogManager.defaultLogManager.appLog,
+  os_log_info(LogManager.defaultLogManager.mainLog,
               "Shallow rescan of %@", path);
 
   [treeGuide descendIntoDirectory: newDir];
@@ -177,7 +177,7 @@
   [progressTracker processedFolder: newDir];
 
   if (!hardLinkMismatch && ![self shallowHardlinkCompare: oldDir to: newDir]) {
-    os_log(LogManager.defaultLogManager.appLog,
+    os_log(LogManager.defaultLogManager.mainLog,
            "Shallow hardlink mismatch at %@", path);
     hardLinkMismatch = true;
   }

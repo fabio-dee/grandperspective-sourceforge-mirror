@@ -175,7 +175,7 @@ typedef NS_ENUM(NSInteger, LockConditionEnum) {
       miscUsedSize -= self.freeSpace;
     }
     else {
-      os_log(LogManager.defaultLogManager.appLog,
+      os_log(LogManager.defaultLogManager.mainLog,
              "Scanned tree size plus free space is larger than volume size.");
       miscUsedSizeAnomaly = TRUE;
 
@@ -185,7 +185,7 @@ typedef NS_ENUM(NSInteger, LockConditionEnum) {
     }
   } 
   else {
-    os_log(LogManager.defaultLogManager.appLog,
+    os_log(LogManager.defaultLogManager.mainLog,
            "Scanned tree size is larger than volume size.");
     miscUsedSizeAnomaly = TRUE;
 
@@ -196,7 +196,7 @@ typedef NS_ENUM(NSInteger, LockConditionEnum) {
   }
 
   if (miscUsedSizeAnomaly) {
-    os_log(LogManager.defaultLogManager.appLog,
+    os_log(LogManager.defaultLogManager.mainLog,
            "Volume size=%qu (%@), Free space=%qu (%@), Scanned size=%qu (%@)",
            self.volumeSize, [FileItem stringForFileItemSize: self.volumeSize],
            self.freeSpace, [FileItem stringForFileItemSize: self.freeSpace],

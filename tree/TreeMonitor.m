@@ -36,12 +36,12 @@ void eventCallback(ConstFSEventStreamRef streamRef,
     // printf("Change %llu in %s, flags %lu\n", eventIds[i], paths[i], eventFlag);
 
     if (eventFlag & kFSEventStreamEventFlagEventIdsWrapped) {
-      os_log(LogManager.defaultLogManager.appLog,
+      os_log(LogManager.defaultLogManager.mainLog,
              "Warning: FSEvent IDs wrapped");
     }
     if ((eventFlag & kFSEventStreamEventFlagKernelDropped)
         || (eventFlag & kFSEventStreamEventFlagUserDropped)) {
-      os_log(LogManager.defaultLogManager.appLog,
+      os_log(LogManager.defaultLogManager.mainLog,
              "Warning: Some FSEvents were dropped");
     }
 
@@ -88,7 +88,7 @@ void eventCallback(ConstFSEventStreamRef streamRef,
 
     rootPathComponents = [[[NSURL fileURLWithPath: path] pathComponents] retain];
 
-    logger = LogManager.defaultLogManager.appLog;
+    logger = LogManager.defaultLogManager.mainLog;
   }
 
   return self;

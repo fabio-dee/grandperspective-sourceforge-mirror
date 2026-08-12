@@ -139,7 +139,7 @@ const item_size_t  minUpperBound = 1024;
   MaxItemSizeFinder  *finder = [[[MaxItemSizeFinder alloc] initWithSettings: settings] autorelease];
   item_size_t maxItemSize = [finder findMaximumItemSize: treeRoot];
 
-  os_log_info(LogManager.defaultLogManager.appLog,
+  os_log_info(LogManager.defaultLogManager.mainLog,
               "maxItemSize = %lld", maxItemSize);
 
   // Round down towards clean boundary value
@@ -150,7 +150,7 @@ const item_size_t  minUpperBound = 1024;
 
   maxItemSizeLimit = cleanLimit / 2;
 
-  os_log_info(LogManager.defaultLogManager.appLog,
+  os_log_info(LogManager.defaultLogManager.mainLog,
               "maxItemSizeLimit = %lld", maxItemSizeLimit);
 }
 

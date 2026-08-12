@@ -64,6 +64,7 @@ typedef NS_ENUM(NSInteger, FileSizeEnum) {
   BOOL  fastPackageCheckEnabled;
 
   os_log_t  logger;
+  os_log_t  trustedLogger;
 }
 
 + (NSArray *)fileSizeMeasureNames;

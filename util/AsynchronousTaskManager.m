@@ -207,7 +207,7 @@ enum {
     [pool release];
   } while (workLock.condition != BACKGROUND_THREAD_SHUTDOWN);
 
-  os_log_info(LogManager.defaultLogManager.appLog, "Thread terminated.");
+  os_log_info(LogManager.defaultLogManager.mainLog, "Thread terminated.");
 }
 
 @end // @implementation AsynchronousTaskManager (PrivateMethods)

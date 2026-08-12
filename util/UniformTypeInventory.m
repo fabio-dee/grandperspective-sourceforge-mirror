@@ -183,7 +183,7 @@ NSString  *UnknownTypeUTI = @"unknown";
 
 
 - (void) dumpTypesToLog {
-  os_log_t logger = LogManager.defaultLogManager.appLog;
+  os_log_t logger = LogManager.defaultLogManager.mainLog;
 
   for (UniformType *type in [self uniformTypeEnumerator]) {
     os_log_debug(logger, "Type: %@", [type uniformTypeIdentifier]);
