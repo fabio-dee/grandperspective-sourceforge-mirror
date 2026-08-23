@@ -275,7 +275,7 @@ static const NSInteger POPUP_GB    = 3;
   
   if ([test isKindOfClass:[CompoundAndItemTest class]]) {
     // It is a compound test. Iterate over all subtests.
-    for (FileItemTest *subTest in [((CompoundAndItemTest *)test).subItemTests objectEnumerator]) {
+    for (FileItemTest *subTest in ((CompoundAndItemTest *)test).subItemTests) {
       [self updateStateBasedOnTest: subTest];
     } 
   }

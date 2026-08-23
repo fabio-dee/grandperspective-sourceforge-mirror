@@ -53,7 +53,7 @@ NSString  *UniformTypesRankingKey = @"uniformTypesRanking";
   
   NSArray  *rankedUTIs = [NSUserDefaults.standardUserDefaults arrayForKey: UniformTypesRankingKey];
 
-  for (NSString *uti in [rankedUTIs objectEnumerator]) {
+  for (NSString *uti in rankedUTIs) {
     UTType  *type = [typeInventory uniformTypeForIdentifier: uti];
     
     if (!type.isUnknown || [uti isEqualToString: UTType.unknownType.identifier]) {

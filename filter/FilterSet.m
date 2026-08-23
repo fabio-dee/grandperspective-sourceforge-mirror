@@ -149,7 +149,7 @@
 - (NSString *)description {
   NSMutableString  *descr = [NSMutableString stringWithCapacity: 32];
   
-  for (NamedFilter *namedFilter in [self.filters objectEnumerator]) {
+  for (NamedFilter *namedFilter in self.filters) {
     if (descr.length > 0) {
       [descr appendString: @", "];
     }
@@ -173,7 +173,7 @@
   // Create the file item test for the set of filters.
   NSMutableArray  *filterTests = [NSMutableArray arrayWithCapacity: namedFilters.count];
 
-  for (NamedFilter *namedFilter in [namedFilters objectEnumerator]) {
+  for (NamedFilter *namedFilter in namedFilters) {
     Filter  *filter;
 
     if (filterRepository == nil) {

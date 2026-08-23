@@ -74,7 +74,7 @@
                       toPopUp:(NSPopUpButton *)popUp
                        select:(NSString *)selectName
                         table:(NSString *)tableName {
-  for (NSString *name in [names objectEnumerator]) {
+  for (NSString *name in names) {
     [self addLocalisedNameFor: name
                       toPopUp: popUp
                        select: [name isEqualToString: selectName]
@@ -114,7 +114,7 @@
                               table:(NSString *)tableName {
   int  index = (int)popUp.numberOfItems;
 
-  for (NSString *name in [names objectEnumerator]) {
+  for (NSString *name in names) {
     NSString  *localizedName = [NSBundle.mainBundle localizedStringForKey: name
                                                                     value: nil
                                                                     table: tableName];

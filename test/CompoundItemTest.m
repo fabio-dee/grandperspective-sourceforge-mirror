@@ -43,7 +43,7 @@
     NSArray  *subTestDicts = dict[@"subTests"];
     NSMutableArray  *tmpSubTests = [NSMutableArray arrayWithCapacity: subTestDicts.count];
 
-    for (NSDictionary *subTestDict in [subTestDicts objectEnumerator]) {
+    for (NSDictionary *subTestDict in subTestDicts) {
       [tmpSubTests addObject: [FileItemTest fileItemTestFromDictionary: subTestDict]];
     }
     
@@ -65,7 +65,7 @@
   [super addPropertiesToDictionary: dict];
   
   NSMutableArray  *subTestsDicts = [NSMutableArray arrayWithCapacity: self.subItemTests.count];
-  for (FileItemTest *subTest in [self.subItemTests objectEnumerator]) {
+  for (FileItemTest *subTest in self.subItemTests) {
     [subTestsDicts addObject: [subTest dictionaryForObject]];
   }
 

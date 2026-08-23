@@ -340,7 +340,7 @@ static dispatch_once_t  singletonOnceToken;
              object: nil];
 
     NSArray*  viewProducingTaskManagers = @[scanTaskManager, filterTaskManager, xmlReadTaskManager];
-    for (NSObject*  taskManager in [viewProducingTaskManagers objectEnumerator]) {
+    for (NSObject*  taskManager in viewProducingTaskManagers) {
       [nc addObserver: self
              selector: @selector(viewProducingTaskScheduled:)
                  name: TaskScheduledEvent
@@ -1217,7 +1217,7 @@ static dispatch_once_t  singletonOnceToken;
 
   // Quote the names
   NSMutableArray  *quotedNames = [NSMutableArray arrayWithCapacity: unboundNames.count];
-  for (NSString *name in [unboundNames objectEnumerator]) {
+  for (NSString *name in unboundNames) {
     [quotedNames addObject: [NSString stringWithFormat: @"\"%@\"", name]];
   }
     
@@ -1542,7 +1542,7 @@ static dispatch_once_t  singletonOnceToken;
   
   NSString  *subjectScanTreePath = subjectPath.scanTree.path;
   
-  for (FileItem *targetItem in [targetPath.fileItemPath objectEnumerator]) {
+  for (FileItem *targetItem in targetPath.fileItemPath) {
     if (insideSubjectScanTree) {
       // Only try to extend the visible path once we are inside the subject's scan tree, as this is
       // where the path starts. (Also, we need to be in the target's scan tree as well, but this is

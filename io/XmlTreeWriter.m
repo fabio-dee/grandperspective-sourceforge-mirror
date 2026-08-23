@@ -253,7 +253,7 @@ NSString *escapedXML(NSString *s, CharacterOptions escapeCharMask) {
                        PackagesAsFilesAttr,
                        filterSet.packagesAsFiles ? TrueValue : FalseValue]];
 
-  for (NamedFilter *namedFilter in [filterSet.filters objectEnumerator]) {
+  for (NamedFilter *namedFilter in filterSet.filters) {
     [self appendFilterElement: namedFilter];
   }
 
@@ -272,7 +272,7 @@ NSString *escapedXML(NSString *s, CharacterOptions escapeCharMask) {
                          NameAttr, escapedXML(namedFilter.name, ATTRIBUTE_ESCAPE_CHARS)];
   [self appendString: openElem];
 
-  for (FilterTestRef *filterTest in [filter.filterTests objectEnumerator]) {
+  for (FilterTestRef *filterTest in filter.filterTests) {
     [self appendFilterTestElement: filterTest];
   }
 

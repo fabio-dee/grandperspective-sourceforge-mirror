@@ -43,7 +43,7 @@
 @implementation BasicFileItemTestVisitor (PrivateMethods)
 
 - (void) visitCompoundItemTest:(CompoundItemTest *)test {
-  for (FileItemTest *subItemTest in [test.subItemTests objectEnumerator]) {
+  for (FileItemTest *subItemTest in test.subItemTests) {
     [subItemTest acceptFileItemTestVisitor: self];
   }
 }

@@ -325,7 +325,7 @@ NSString  *InternalTableDragType = @"net.sourceforge.grandperspectiv.GrandPerspe
 - (void) commitChangedTypeList {
   NSMutableArray  *newRanking = [NSMutableArray arrayWithCapacity: typeCells.count];
     
-  for (TypeCell *typeCell in [typeCells objectEnumerator]) {
+  for (TypeCell *typeCell in typeCells) {
     [newRanking addObject: typeCell.uniformType];
   }
   

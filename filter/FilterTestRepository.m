@@ -117,7 +117,7 @@ NSString  *AppTestsKey = @"GPDefaultFilterTests";
 
 - (void) addStoredTestsFromArray:(NSArray *)testDicts
                      toLiveTests:(NSMutableDictionary *)testsByNameVal {
-  for (NSDictionary *fileItemTestDict in [testDicts objectEnumerator]) {
+  for (NSDictionary *fileItemTestDict in testDicts) {
     FileItemTest  *fileItemTest = [FileItemTest fileItemTestFromDictionary: fileItemTestDict];
     NSString  *name = fileItemTestDict[@"name"];
 

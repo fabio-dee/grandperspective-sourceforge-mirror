@@ -73,7 +73,7 @@ NSColorList* createGrandPerspectivePalette(void) {
     
     NSBundle  *bundle = NSBundle.mainBundle;
     NSArray  *colorListPaths = [bundle pathsForResourcesOfType: @".clr" inDirectory: @"Palettes"];
-    for (NSString *path in [colorListPaths objectEnumerator]) {
+    for (NSString *path in colorListPaths) {
       NSString  *name = path.lastPathComponent.stringByDeletingPathExtension;
 
       NSColorList  *colorList = [[[NSColorList alloc] initWithName: name
