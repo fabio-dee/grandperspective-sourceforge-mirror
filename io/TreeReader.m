@@ -1503,7 +1503,7 @@ didStartElement:(NSString *)childElement
     item_size_t  size = [self getItemSizeAttributeValue: SizeAttr from: attribs];
     
     UniformTypeInventory  *typeInventory = UniformTypeInventory.defaultUniformTypeInventory;
-    UniformType  *fileType = [typeInventory uniformTypeForExtension: name.pathExtension];
+    UTType  *fileType = [typeInventory uniformTypeForExtension: name.pathExtension];
 
     CFAbsoluteTime  creationTime = [self getTimeAttributeValue: CreatedAttr from: attribs];
     CFAbsoluteTime  modificationTime = [self getTimeAttributeValue: ModifiedAttr from: attribs];

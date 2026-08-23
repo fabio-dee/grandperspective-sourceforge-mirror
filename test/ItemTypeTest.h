@@ -15,7 +15,7 @@
                                strict:(BOOL)strict NS_DESIGNATED_INITIALIZER;
 - (instancetype) initWithPropertiesFromDictionary:(NSDictionary *)dict NS_DESIGNATED_INITIALIZER;
 
-// Array of UniformTypes
+// Array of UTTypes
 @property (nonatomic, readonly, copy) NSArray *matchTargets;
 
 // Controls if the matching is strict, or if conformance is tested.

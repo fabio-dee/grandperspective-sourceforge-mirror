@@ -1187,7 +1187,7 @@ static const NSInteger POPUP_GB    = 3;
     UniformTypeInventory  *typeInventory = UniformTypeInventory.defaultUniformTypeInventory;
 
     NSMutableArray  *unsortedTypes = [NSMutableArray arrayWithCapacity: typeInventory.count];
-    for (UniformType *type in [typeInventory uniformTypeEnumerator]) {
+    for (UTType *type in [typeInventory uniformTypeEnumerator]) {
       [unsortedTypes addObject: type.uniformTypeIdentifier];
     }
     
@@ -1216,7 +1216,7 @@ static const NSInteger POPUP_GB    = 3;
 
   UniformTypeInventory  *typeInventory = UniformTypeInventory.defaultUniformTypeInventory;
 
-  UniformType  *type = [typeInventory uniformTypeForIdentifier: popUp.titleOfSelectedItem];
+  UTType  *type = [typeInventory uniformTypeForIdentifier: popUp.titleOfSelectedItem];
   // Restore popup state
   [popUp selectItemAtIndex: POPUP_ADD_TYPE];
 

@@ -72,7 +72,7 @@ static const int AUTORELEASE_PERIOD = 1024;
 
 @interface TreeBuilder (PrivateMethods)
 
-+ (item_size_t) getLogicalFileSize:(FTSENT *)entp withType:(UniformType *)fileType;
++ (item_size_t) getLogicalFileSize:(FTSENT *)entp withType:(UTType *)fileType;
 
 - (NSURL *)getVolumeRoot:(NSURL *)url;
 
@@ -429,8 +429,8 @@ CFAbsoluteTime convertTimespec(struct timespec ts) {
 
 @implementation TreeBuilder (PrivateMethods)
 
-+ (item_size_t) getLogicalFileSize:(FTSENT *)entp withType:(UniformType *)fileType {
-  if ([fileType.uniformTypeIdentifier isEqualToString: @"com.apple.icloud-file-fault"]) {
++ (item_size_t) getLogicalFileSize:(FTSENT *)entp withType:(UTType *)fileType {
+  if ([fileType.identifier isEqualToString: @"com.apple.icloud-file-fault"]) {
     NSURL  *url = [NSURL fileURLWithFileSystemRepresentation: entp->fts_path
                                                  isDirectory: S_ISDIR(entp->fts_statp->st_mode)
                                                relativeToURL: NULL];
@@ -764,8 +764,7 @@ CFAbsoluteTime convertTimespec(struct timespec ts) {
     item_size_t  physicalFileSize = statBlock->st_blocks * 512;
     item_size_t  fileSize;
 
-    UniformType  *fileType =
-      [typeInventory uniformTypeForExtension: lastPathComponent.pathExtension];
+    UTType  *fileType = [typeInventory uniformTypeForExtension: lastPathComponent.pathExtension];
 
     switch (fileSizeMeasure) {
       case LogicalFileSize: {

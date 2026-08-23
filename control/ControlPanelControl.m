@@ -588,7 +588,7 @@ NSString  *DisplaySettingsChangedEvent = @"displaySettingsChanged";
 
   // Update the file type fields in the Focus panel
   if (selectedItem != nil && selectedItem.isPhysical && !selectedItem.isDirectory) {
-    UniformType  *type = ((PlainFileItem *)selectedItem).uniformType;
+    UTType  *type = ((PlainFileItem *)selectedItem).uniformType;
 
     selectedItemTypeIdentifierField.stringValue = type.uniformTypeIdentifier;
     selectedItemTypeIdentifierField.toolTip =

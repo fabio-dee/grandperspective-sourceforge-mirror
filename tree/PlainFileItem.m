@@ -26,7 +26,7 @@
 - (instancetype) initWithLabel:(NSString *)label
                         parent:(DirectoryItem *)parent
                           size:(item_size_t)size
-                          type:(UniformType *)type
+                          type:(UTType *)type
                          flags:(FileItemOptions)flags
                   creationTime:(CFAbsoluteTime)creationTime
               modificationTime:(CFAbsoluteTime)modificationTime

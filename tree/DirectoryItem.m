@@ -150,10 +150,9 @@ static NSLock  *rescanFlagsMutex;
 }
 
 - (PlainFileItem *)directoryAsPlainFile {
-  UniformType  *fileType = [UniformTypeInventory.defaultUniformTypeInventory
-                            uniformTypeForExtension: self.systemPathComponent.pathExtension];
+  UTType  *fileType = [UniformTypeInventory.defaultUniformTypeInventory
+                       uniformTypeForExtension: self.systemPathComponent.pathExtension];
 
-  // Note: This item is short-lived, so it is allocated in the default zone.
   return [[[PlainFileItem alloc] initWithLabel: self.label
                                         parent: self.parentDirectory
                                           size: self.itemSize
@@ -166,8 +165,8 @@ static NSLock  *rescanFlagsMutex;
 }
 
 - (PlainFileItem *)groupedFiles {
-  UniformType  *fileType = [UniformTypeInventory.defaultUniformTypeInventory
-                            uniformTypeForExtension: self.systemPathComponent.pathExtension];
+  UTType  *fileType = [UniformTypeInventory.defaultUniformTypeInventory
+                       uniformTypeForExtension: self.systemPathComponent.pathExtension];
 
   return [[[PlainFileItem alloc] initWithLabel: self.label
                                         parent: self

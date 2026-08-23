@@ -1,8 +1,5 @@
 #import "UniformType.h"
 
-@import UniformTypeIdentifiers;
-
-
 // The UTI that is used when the type is unknown (i.e. when there is no proper UTI associated with
 // a given file or extension).
 //
@@ -10,57 +7,40 @@
 NSString  *UnknownTypeUTI = @"unknown";
 
 
-@implementation UniformType
+@implementation UTType (HelperMethods)
 
-+ (UniformType *)unknownType {
-  static UniformType*  unknownType;
++ (UTType *)unknownType {
+  static UTType*  unknownType;
   static dispatch_once_t  onceToken;
 
   dispatch_once(&onceToken, ^{
-    unknownType = [[UniformType alloc] initWithUTType: nil];
+    unknownType = [[UTType typeWithFilenameExtension: @"gp-unknown-filetype"] retain];
+//    NSLog(@"unknownType = %@", unknownType);
   });
 
   return unknownType;
 }
 
-- (instancetype) initWithUTType:(UTType *)typeVal {
-  if (self = [super init]) {
-    type = [typeVal retain];
-  }
-  
-  return self;
-}
-
-- (void) dealloc {
-  [type release];
-
-  [super dealloc];
-}
-
 - (BOOL) isUnknown {
-  return (self == UniformType.unknownType);
-}
-
-- (UTType *)utType {
-  return type;
-}
-
-- (NSString *)uniformTypeIdentifier {
-  return type ? type.identifier : UnknownTypeUTI;
+  return (self == UTType.unknownType);
 }
 
 - (NSString *)description {
-  return (type
-          ? type.localizedDescription
-          : NSLocalizedString(@"unknown file type", @"Description for 'unknown' UTI."));
+  return (self.isUnknown
+          ? NSLocalizedString(@"unknown file type", @"Description for 'unknown' UTI.")
+          : self.localizedDescription);
+}
+
+- (NSString *)uniformTypeIdentifier {
+  return (self.isUnknown ? UnknownTypeUTI : self.identifier);
 }
 
 - (NSSet *)parentUTTypes {
-  if (type == nil) {
+  if (self.isUnknown) {
     return [NSSet set];
   }
 
-  NSSet*  ancestors = type.supertypes;
+  NSSet*  ancestors = self.supertypes;
   NSMutableSet*  parents = [NSMutableSet setWithSet: ancestors];
 
   for (UTType* tp in ancestors) {

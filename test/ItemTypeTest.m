@@ -44,9 +44,9 @@
     NSMutableArray  *tmpMatches = [NSMutableArray arrayWithCapacity: utis.count];
 
     for (NSString* uti in utis) {
-      UniformType  *type = [typeInventory uniformTypeForIdentifier: uti];
-        
-      if (type != nil && !type.isUnknown) {
+      UTType  *type = [typeInventory uniformTypeForIdentifier: uti];
+
+      if (!type.isUnknown || [uti isEqualToString: UTType.unknownType.uniformTypeIdentifier]) {
         [tmpMatches addObject: type];
       }
     }
@@ -82,11 +82,11 @@
     return TestNotApplicable;
   }
   
-  UniformType  *type = ((PlainFileItem *)item).uniformType;
-  NSSet  *ancestorTypes = self.isStrict ? nil : type.utType.supertypes;
+  UTType  *type = ((PlainFileItem *)item).uniformType;
+  NSSet  *ancestorTypes = self.isStrict ? nil : type.supertypes;
 
-  for (UniformType *matchType in self.matchTargets) {
-    if (type == matchType || [ancestorTypes containsObject: matchType.utType]) {
+  for (UTType *matchType in self.matchTargets) {
+    if (type == matchType || [ancestorTypes containsObject: matchType]) {
       return TestPassed;
     }
   }
@@ -130,13 +130,10 @@
 @implementation ItemTypeTest (PrivateMethods)
 
 - (NSArray *)matchTargetsAsStrings {
-  NSUInteger  numMatchTargets = self.matchTargets.count;
-  NSMutableArray  *utis = [NSMutableArray arrayWithCapacity: numMatchTargets];
+  NSMutableArray  *utis = [NSMutableArray arrayWithCapacity: self.matchTargets.count];
 
-  NSUInteger  i = 0;
-  while (i < numMatchTargets) {
-    [utis addObject: ((UniformType *)self.matchTargets[i]).uniformTypeIdentifier];
-    i++;
+  for (UTType *type in self.matchTargets) {
+    [utis addObject: type.uniformTypeIdentifier];
   }
   
   return utis;

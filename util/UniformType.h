@@ -1,30 +1,23 @@
 #import <Cocoa/Cocoa.h>
 
+#import <UniformTypeIdentifiers/UTType.h>
 
-/* Very thin wrapper for "UTType". It is used to have a single type for all "unknown" types.
- *
- * Note: Instances are immutable (and therefore thread-safe).
+@interface UTType (HelperMethods)
+
+/* Creates a shared file type instance that should be used for all unknown file types
+ * (irrespective of their file extension).
  */
-@interface UniformType : NSObject {
-  // The wrapped type. It is nil when there is no type known.
-  UTType  *type;
-}
-
-+ (UniformType *)unknownType;
-
-// Overrides super's designated initialiser.
-- (instancetype) init NS_UNAVAILABLE;
-
-- (instancetype) initWithUTType:(UTType *)type NS_DESIGNATED_INITIALIZER;
++ (UTType *)unknownType;
 
 @property (nonatomic, readonly) BOOL isUnknown;
 
-@property (nonatomic, readonly, copy) UTType *utType;
-
+/* Thin wrapper around UTType.identifier. For the unknown type, it returns a fixed, human-readable
+ * identifier.
+ */
 @property (nonatomic, readonly, copy) NSString *uniformTypeIdentifier;
 
-@property (nonatomic, readonly, copy) NSString *description;
-
+/* Convenience method that constructs a set of all direct parents from the set of all ancestors.
+ */
 @property (nonatomic, readonly, copy) NSSet *parentUTTypes;
 
 @end

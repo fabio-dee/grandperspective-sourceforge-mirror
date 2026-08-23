@@ -28,7 +28,7 @@
 - (instancetype) initWithUniformTypeRanking:(UniformTypeRanking *)typeRanking
   NS_DESIGNATED_INITIALIZER;
 
-- (NSUInteger) findIndexForType:(UniformType *)uniformType;
+- (NSUInteger) findIndexForType:(UTType *)uniformType;
 
 @end
 
@@ -106,31 +106,18 @@
 }
 
 
-- (NSUInteger) findIndexForType:(UniformType *)targetType {
+- (NSUInteger) findIndexForType:(UTType *)targetType {
   __block NSUInteger retVal = NSIntegerMax;
 
-  if (targetType.isUnknown) {
-    [orderedTypes enumerateObjectsUsingBlock:^(UniformType *type, NSUInteger idx, BOOL *stop) {
-      if (type.isUnknown) {
-        retVal = idx;
-        *stop = YES;
-      }
-    }];
-  } else {
-    UTType *targetUTType = targetType.utType;
-    NSSet *ancestorUTTypes = targetUTType.supertypes;
+  NSSet *ancestorTypes = targetType.supertypes;
 
-    [orderedTypes enumerateObjectsUsingBlock:^(UniformType *type, NSUInteger idx, BOOL *stop) {
-      if (!type.isUnknown) {
-        UTType* utType = type.utType;
-        if (utType == targetUTType || [ancestorUTTypes containsObject: utType]) {
-          // Found the first type in the list that the file item conforms to.
-          retVal = idx;
-          *stop = YES;
-        }
-      }
-    }];
-  }
+  [orderedTypes enumerateObjectsUsingBlock:^(UTType *type, NSUInteger idx, BOOL *stop) {
+    if (type == targetType || [ancestorTypes containsObject: type]) {
+      // Found the first type in the list that the file item conforms to.
+      retVal = idx;
+      *stop = YES;
+    }
+  }];
 
   return retVal;
 }
@@ -139,15 +126,14 @@
 // Implementation of FileItemMapping protocol
 
 - (NSUInteger) hashForFileItem:(FileItem *)item atDepth:(NSUInteger)depth {
-  UniformType  *type = item.isDirectory ? nil : ((PlainFileItem *)item).uniformType;
-  
+  UTType  *type = item.isDirectory ? nil : ((PlainFileItem *)item).uniformType;
+
   if (type == nil) {
     // Unknown type
     return NSIntegerMax;
   }
-  
-  NSString  *uti = type.uniformTypeIdentifier;
-  NSNumber  *hash = hashForUTICache[uti];
+
+  NSNumber  *hash = hashForUTICache[type.identifier];
   if (hash != nil) {
     return hash.intValue;
   }
@@ -155,7 +141,7 @@
   NSUInteger  utiIndex = [self findIndexForType: type];
 
   // Add it to the cache for next time.
-  hashForUTICache[uti] = @(utiIndex);
+  hashForUTICache[type.identifier] = @(utiIndex);
   return utiIndex;
 }
 
@@ -177,11 +163,10 @@
                              @"Misc. description for File type mapping scheme.");
   }
   
-  UniformType  *type = orderedTypes[colorIndex];
-  
+  UTType  *type = orderedTypes[colorIndex];
   NSString  *descr = type.description;
    
-  return (descr != nil) ? descr : type.uniformTypeIdentifier;
+  return (descr != nil) ? descr : type.identifier;
 }
 
 @end
