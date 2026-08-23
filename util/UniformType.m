@@ -15,7 +15,6 @@ NSString  *UnknownTypeUTI = @"unknown";
 
   dispatch_once(&onceToken, ^{
     unknownType = [[UTType typeWithFilenameExtension: @"gp-unknown-filetype"] retain];
-//    NSLog(@"unknownType = %@", unknownType);
   });
 
   return unknownType;

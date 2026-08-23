@@ -80,7 +80,6 @@ NSString  *UniformTypeKey = @"uniformType";
   }
 
   typeForExtension[ext] = type;
-  NSLog(@"%@ => %@", ext, type.identifier);
 
   return type;
 }
