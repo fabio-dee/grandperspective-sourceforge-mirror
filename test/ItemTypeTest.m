@@ -38,21 +38,17 @@
 - (instancetype) initWithPropertiesFromDictionary:(NSDictionary *)dict {
   if (self = [super initWithPropertiesFromDictionary: dict]) {
     NSArray  *utis = dict[@"matches"];
-    NSUInteger  numMatchTargets = utis.count;
 
     UniformTypeInventory  *typeInventory = UniformTypeInventory.defaultUniformTypeInventory;
 
-    NSMutableArray  *tmpMatches = [NSMutableArray arrayWithCapacity: numMatchTargets];
-    
-    NSUInteger  i = 0;
-    while (i < numMatchTargets) {
-      UniformType  *type = [typeInventory uniformTypeForIdentifier: utis[i]];
+    NSMutableArray  *tmpMatches = [NSMutableArray arrayWithCapacity: utis.count];
+
+    for (NSString* uti in utis) {
+      UniformType  *type = [typeInventory uniformTypeForIdentifier: uti];
         
-      if (type != nil) {
+      if (type != nil && !type.isUnknown) {
         [tmpMatches addObject: type];
       }
-      
-      i++;
     }
     
     // Make the array immutable
