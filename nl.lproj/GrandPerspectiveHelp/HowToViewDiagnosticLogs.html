@@ -1,0 +1,46 @@
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<title>Het activeren en bekijken van log berichten</title>
+<link href="HelpStyle.css" rel="stylesheet" media="all">
+<meta name="description" content="Het activeren en bekijken van log berichten.">
+<meta name="keywords" content="hoe, log berichten, bekijken, diagnose, logs bekijken, logs activeren">
+</head>
+<body>
+
+<div id="caticon">
+<img src="images/GrandPerspectiveIcon32.png" alt="GrandPerspective icon" height="32" width="32">
+</div>
+<div id="pagetitle">
+<h1>Het activeren en bekijken van log berichten</h1>
+</div>
+
+<p>
+Mocht het gebeuren dat GrandPerspective <a href="HowToHandleCrashesWhileScanning.html">crasht</a> of <a href="HowToHandleHangsWhileScanning.html">hangt</a> tijdens het inlezen, dan is het nuttig voor het analyzeren van het probleem om gedetailleerde logs te bekijken.
+Dit kan alsvolgt:
+</p>
+
+<ol>
+<li>Bekijk log berichten die worden gegenereerd door GrandPerspective.
+In een Terminal venster, gebruik het <tt>log</tt> commando om GrandPerspective logs te observeren:<br><br>
+
+<tt>log stream --predicate '(subsystem="net.sf.grandperspectiv")' --level=debug --style=compact</tt><br><br>
+</li>
+
+<li>Start vervolgens GrandPerspective met volledige logging geactiveerd.
+Doe dit door in een ander Terminal venster de applicatie te starten via het <tt>open</tt> commando met <tt>-logAll YES</tt> als parameter.<br>
+Bijvoorbeeld, wanneer de applicatie in uw Applicatie folder geinstalleerd is, type dan:<br><br>
+<tt>open /Applications/GrandPerspective.app --args -logAll YES</tt><br><br>
+
+Pas op: Wanneer de "logAll" instelling is geactiveerd, dan wordt mogelijk prive informatie (de namen van mappen die ingelezen worden) gelogd.
+Aangezien deze berichten als "debug" zijn geclassificeerd, worden ze niet opgeslagen, wat privacy risico's minimaliseert.
+Desondanks is het sterk aan te raden, voor bescherming van uw privacy en verhogen van inlees snelheid, om volledige logging enkel te activeren wanneer nodig.
+</li>
+
+<li>Probeer het probleem waar u tegen aan liep te reproduceren.</li>
+
+<li>Analyseer de log berichten om te bekijken het probleem reproduceerbaar is en altijd tijdens het inlezen van dezelfde map optreedt.</li>
+</ol>
+
+</body>
+</html>
