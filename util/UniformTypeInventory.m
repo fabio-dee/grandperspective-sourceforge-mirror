@@ -76,6 +76,8 @@ NSString  *UniformTypeKey = @"uniformType";
     // Only create types for declared types (not for dynamically created ones).
     type = [self uniformTypeForIdentifier: type.identifier];
   } else {
+    os_log_debug(LogManager.defaultLogManager.mainLog,
+                 "Unrecognized extension: %{public}@", ext);
     type = UTType.unknownType;
   }
 
