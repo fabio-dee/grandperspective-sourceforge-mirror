@@ -3,6 +3,8 @@
 #import "UniformType.h"
 #import "UniformTypeInventory.h"
 
+@import UniformTypeIdentifiers;
+
 
 NSString  *UniformTypeRankingChangedEvent = @"uniformTypeRankingChanged";
 
@@ -118,44 +120,31 @@ NSString  *UniformTypesRankingKey = @"uniformTypesRanking";
 
 
 - (BOOL) isUniformTypeDominated:(UniformType *)type {
-  NSUInteger  i = 0;
-  NSUInteger  i_max = rankedTypes.count;
-  
-  NSSet  *ancestors = type.ancestorTypes;
-  
-  while (i < i_max) {
-    UniformType  *higherType = rankedTypes[i];
-    
+  NSSet  *ancestors = type.utType.supertypes;
+
+  for (UniformType* higherType in rankedTypes) {
     if (higherType == type) {
       // Found the type in the list, without encountering any type that dominates it.
       return NO;
     }
 
-    if ([ancestors containsObject: higherType]) {
+    if ([ancestors containsObject: higherType.utType]) {
       // Found a type that dominates this one.
       return YES;
     }
-    
-    i++;
   }
+
   NSAssert(NO, @"Unexpected termination");
   return NO;
 }
 
 - (NSArray *)undominatedRankedUniformTypes {
   NSMutableArray  *undominatedTypes = [NSMutableArray arrayWithCapacity: rankedTypes.count];
-    
-  NSUInteger  i = 0;
-  NSUInteger  i_max = rankedTypes.count;
 
-  while (i < i_max) {
-    UniformType  *type = rankedTypes[i];
-    
+  for (UniformType* type in rankedTypes) {
     if (! [self isUniformTypeDominated: type]) {
       [undominatedTypes addObject: type];
     }
-    
-    i++;
   }
   
   return undominatedTypes;

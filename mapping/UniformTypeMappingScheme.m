@@ -5,6 +5,8 @@
 #import "UniformType.h"
 #import "UniformTypeRanking.h"
 
+@import UniformTypeIdentifiers;
+
 
 @interface UniformTypeMappingScheme (PrivateMethods)
 
@@ -25,6 +27,8 @@
 
 - (instancetype) initWithUniformTypeRanking:(UniformTypeRanking *)typeRanking
   NS_DESIGNATED_INITIALIZER;
+
+- (NSUInteger) findIndexForType:(UniformType *)uniformType;
 
 @end
 
@@ -102,6 +106,35 @@
 }
 
 
+- (NSUInteger) findIndexForType:(UniformType *)targetType {
+  __block NSUInteger retVal = NSIntegerMax;
+
+  if (targetType.isUnknown) {
+    [orderedTypes enumerateObjectsUsingBlock:^(UniformType *type, NSUInteger idx, BOOL *stop) {
+      if (type.isUnknown) {
+        retVal = idx;
+        *stop = YES;
+      }
+    }];
+  } else {
+    UTType *targetUTType = targetType.utType;
+    NSSet *ancestorUTTypes = targetUTType.supertypes;
+
+    [orderedTypes enumerateObjectsUsingBlock:^(UniformType *type, NSUInteger idx, BOOL *stop) {
+      if (!type.isUnknown) {
+        UTType* utType = type.utType;
+        if (utType == targetUTType || [ancestorUTTypes containsObject: utType]) {
+          // Found the first type in the list that the file item conforms to.
+          retVal = idx;
+          *stop = YES;
+        }
+      }
+    }];
+  }
+
+  return retVal;
+}
+
 //----------------------------------------------------------------------------
 // Implementation of FileItemMapping protocol
 
@@ -118,26 +151,12 @@
   if (hash != nil) {
     return hash.intValue;
   }
-    
-  NSSet  *ancestorTypes = type.ancestorTypes;
-  NSUInteger  utiIndex = 0;
-  
-  while (utiIndex < orderedTypes.count) {
-    UniformType  *orderedType = orderedTypes[utiIndex];
-  
-    if (type == orderedType || [ancestorTypes containsObject: orderedType]) {
-      // Found the first type in the list that the file item conforms to.
-      
-      // Add it to the cache for next time.
-      hashForUTICache[uti] = @(utiIndex);
-      return utiIndex;
-    }
-    
-    utiIndex++;
-  }
-  
-  NSAssert(NO, @"No conforming type found.");
-  return 0;
+
+  NSUInteger  utiIndex = [self findIndexForType: type];
+
+  // Add it to the cache for next time.
+  hashForUTICache[uti] = @(utiIndex);
+  return utiIndex;
 }
 
 - (NSUInteger) colorIndexForHash:(NSUInteger)hash numColors:(NSUInteger)numColors {

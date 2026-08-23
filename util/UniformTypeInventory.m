@@ -11,11 +11,6 @@ NSString  *UniformTypeAddedEvent = @"uniformTypeAdded";
 
 NSString  *UniformTypeKey = @"uniformType";
 
-// The UTI that is used when the type is unknown (i.e. when there is no proper UTI associated with a
-// given file or extension).
-NSString  *UnknownTypeUTI = @"unknown";
-
-
 @interface UniformTypeInventory (PrivateMethods) 
 
 - (void) postNotification:(NSNotification *)notification;
@@ -43,32 +38,19 @@ NSString  *UnknownTypeUTI = @"unknown";
 - (instancetype) init {
   if (self = [super init]) {
     typeForExtension = [[NSMutableDictionary alloc] initWithCapacity: 32];
-    untypedExtensions = [[NSMutableSet alloc] initWithCapacity: 32];
     typeForUTI = [[NSMutableDictionary alloc] initWithCapacity: 32];
-    childrenForUTI = [[NSMutableDictionary alloc] initWithCapacity: 32];
-    parentlessTypes = [[NSMutableSet alloc] initWithCapacity: 8];
-    
-    // Create the UniformType object used when the type is unknown.
-    NSString  *descr = NSLocalizedString(@"unknown file type",
-                                         @"Description for 'unknown' UTI.");
-    unknownType = [[UniformType alloc] initWithUniformTypeIdentifier: UnknownTypeUTI
-                                                         description: descr
-                                                             parents: @[]];
-    typeForUTI[UnknownTypeUTI] = unknownType;
-    [parentlessTypes addObject: unknownType];
+
+    UniformType*  unknownType = UniformType.unknownType;
+    typeForUTI[unknownType.uniformTypeIdentifier] = unknownType;
   }
   
   return self;
 }
 
 - (void) dealloc {
-  [unknownType release];
-  
+
   [typeForExtension release];
-  [untypedExtensions release];
   [typeForUTI release];
-  [childrenForUTI release];
-  [parentlessTypes release];
     
   [super dealloc];
 }
@@ -79,10 +61,6 @@ NSString  *UnknownTypeUTI = @"unknown";
 }
 
 
-- (UniformType *)unknownUniformType; {
-  return unknownType;
-}
-
 - (NSEnumerator *)uniformTypeEnumerator {
   return [typeForUTI objectEnumerator];
 }
@@ -91,79 +69,53 @@ NSString  *UnknownTypeUTI = @"unknown";
 - (UniformType *)uniformTypeForExtension:(NSString *)ext {
   UniformType  *type = typeForExtension[ext];
   if (type != nil) {
-    // The extension was already encountered, and corresponds to a valid UTI.
+    // The extension was already encountered.
     return type;
-  }
-  
-  if ([untypedExtensions containsObject: ext]) {
-    // The extension was already encountered, and has no proper UTI associated
-    // with it.
-    return unknownType;
   }
 
   UTType  *uttype = [UTType typeWithFilenameExtension: ext];
-
   if (uttype.isPublicType || uttype.isDeclared) {
+    // Only create types for declared types (not for dynamically created ones).
+    //
+    // Note: The below method may return nil. This can happen when an UTI has been registered for
+    // an extension without additional information describing the type.
+
     type = [self uniformTypeForIdentifier: uttype.identifier];
-
-    if (type != nil) {
-      // Successfully obtained a UniformType for the UTI.
-      //
-      // Note: It is possible that a UTI has been registered for an extension without additional
-      // information describing the type. In this case, no UniformType can be created, which is why
-      // the check is needed.
-      
-      typeForExtension[ext] = type;
-
-      return type;
-    }
   }
 
-  // No proper type could be constructed for the given UTI.
-  [untypedExtensions addObject: ext];
+  if (type == nil) {
+    type = UniformType.unknownType;
+  }
 
-  return unknownType;
+  typeForExtension[ext] = type;
+  return type;
 }
 
 - (UniformType *)uniformTypeForIdentifier:(NSString *)uti {
-  id  typeOrSelf = typeForUTI[uti];
+  UniformType  *type = typeForUTI[uti];
 
-  if (typeOrSelf == self) {
-    // Encountered cycle in the type conformance relationships. Breaking the loop to avoid infinite
-    // recursion.
-
-    return nil;
-  }
-
-  if (typeOrSelf != nil) {
+  if (type != nil) {
     // It has already been registered
-    return typeOrSelf;
+    return type;
   }
 
-  // Temporarily associate "self" with the UTI to mark that the type is currently being created.
+  // Temporarily associate "unknown" with the UTI to mark that the type is currently being created.
   // This is done to guard against infinite recursion should there be a cycle in the
   // type-conformance relationships.
-  typeForUTI[uti] = self;
-  UniformType  *type = [self createUniformTypeForIdentifier: uti];
+  typeForUTI[uti] = UniformType.unknownType;
+
+  type = [self createUniformTypeForIdentifier: uti];
 
   if (type == nil) {
     // No uniform type could be created for the UTI
-    [typeForUTI removeObjectForKey: uti];
 
-    return nil;
+    os_log_info(LogManager.defaultLogManager.mainLog, "Failed to create type for %{public}@", uti);
+
+    return UniformType.unknownType;
   }
   
   typeForUTI[uti] = type;
-  childrenForUTI[uti] = @[];
-  
-  // Register it as a child for each parent
-  for (UniformType *parentType in [type.parentTypes objectEnumerator]) {
-    NSString  *parentUTI = [parentType uniformTypeIdentifier];
-    NSArray  *children = childrenForUTI[parentUTI];
-    
-    childrenForUTI[parentUTI] = [children arrayByAddingObject: type];
-  }
-  
+
   // Notify interested observers
   NSNotification  *notification = 
     [NSNotification notificationWithName: UniformTypeAddedEvent 
@@ -174,33 +126,6 @@ NSString  *UnknownTypeUTI = @"unknown";
                       waitUntilDone: NO];
   
   return type;
-}
-
-
-- (NSSet *)childrenOfUniformType:(UniformType *)type {
-  return [NSSet setWithArray: childrenForUTI[[type uniformTypeIdentifier]]];
-}
-
-
-- (void) dumpTypesToLog {
-  os_log_t logger = LogManager.defaultLogManager.mainLog;
-
-  for (UniformType *type in [self uniformTypeEnumerator]) {
-    os_log_debug(logger, "Type: %@", [type uniformTypeIdentifier]);
-    os_log_debug(logger, "  Description: %@", [type description]);
-
-    NSMutableString  *s = [NSMutableString stringWithCapacity: 64];
-    for (UniformType *type2 in [type.parentTypes objectEnumerator]) {
-      [s appendFormat: @" %@", [type2 uniformTypeIdentifier]];
-    }
-    os_log_debug(logger, "  Parents:%@", s);
-
-    [s deleteCharactersInRange: NSMakeRange(0, s.length)];
-    for (UniformType *type2 in [[self childrenOfUniformType: type] objectEnumerator]) {
-      [s appendFormat: @" %@", [type2 uniformTypeIdentifier]];
-    }
-    os_log_debug(logger, "  Children:%@", s);
-  }
 }
 
 @end // @implementation UniformTypeInventory
@@ -220,17 +145,12 @@ NSString  *UnknownTypeUTI = @"unknown";
     return nil;
   }
 
-  NSMutableArray  *parents = [NSMutableArray arrayWithCapacity: uttype.supertypes.count];
-  for (UTType* parent in uttype.supertypes) {
-    UniformType  *parentType = [self uniformTypeForIdentifier: parent.identifier];
-    if (parentType != nil) {
-      [parents addObject: parentType];
-    }
+  // Ensure all ancestor types are also created
+  for (UTType* ancestor in uttype.supertypes) {
+    [self uniformTypeForIdentifier: ancestor.identifier];
   }
 
-  return [[[UniformType alloc] initWithUniformTypeIdentifier: uti
-                                                 description: uttype.localizedDescription
-                                                     parents: parents] autorelease];
+  return [[[UniformType alloc] initWithUTType: uttype] autorelease];
 }
 
 @end // @implementation UniformTypeInventory (PrivateMethods)

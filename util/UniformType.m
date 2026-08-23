@@ -1,68 +1,73 @@
 #import "UniformType.h"
 
+@import UniformTypeIdentifiers;
+
+
+// The UTI that is used when the type is unknown (i.e. when there is no proper UTI associated with
+// a given file or extension).
+//
+// It is only used as an internal UTI and not exported/visible outside the application.
+NSString  *UnknownTypeUTI = @"unknown";
+
+
 @implementation UniformType
 
-- (instancetype) initWithUniformTypeIdentifier:(NSString *)utiVal
-                                   description:(NSString *)descriptionVal
-                                       parents:(NSArray *)parentTypes {
++ (UniformType *)unknownType {
+  static UniformType*  unknownType;
+  static dispatch_once_t  onceToken;
 
-  if (self = [super init]) { 
-    uti = [utiVal retain];
-    description = [descriptionVal retain];
-    
-    parents = [[NSSet setWithArray: parentTypes] retain];
+  dispatch_once(&onceToken, ^{
+    unknownType = [[UniformType alloc] initWithUTType: nil];
+  });
+
+  return unknownType;
+}
+
+- (instancetype) initWithUTType:(UTType *)typeVal {
+  if (self = [super init]) {
+    type = [typeVal retain];
   }
   
   return self;
-  
 }
 
 - (void) dealloc {
-  [uti release];
-  [description release];
-  [parents release];
-  
+  [type release];
+
   [super dealloc];
 }
 
+- (BOOL) isUnknown {
+  return (self == UniformType.unknownType);
+}
+
+- (UTType *)utType {
+  return type;
+}
 
 - (NSString *)uniformTypeIdentifier {
-  return uti;
+  return type ? type.identifier : UnknownTypeUTI;
 }
 
 - (NSString *)description {
-  return description;
+  return (type
+          ? type.localizedDescription
+          : NSLocalizedString(@"unknown file type", @"Description for 'unknown' UTI."));
 }
 
-- (NSSet *)parentTypes {
-  return parents;
-}
-
-
-- (NSSet *)ancestorTypes {
-  NSMutableSet  *ancestors = [NSMutableSet setWithCapacity: 16];
-
-  NSMutableArray  *toVisit = [NSMutableArray arrayWithCapacity: 8];
-  [toVisit addObject: self];
-  
-  while (toVisit.count > 0) {
-    // Visit next node in the list.
-    UniformType  *current = toVisit.lastObject;
-    [toVisit removeLastObject];
-  
-    // Add parents that have not yet been encountered to list of nodes to visit.
-    for (UniformType *parentType in [current.parentTypes objectEnumerator]) {
-      if (! [ancestors containsObject: parentType]) {
-        // Only visit ancestor types that have not yet been encountered. This ensures that the
-        // search time is linear in the number of ancestors (despite there possibly being multiple
-        // paths to certain ancestors).
-        [ancestors addObject: parentType];
-        [toVisit addObject: parentType];
-      }
-    }
+- (NSSet *)parentUTTypes {
+  if (type == nil) {
+    return [NSSet set];
   }
 
-  return ancestors;
+  NSSet*  ancestors = type.supertypes;
+  NSMutableSet*  parents = [NSMutableSet setWithSet: ancestors];
+
+  for (UTType* tp in ancestors) {
+    [parents minusSet: tp.supertypes];
+  }
+
+  return parents;
 }
 
 @end

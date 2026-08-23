@@ -6,6 +6,8 @@
 #import "UniformType.h"
 #import "UniformTypeInventory.h"
 
+@import UniformTypeIdentifiers;
+
 
 @interface ItemTypeTest (PrivateMethods)
 
@@ -85,12 +87,10 @@
   }
   
   UniformType  *type = ((PlainFileItem *)item).uniformType;
-  NSSet  *ancestorTypes = self.isStrict ? nil : type.ancestorTypes;
-    
-  NSUInteger  i = self.matchTargets.count;
-  while (i-- > 0) {
-    UniformType  *matchType = self.matchTargets[i];
-    if (type == matchType || [ancestorTypes containsObject: matchType]) {
+  NSSet  *ancestorTypes = self.isStrict ? nil : type.utType.supertypes;
+
+  for (UniformType *matchType in self.matchTargets) {
+    if (type == matchType || [ancestorTypes containsObject: matchType.utType]) {
       return TestPassed;
     }
   }
